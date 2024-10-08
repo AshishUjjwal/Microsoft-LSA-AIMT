@@ -1,0 +1,37 @@
+my_project/
+│
+├── public/
+│   ├── index.html
+│   └── signup-image.jpg (if using local images)
+│
+├── src/
+│   ├── assets/
+│   │   └── signup-image.jpg (alternative location for images)
+│   │
+│   ├── components/
+│   │   ├── Navbar.jsx
+│   │   ├── Footer.jsx
+│   │   ├── contact.jsx
+│   │   ├── EventDashboard.jsx
+│   │   ├── FAQ.jsx
+│   │   ├── about.jsx
+│   │   ├── socialshare.jsx
+│   │   └── ProtectedRoute.jsx
+│   │
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   ├── Register.jsx
+│   │   ├── Login.jsx
+│   │   ├── Dashboard.jsx
+│   │   └── NotFound.jsx
+│   │
+│   ├── routes/
+│   │   └── AllRoutes.js
+│   │
+│   ├── App.js
+│   ├── App.css
+│   └── index.js
+│
+├── package.json
+├── package-lock.json
+└── README.md

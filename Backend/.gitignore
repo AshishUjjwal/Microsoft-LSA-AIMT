@@ -1,0 +1,51 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+jspm_packages/
+
+# Environment variables
+.env
+
+# Production build
+/build
+/dist
+
+# Temporary files
+*.tmp
+*.swp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Coverage reports
+coverage/
+
+# Cache files
+.cache/
+*.pid
+
+# Static assets
+/public/static/
+
+# Ignore tests and mock data in production
+/tests/
+__tests__/
+__mocks__/
+
+# TypeScript
+*.tsbuildinfo
