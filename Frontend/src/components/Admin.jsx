@@ -23,6 +23,8 @@ import {
     Textarea,
     useColorModeValue,
     Divider,
+    Stack,
+    VStack,
 } from "@chakra-ui/react";
 
 // Admin panel component ------------------------------------->>
@@ -111,14 +113,12 @@ const AdminPanel = () => {
     };
 
     return (
-        <Box position="relative">
-            {/* Video background */}
-            {/* <Hero /> */}
-            <Heading m={6} textAlign="center" fontFamily={'monospace'} zIndex={-1}>
+        <VStack position="relative" bgGradient={'linear(to-r, blackAlpha.600, transparent)'}>
+            <Heading m={6} textAlign="center" fontFamily={'monospace'} >
                 Welcome To Admin Page!!
             </Heading>
             <Divider borderColor={useColorModeValue('gray.300', 'gray.700')} />
-            <Box
+            <Stack
                 mb={20}
                 p={10}
                 bg={useColorModeValue('gray.300', 'gray.700')}
@@ -133,7 +133,7 @@ const AdminPanel = () => {
                     Admin Panel
                 </Heading>
                 {/* Grid layout for buttons */}
-                <Grid templateColumns="repeat(2, 1fr)" gap={6}>
+                <Stack templateColumns="repeat(2, 1fr)" gap={6} >
                     <GridItem colSpan={2}>
                         <Button colorScheme="green" width="100%" height='16' onClick={openCreateModal}>
                             Create New Event
@@ -159,8 +159,8 @@ const AdminPanel = () => {
                             Logout
                         </Button>
                     </GridItem>
-                </Grid>
-            </Box>
+                </Stack>
+            </Stack>
 
             {/* Modal for Create, Edit, Delete, View All actions */}
             <Modal isOpen={isOpen} onClose={onClose}>
@@ -188,7 +188,7 @@ const AdminPanel = () => {
                     </ModalFooter>
                 </ModalContent>
             </Modal>
-        </Box>
+        </VStack>
     );
 };
 
