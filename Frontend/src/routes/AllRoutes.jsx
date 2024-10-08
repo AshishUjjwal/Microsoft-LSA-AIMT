@@ -34,9 +34,9 @@ const AllRoutes = () => {
       <Route path="/events" element={<EventPage />} />
       <Route path="/admin"
         element={
-          // <ProtectedRoute requiredRole={'admin'}>
+          <ProtectedRoute requiredRole={'admin'}>
             <AdminPanel />
-          // </ProtectedRoute>
+          </ProtectedRoute>
         }
       />
 

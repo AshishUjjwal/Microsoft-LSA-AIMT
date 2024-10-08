@@ -1,4 +1,4 @@
-import mongoose, {Schema} from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
@@ -20,6 +20,11 @@ const userSchema = new Schema(
         password: {
             type: String,
             required: [true, 'password is required']
+        },
+        role: {
+            type: String,
+            enum: ['user', 'admin'], // Allowed roles
+            default: 'user' // Default role
         },
         refreshToken: {
             type: String
@@ -49,6 +54,7 @@ userSchema.methods.generateAccessToken = async function () {
         {
             _id: this._id,
             email: this.email,
+            role: this.role,
         },
         process.env.ACCESS_TOKEN,
         {

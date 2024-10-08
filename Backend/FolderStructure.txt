@@ -1,0 +1,20 @@
+project-root/
+├── models/
+│   ├── User.js
+│   └── Event.js
+├── routes/
+│   ├── auth.js
+│   └── events.js
+├── controllers/
+│   ├── authController.js
+│   └── eventController.js
+├── middleware/
+│   └── auth.js
+├── config/
+│   └── db.js
+├── scripts/
+│   └── seedAdmin.js
+|
+├── app.js or server.js
+├── package.json
+└── .env
