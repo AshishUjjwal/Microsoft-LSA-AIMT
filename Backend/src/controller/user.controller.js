@@ -76,6 +76,7 @@ const loginUser = asyncHandler(async (req, res) => {
         throw new ApiError('User not found', 404);
     }
     // validate the password
+    console.log(password);
     const isPasswordValid = await user.isPasswordCorrect(password);
     if (!isPasswordValid) {
         throw new ApiError('Invalid password', 401);

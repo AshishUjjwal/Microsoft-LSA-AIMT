@@ -120,6 +120,7 @@ export default function Navbar() {
             <NavLink href="/about">About</NavLink>
             <NavLink href="/blog">Blog</NavLink>
             <NavLink href="/events">Events</NavLink>
+            <NavLink href="/admin">AdminPanel</NavLink>
 
             {/* Dark/Light Mode Toggle */}
             <Button onClick={toggleColorMode}>
