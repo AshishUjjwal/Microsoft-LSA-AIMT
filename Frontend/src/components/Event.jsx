@@ -10,6 +10,7 @@ import {
     useBreakpointValue,
     useColorModeValue,
 } from "@chakra-ui/react";
+// import axios from 'axios';
 
 // Example event data
 const events = [
@@ -49,6 +50,19 @@ const events = [
 
 // Main Component for Event Dashboard
 const EventDashboard = () => {
+
+    // const response = await fetch("https://localhost:8000/api/events/getevent", {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(),
+    //     credentials: 'include' // Important to send and receive cookies
+    //     // credentials: 'include': This tells the browser to include cookies in the request and also save cookies sent from the backend. By default, cookies are not included in cross-origin requests, so this is necessary for cross-origin API calls.
+    //   });
+    //   const result = await response.json();
+    //   console.log('result', result);
+
     const isMobile = useBreakpointValue({ base: true, md: false });
 
     return (

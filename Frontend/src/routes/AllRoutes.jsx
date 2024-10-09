@@ -14,6 +14,7 @@ import BlogSection from '../components/Blog.jsx';
 
 import ProtectedRoute from './ProtectedRoute.jsx'; // A component to protect routes
 import AdminPanel from '../pages/AdminPage.jsx';
+import LoadingPage from '../pages/LoadinPage.jsx';
 
 
 const AllRoutes = () => {
@@ -32,6 +33,8 @@ const AllRoutes = () => {
       <Route path="/blog" element={<BlogSection />} />
       <Route path="/contact" element={<ContactSection />} />
       <Route path="/events" element={<EventPage />} />
+      <Route path="/loading" element={<LoadingPage />} />
+
       <Route path="/admin"
         element={
           <ProtectedRoute requiredRole={'admin'}>

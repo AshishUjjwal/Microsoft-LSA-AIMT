@@ -129,12 +129,14 @@ const Signup = () => {
       if (response.ok) {
         toast({
           title: `Registration successful!`,
+          description: `Now you can Login`,
           position: "top",
           duration: 6000,
           status: "success",
           isClosable: true,
         });
         setAllRight(true);
+        navigate('/login')
       } else {
         throw new Error(result.message || "Registration failed!");
       }
