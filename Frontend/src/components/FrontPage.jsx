@@ -1,25 +1,42 @@
+import React, { useEffect, useState } from 'react';
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  Button,
+  useColorModeValue,
+  Link,
+  VStack,
+  useBreakpointValue,
+  useColorMode,
+  IconButton
+} from '@chakra-ui/react';
+import { FaLinkedin, FaGithub, FaWhatsapp, FaSun, FaMoon } from 'react-icons/fa';
 
-import React, {  useEffect, useState } from 'react';
-import { Box, Flex, Heading, Text, Button, useColorModeValue, Link, VStack } from '@chakra-ui/react';
-import { FaLinkedin, FaGithub, FaWhatsapp } from 'react-icons/fa';
-
-// Image array for the background
 const images = [
   'https://w0.peakpx.com/wallpaper/435/732/HD-wallpaper-laptop-numbers-dark.jpg',
-  'https://t4.ftcdn.net/jpg/06/67/43/77/360_F_667437709_f8fCt8tCHM84H0pTtJ0SdN4UJ15SeC35.jpg', // Replace with actual image URLs
   'https://c1.wallpaperflare.com/preview/427/745/192/notebook-natural-laptop-macbook.jpg',
+  // 'https://c1.wallpaperflare.com/preview/427/745/192/notebook-natural-laptop-macbook.jpg'
 ];
 
 const FrontPage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { colorMode, toggleColorMode } = useColorMode(); // For light/dark mode toggle
 
+  // Change the image every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000); // Change image every 5 seconds
+    }, 5000);
 
-    return () => clearInterval(interval); // Cleanup on unmount
+    return () => clearInterval(interval);
   }, []);
+
+  // Responsive font sizes and padding for different screen sizes
+  const headingFontSize = useBreakpointValue({ base: '30px', md: '40px', lg: '50px' });
+  const textFontSize = useBreakpointValue({ base: '15px', md: '18px', lg: '20px' });
+  const buttonSize = useBreakpointValue({ base: 'md', md: 'md', lg: 'lg' });
 
   return (
     <Flex
@@ -27,12 +44,11 @@ const FrontPage = () => {
       justifyContent="center"
       alignItems="center"
       textAlign="center"
-      textColor={useColorModeValue('gray.100', 'black.900')}
-      h="89vh" // Full-screen height for proper centering
+      h="90vh"
       p={4}
       position="relative"
       overflow="hidden"
-      zIndex={-1} // Behind the content
+      zIndex={-1}
     >
       {/* Background Image */}
       <Box
@@ -44,27 +60,70 @@ const FrontPage = () => {
         backgroundImage={`url(${images[currentImageIndex]})`}
         backgroundSize="cover"
         backgroundPosition="center"
-        transition="background-image 1s ease-in-out" // Smooth transition
-        zIndex={-1} // Behind the content
+        transition="background-image 1s ease-in-out"
+        zIndex={-1}
+        filter="brightness(50%)" // Darken background for text readability
       />
 
-      <VStack spacing={6} align="center" maxWidth="1170px" zIndex={1}> {/* Ensures the content is above the background */}
-        <Heading as="h1" size="xl" fontSize={'40px'}>
-          Empowering students to code their future, master AI, and shape tomorrow's tech culture.
+      {/* Dark/Light Mode Toggle Button */}
+      {/* <IconButton
+        icon={colorMode === 'light' ? <FaMoon /> : <FaSun />}
+        isRound
+        size="lg"
+        position="absolute"
+        top="20px"
+        right="20px"
+        onClick={toggleColorMode}
+        zIndex={2}
+        aria-label="Toggle theme"
+      /> */}
+
+      <VStack spacing={6} align="center" zIndex={1} maxW="1000px">
+        <Heading
+          as="h1"
+          fontSize={headingFontSize}
+          fontWeight="bold"
+          color={useColorModeValue('gray.100', 'whiteAlpha.900')}
+          transition="color 0.3s ease"
+        >
+          Empowering students to code their future, master AI and shape tomorrow's tech culture.
         </Heading>
 
-        <Text fontSize="lg" maxW="600px">
+        <Text
+          fontSize={textFontSize}
+          color={useColorModeValue('gray.200', 'gray.300')}
+          maxW="600px"
+          lineHeight="1.6"
+          transition="color 0.3s ease"
+        >
           Join our community to learn, innovate, and thrive in the tech world together.
         </Text>
 
-        <Flex justify="center" align="center"> {/* Flexbox to center the buttons */}
+        <Flex justify="center" align="center">
           <Link href="https://www.linkedin.com/in/your-profile" isExternal>
-            <Button leftIcon={<FaLinkedin />} variant="outline" m={2} bg="grey">
+            <Button
+              leftIcon={<FaLinkedin />}
+              variant="solid"
+              size={buttonSize}
+              m={2}
+              colorScheme="linkedin"
+              _hover={{ transform: 'scale(1.05)', boxShadow: 'lg' }} // Hover animation
+              transition="all 0.3s ease"
+            >
               LinkedIn
             </Button>
           </Link>
           <Link href="https://github.com/your-profile" isExternal>
-            <Button leftIcon={<FaGithub />} variant="outline" m={2} bg="grey">
+            <Button
+              leftIcon={<FaGithub />}
+              variant="solid"
+              size={buttonSize}
+              m={2}
+              bg={useColorModeValue('gray.700', 'gray.600')}
+              color="white"
+              _hover={{ transform: 'scale(1.05)', boxShadow: 'lg' }}
+              transition="all 0.3s ease"
+            >
               GitHub
             </Button>
           </Link>
@@ -74,8 +133,9 @@ const FrontPage = () => {
           <Button
             leftIcon={<FaWhatsapp />}
             colorScheme="whatsapp"
-            size="lg"
-            mt={4}
+            size={buttonSize}
+            _hover={{ transform: 'scale(1.05)', boxShadow: 'lg' }}
+            transition="all 0.3s ease"
           >
             Join WhatsApp
           </Button>

@@ -12,14 +12,14 @@ import {
     Flex,
 } from '@chakra-ui/react'
 
-
 export default function Subscribe() {
     return (
         <Flex
             align={'center'}
             justify={'center'}
-            width={'500px'} // Adjust this value to increase the width
+            w={{base: '100', md: '200', lg: '200%' }}
             bg={useColorModeValue('gray.50', 'gray.800')}
+            py={{ base: 0, md: 0 }} // Padding for mobile and larger screens
         >
             <Container
                 bg={useColorModeValue('white', 'whiteAlpha.100')}
@@ -29,7 +29,7 @@ export default function Subscribe() {
             >
                 <Heading
                     as={'h2'}
-                    fontSize={{ base: 'xl', sm: '2xl' }}
+                    fontSize={{ base: 'lg', sm: '2xl' }}
                     textAlign={'center'}
                     mb={5}
                 >
@@ -53,7 +53,7 @@ export default function Subscribe() {
                             aria-label={'Your Email'}
                         />
                     </FormControl>
-                    <FormControl w={{ base: '100%', md: '100%' }}>
+                    <FormControl w={{ base: '100%', md: 'auto' }}>
                         <Button colorScheme={'blue'} w="100%" type={'submit'}>
                             Submit
                         </Button>

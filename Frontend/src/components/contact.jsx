@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './ContactSection.module.css';
+import { Link } from 'react-router-dom';
 
 const ContactSection = () => {
   const [focus, setFocus] = useState({
@@ -55,23 +56,25 @@ const ContactSection = () => {
         <div className={styles.whatsapp}>
           
           <h3>Join WhatsApp Group</h3>
-          <a href="https://chat.whatsapp.com/your-group-link" target="_blank" rel="noopener noreferrer">
+          {/* <a href="https://chat.whatsapp.com/your-group-link" target="_blank" rel="noopener noreferrer">
             <button>Join WhatsApp Group</button>
-          </a>
+          </a> */}
         </div>
         <div className={styles.linkedin}>
           <h3>Follow Us on LinkedIn</h3>
           <p>Stay updated with our latest Events and Challenge.</p>
-          <a href="https://www.linkedin.com/company/your-company" target="_blank" rel="noopener noreferrer">
+          {/* <a href="https://www.linkedin.com/company/your-company" target="_blank" rel="noopener noreferrer">
             <button>Follow LinkedIn Page</button>
-          </a>
+          </a> */}
+          <Link to="https://www.linkedin.com/company/your-company">Follow LinkedIn Page</Link>
         </div>
         <div className={styles.address}>
           <h3>Address</h3>
           <p>Lucknow, Uttar Pradesh, India</p>
-          <a href="https://www.linkedin.com/company/your-company" target="_blank" rel="noopener noreferrer">
+          {/* <a href="https://www.linkedin.com/company/your-company" target="_blank" rel="noopener noreferrer">
             <button>Visit Map</button>
-          </a>
+          </a> */}
+          <Link to="https://www.linkedin.com/company/your-company">About</Link>
         </div>
       </div>
     </div>

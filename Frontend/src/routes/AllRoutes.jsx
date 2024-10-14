@@ -22,9 +22,9 @@ const AllRoutes = () => {
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={
-        <ProtectedRoute>
+        // <ProtectedRoute>
           <Home />
-        </ProtectedRoute>
+        // </ProtectedRoute>
       }
       />
       <Route path="/about" element={<AboutPage />} />
@@ -37,9 +37,9 @@ const AllRoutes = () => {
 
       <Route path="/admin"
         element={
-          <ProtectedRoute requiredRole={'admin'}>
+          // <ProtectedRoute requiredRole={'admin'}>
             <AdminPanel />
-          </ProtectedRoute>
+          // </ProtectedRoute>
         }
       />
 

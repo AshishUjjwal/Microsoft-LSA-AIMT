@@ -1,6 +1,6 @@
 // src/components/LoadingPage.jsx
 import React from 'react';
-import { Box, Spinner, Text, VStack, Flex, Image } from '@chakra-ui/react';
+import { Box, Text, Flex, Image } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import logo from '../Images/loading1.svg'
 

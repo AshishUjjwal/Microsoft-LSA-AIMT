@@ -149,11 +149,12 @@ const Login = () => {
   return (
 
     <Stack
-      minH={'90vh'}
+      minH={{ base: '80vh', md: '90vh' }}
       direction={{ base: 'column', md: 'row' }}
       textColor={useColorModeValue('black.800', 'black.900')}
       maxWidth="1100px"
       mx="auto"
+      mt={{base: '19', md: '0'}}
     >
       <Flex p={5} flex={1} align={'center'} justify={'center'} >
         <Stack spacing={4} w={'full'} maxW={'md'}>
@@ -231,6 +232,7 @@ const Login = () => {
       </Flex>
       <Flex flex={1}>
         <Image
+          display={{ base: 'none', md: 'flex' }}
           alt={'Login Image'}
           objectFit={'cover'}
           borderRadius="15px"
@@ -239,6 +241,7 @@ const Login = () => {
           w={'auto'}
           boxShadow={'lg'}
           margin={'auto'}
+
           src={
             'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80'
           }
