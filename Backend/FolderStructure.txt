@@ -18,3 +18,19 @@ project-root/
 ├── app.js or server.js
 ├── package.json
 └── .env
+
+
+4. Fetch Latest Changes from Remote
+Fetching updates your local repository with the latest commits from the remote without merging them into your local branches:
+git fetch origin
+Explanation: This command retrieves updates from the origin remote but doesn't modify your working files or current branches.
+
+5. Merge Remote main into Local main
+After fetching, merge the remote main branch into your local main branch:
+git merge origin/main
+
+
+Alternative: You can use git pull, which is a combination of git fetch and git merge:
+
+git pull origin main
+Explanation: This command fetches the latest changes and immediately attempts to merge them into your current branch.

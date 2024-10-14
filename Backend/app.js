@@ -24,10 +24,15 @@ app.use(express.json());
 
 // routes import
 import userRouter from './src/routes/user.routes.js'
+import eventRouter from './src/routes/event.routes.js'
 
 // Routes
 
 app.use('/api/users', userRouter);
 // http://localhost:8000/api/users/*
+
+
+app.use('/api/events', eventRouter);
+// http://localhost:8000/api/events/*
 
 export {app};

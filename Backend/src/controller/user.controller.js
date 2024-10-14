@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { ApiError } from "../utils/apiError.js"
 import { ApiResponse } from "../utils/apiResponse.js"
-
+import jwt from "jsonwebtoken"
 import { User } from '../Models/user.model.js';
 
 
@@ -11,7 +11,8 @@ const generateAccessAndRefreshToken = async (userId) => {
         const accessToken = await user.generateAccessToken();
         const refreshToken = await user.generateRefreshToken();
 
-        // console.log(accessToken, refreshToken);
+        // console.log('GeneratedAccessToken : ', accessToken);
+        // console.log('GeneratedRefreshToken : ', refreshToken);
 
         user.refreshToken = refreshToken; // Making Object in user
         await user.save({ validationBeforeSave: false }); // saving in the database not required validation
@@ -29,9 +30,6 @@ const registerUser = asyncHandler(async (req, res) => {
     // })
 
     const { name, email, password } = req.body;
-    console.log("email: " + email);
-    console.log("name: " + name);
-    console.log("pass: " + password);
 
     // check for required fields
     if ([name, email, password].some((field) =>
@@ -76,7 +74,6 @@ const loginUser = asyncHandler(async (req, res) => {
         throw new ApiError('User not found', 404);
     }
     // validate the password
-    console.log(password);
     const isPasswordValid = await user.isPasswordCorrect(password);
     if (!isPasswordValid) {
         throw new ApiError('Invalid password', 401);
@@ -89,8 +86,10 @@ const loginUser = asyncHandler(async (req, res) => {
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken");  // select command remove the give argument for accessing.
 
     const options = {
-        // httpOnly: true,
-        secure: true
+        // httpOnly: false,   // To make it accessible to JavaScript
+        secure: true,  // to make it accessible to JavaScript
+        sameSite: 'Strict', // To prevent CSRF attacks
+        path: '/',        // Make it available on all routes
     }
 
     return res
@@ -155,16 +154,17 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     // return res.status(200).json({
     //     message: "ok"
     // })
-    const incomingRefreshToken = req.cookie.refreshToken || req.body.refreshToken;
-
+    const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
+    console.log(incomingRefreshToken);
     if (!incomingRefreshToken) {
         throw new ApiError('Refresh token is required', 401);
     }
 
     try {
         const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN);
-
+        console.log(decodedToken);
         const user = await User.findById(decodedToken?._id)
+        console.log(user);
         if (!user) {
             throw new ApiError('Invalid refresh token', 401);
         }
@@ -174,21 +174,21 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
         }
 
         const options = {
-            httpOnly: true,
+            // httpOnly: true,
             secure: true
         }
 
-        const { accessToken, newrefreshToken } = await generateAccessAndRefreshToken(user?._id);
-        console.log(accessToken);
-        console.log(newrefreshToken);
-        if (!accessToken && !newrefreshToken) console.log("Failed to Generate new Access Token and new Refresh Token");
+        const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user?._id);
+        console.log('NewAccessToken : ', accessToken);
+        console.log('NewRefreshToken : ', refreshToken);
+        if (!accessToken && !refreshToken) console.log("Failed to Generate new Access Token and new Refresh Token");
         return res
             .status(200)
             .cookie("accessToken", accessToken, options)
-            .cookie("refreshToken", newrefreshToken, options)
+            .cookie("refreshToken", refreshToken, options)
             .json(new ApiResponse(200, "Refreshed Access Token", {
                 user: user,
-                refreshToken: newrefreshToken
+                refreshToken: refreshToken
             }));
 
     } catch (error) {

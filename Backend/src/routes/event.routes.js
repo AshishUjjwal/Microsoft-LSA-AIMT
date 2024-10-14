@@ -1,28 +1,31 @@
 // routes/events.js
+import { Router } from 'express';
+const router = Router();
+import { verifyJWT } from '../middleware/auth.middleware.js';
+import { verifyAdmin } from '../middleware/admin.middleware.js';
 
-const express = require('express');
-const router = express.Router();
-const { getEvents, createEvent, updateEvent, deleteEvent } = require('../controllers/eventController');
-const { authenticate, authorize } = require('../middleware/auth');
+
+import { getEvents, createEvent, updateEvent } from '../controller/event.controller.js';
+
 
 // @route   GET /api/events
 // @desc    Get all events
 // @access  Private
-router.get('/', authenticate, getEvents);
+router.get('/getevent', getEvents);
 
 // @route   POST /api/events
 // @desc    Create a new event
 // @access  Private/Admin
-router.post('/', authenticate, authorize('admin'), createEvent);
+router.route('/create-event').post( verifyAdmin, createEvent);
 
 // @route   PUT /api/events/:id
 // @desc    Update an existing event
 // @access  Private/Admin
-router.put('/:id', authenticate, authorize('admin'), updateEvent);
+router.route('/update-event').post( verifyAdmin, updateEvent);
 
 // @route   DELETE /api/events/:id
 // @desc    Delete an event
 // @access  Private/Admin
-router.delete('/:id', authenticate, authorize('admin'), deleteEvent);
+// router.delete('/:id', authenticate, authorize('admin'), deleteEvent);
 
-module.exports = router;
+export default router;
