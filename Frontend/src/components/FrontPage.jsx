@@ -9,12 +9,12 @@ import {
   Link,
   VStack,
   useBreakpointValue,
-  useColorMode,
-  IconButton
 } from '@chakra-ui/react';
-import { FaLinkedin, FaGithub, FaWhatsapp, FaSun, FaMoon } from 'react-icons/fa';
+import { FaLinkedin, FaGithub, FaWhatsapp } from 'react-icons/fa';
 
 const images = [
+  'https://png.pngtree.com/thumb_back/fh260/background/20231010/pngtree-online-marketing-website-displayed-on-laptop-in-a-modern-workplace-3d-image_13595570.png',
+  'https://png.pngtree.com/thumb_back/fw800/background/20230722/pngtree-d-rendering-of-a-home-office-with-a-responsive-digital-marketing-image_3870151.jpg',
   'https://w0.peakpx.com/wallpaper/435/732/HD-wallpaper-laptop-numbers-dark.jpg',
   'https://c1.wallpaperflare.com/preview/427/745/192/notebook-natural-laptop-macbook.jpg',
   // 'https://c1.wallpaperflare.com/preview/427/745/192/notebook-natural-laptop-macbook.jpg'
@@ -22,7 +22,6 @@ const images = [
 
 const FrontPage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const { colorMode, toggleColorMode } = useColorMode(); // For light/dark mode toggle
 
   // Change the image every 5 seconds
   useEffect(() => {
@@ -62,21 +61,8 @@ const FrontPage = () => {
         backgroundPosition="center"
         transition="background-image 1s ease-in-out"
         zIndex={-1}
-        filter="brightness(50%)" // Darken background for text readability
+        filter="brightness(60%)" // Darken background for text readability
       />
-
-      {/* Dark/Light Mode Toggle Button */}
-      {/* <IconButton
-        icon={colorMode === 'light' ? <FaMoon /> : <FaSun />}
-        isRound
-        size="lg"
-        position="absolute"
-        top="20px"
-        right="20px"
-        onClick={toggleColorMode}
-        zIndex={2}
-        aria-label="Toggle theme"
-      /> */}
 
       <VStack spacing={6} align="center" zIndex={1} maxW="1000px">
         <Heading

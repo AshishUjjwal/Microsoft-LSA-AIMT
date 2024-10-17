@@ -1,6 +1,7 @@
 'use client'
 
 import { Stack, Flex, Button, Text, VStack, useBreakpointValue } from '@chakra-ui/react'
+import logo from '../Images/bannermlsa.png'
 
 export default function WithBackgroundImage() {
   return (
@@ -8,10 +9,12 @@ export default function WithBackgroundImage() {
       w={'full'}
       h={'40vh'}
       backgroundImage={
-        'url(https://images.unsplash.com/photo-1600267175161-cfaa711b4a81?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80)'
+        logo
+        // 'url(https://images.unsplash.com/photo-1600267175161-cfaa711b4a81?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80)'
       }
       backgroundSize={'cover'}
       backgroundPosition={'center center'}
+      filter="brightness(90%)" // Darken background for text readability
     >
       <VStack
         w={'full'}
@@ -35,13 +38,13 @@ export default function WithBackgroundImage() {
               _hover={{ bg: 'blue.500' }}>
               Show me more
             </Button>
-            <Button
+            {/* <Button
               bg={'whiteAlpha.300'}
               rounded={'full'}
               color={'white'}
               _hover={{ bg: 'whiteAlpha.500' }}>
               Show me more
-            </Button>
+            </Button> */}
           </Stack>
         </Stack>
       </VStack>

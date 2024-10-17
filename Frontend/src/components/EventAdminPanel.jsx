@@ -56,16 +56,15 @@ const EventPanel = () => {
     // };
 
     return (
-        <VStack position="relative" zIndex={-1} w={'100vw'}>
-            {/* <Divider borderColor={useColorModeValue('gray.300', 'gray.700')} /> */}
+        <VStack position="relative">
             <Stack
                 p={10}
                 bg={useColorModeValue('gray.300', 'gray.700')}
                 borderRadius="md"
                 boxShadow="xl"
-                w="100%"
-                // width={'450px'}
-                // m={14}
+                width={{base: '350px', md: '450px'}}
+                mt={14}
+                m={{base:'0', md:'14'}}
             >
                 <Heading mb={6} textAlign="center">
                     Event Panel
@@ -73,17 +72,17 @@ const EventPanel = () => {
                 {/* Grid layout for buttons */}
                 <Stack templateColumns="repeat(2, 1fr)" gap={6} >
                     <GridItem colSpan={2}>
-                        <Button colorScheme="green" width="100%" height='16' onClick={openCreateModal}>
+                        <Button colorScheme="green" width={'100%'} height='16' onClick={openCreateModal}>
                             Create New Event
                         </Button>
                     </GridItem>
                     <GridItem colSpan={2}>
-                        <Button colorScheme="blue" width="100%" height='16' onClick={openEditModal}>
+                        <Button colorScheme="blue" width={'100%'}height='16' onClick={openEditModal}>
                             Edit Existing Event
                         </Button>
                     </GridItem>
                     <GridItem colSpan={2}>
-                        <Button colorScheme="red" width="100%" height='16' onClick={openDeleteModal}>
+                        <Button colorScheme="red" width={'100%'}height='16' onClick={openDeleteModal}>
                             View & Delete Event
                         </Button>
                     </GridItem>
@@ -216,7 +215,7 @@ const CreateEventForm = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <Grid templateColumns="repeat(2, 1fr)" gap={3}>
+            <Grid templateColumns="repeat(2, 1fr)" gap={3} >
                 {/* Event Title */}
                 <GridItem colSpan={2}>
                     <FormControl isRequired>

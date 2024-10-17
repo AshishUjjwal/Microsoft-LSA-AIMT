@@ -56,17 +56,15 @@ const UserPanel = () => {
     // };
 
     return (
-        <VStack position="relative" zIndex={-1} w={'100vw'}>
+        <VStack position="relative">
             {/* <Divider borderColor={useColorModeValue('gray.300', 'gray.700')} /> */}
             <Stack
-                mb={20}
                 p={10}
                 bg={useColorModeValue('gray.300', 'gray.700')}
                 borderRadius="md"
                 boxShadow="xl"
-                w="100%"
-                // width={'450px'}
-                // m={14}
+                width={{base: '350px', md: '450px'}}
+                m={14}
             >
                 <Heading mb={6} textAlign="center">
                     User Panel

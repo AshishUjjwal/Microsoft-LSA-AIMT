@@ -7,8 +7,7 @@ import {
   Image,
   Stack,
   Text,
-  Box,
-  useBreakpointValue,
+  Box
 } from '@chakra-ui/react'
 
 export default function About() {
@@ -34,27 +33,6 @@ export default function About() {
         {/* Text Content */}
         <Flex p={4} flex={{ base: '0', md: '1' }} align={'center'} justify={'center'}>
           <Stack spacing={6} maxW={'md'}>
-            {/* <Heading>
-              <Text
-                as={'span'}
-                fontSize={'3xl'}
-                position={'relative'}
-                _after={{
-                  content: "''",
-                  width: 'full',
-                  height: useBreakpointValue({ base: '20%', md: '30%' }),
-                  position: 'absolute',
-                  bottom: 1,
-                  left: 0,
-                  zIndex: -1,
-                }}>
-                Empowering Future Innovators with MLSA
-              </Text>
-              <br />{' '}
-              <Text fontSize={'2xl'} color={'blue.400'} as={'span'}>
-                Join the Microsoft Learn Student Ambassador Program
-              </Text>{' '}
-              </Heading> */}
             <Heading>
               <Text fontSize={'2xl'} color={'blue.400'} as={'span'}>
                 Join the Microsoft Learn Student Ambassador Program

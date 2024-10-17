@@ -5,13 +5,13 @@ import { verifyJWT } from '../middleware/auth.middleware.js';
 import { verifyAdmin } from '../middleware/admin.middleware.js';
 
 
-import { getEvents, createEvent, updateEvent } from '../controller/event.controller.js';
+import { getEvents, createEvent, updateEvent, deleteEvent } from '../controller/event.controller.js';
 
 
 // @route   GET /api/events
 // @desc    Get all events
 // @access  Private
-router.get('/getevent', getEvents);
+router.get('/getevent', verifyJWT, getEvents);
 
 // @route   POST /api/events
 // @desc    Create a new event
@@ -21,11 +21,11 @@ router.route('/create-event').post( verifyAdmin, createEvent);
 // @route   PUT /api/events/:id
 // @desc    Update an existing event
 // @access  Private/Admin
-router.route('/update-event').post( verifyAdmin, updateEvent);
+router.route('/update-event/:id').put( verifyAdmin, updateEvent);
 
 // @route   DELETE /api/events/:id
 // @desc    Delete an event
 // @access  Private/Admin
-// router.delete('/:id', authenticate, authorize('admin'), deleteEvent);
+router.delete('/delete-event/:id', verifyAdmin, deleteEvent);
 
 export default router;

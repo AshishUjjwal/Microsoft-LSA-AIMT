@@ -56,17 +56,14 @@ const EventPanel = () => {
     };
 
     return (
-        <VStack position="relative" zIndex={-1} w={'100vw'}>
-            {/* <Divider borderColor={useColorModeValue('gray.300', 'gray.700')} /> */}
+        <VStack position="relative">
             <Stack
-                mb={20}
                 p={10}
                 bg={useColorModeValue('gray.300', 'gray.700')}
                 borderRadius="md"
                 boxShadow="xl"
-                w="100%"
-                // width={'450px'}
-                // m={14}
+                width={{base: '350px', md: '450px'}}
+                mt={14}
             >
                 <Heading mb={6} textAlign="center">
                     Blog Panel

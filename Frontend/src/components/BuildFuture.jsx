@@ -4,7 +4,7 @@ import { Box, Flex, Heading, Text, Image, Stack } from '@chakra-ui/react';
 
 export default function BuildFuture() {
     return (
-        <Box py={{ base: 8, md: 0 }} px={{ base: 4, md: 5 }} my={{base:'10', md:'0'}} h={{base: 'auto', md: '90vh'}}>
+        <Box py={{ base: 8, md: 0 }} px={{ base: 4, md: 5 }} my={{base:'10', md:'0'}} h={{base: 'auto', md: '90vh'}} maxW={{base:'', md:'1100px'}} mx={'auto'}>
             <Heading fontSize={{ base: '3xl', md: '50' }} textAlign={'center'}>
                 Build Your Future
             </Heading>
@@ -39,7 +39,7 @@ export default function BuildFuture() {
                         <Box>
                             <Heading fontSize={{ base: 'xl', md: '2xl' }}>Coding Bootcamps</Heading>
                             <Text fontSize={{ base: 'sm', md: 'md' }} opacity="0.8">
-                                Enhance your coding skills with intensive training programs designed to boost your career. Gain practical experience, build your portfolio, and master the latest technologies through hands-on learning.
+                                Enhance your coding skills with intensive training programs designed to boost your career. 
                             </Text>
                         </Box>
                         <Box>

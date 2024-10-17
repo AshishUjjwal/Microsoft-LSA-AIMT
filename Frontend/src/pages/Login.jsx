@@ -114,7 +114,7 @@ const Login = () => {
       if (response.ok) {
         // Assuming the backend sends user data in the response
         login(result.data.user, result.token); // Update auth context
-        console.log(`userdata`, result.data.user.name);
+        // console.log(`userdata`, result.data.user.name);
 
         toast({
           title: `Login successful!`,
@@ -134,7 +134,7 @@ const Login = () => {
       // Handle errors
       toast({
         title: `Login failed!`,
-        description: error.message || "An unexpected error occurred.",
+        description: "Please check your email and password",
         position: "top",
         duration: 6000,
         status: "error",

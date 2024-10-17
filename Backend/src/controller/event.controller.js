@@ -24,97 +24,96 @@ const getEvents = asyncHandler(async (req, res) => {
 
 // Create New Event
 const createEvent = asyncHandler(async (req, res) => {
-  // return res.status(200).json({
-  //   message: "ok"
-  // })
-  console.log(req.body);
-  const { title, date, status, connectorIcon, description } = req.body;
+  try {
+    const { title, date, status, connectorIcon, description } = req.body;
 
-  const newEvent = new Event({
-    title,
-    date,
-    connectorIcon,
-    status,
-    description,
-    createdBy: req.user._id
-  });
+    const newEvent = new Event({
+      title,
+      date,
+      connectorIcon,
+      status,
+      description,
+      createdBy: req.user._id
+    });
 
-  const event = await newEvent.save();
-  res.json(event);
+    const Newevent = await newEvent.save();
+    // res.json(event);
 
-  if (!event) {
-    throw new ApiError('Failed to create Event', 500);
+    if (!Newevent) {
+      throw new ApiError('Failed to create Event', 500);
+    }
+
+    console.log('Event created successfully:', Newevent);
+
+    res.status(200).json({
+      message: 'Event Added successfully',
+      event: Newevent
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error Adding event', error });
   }
-
-  return res.status(201).json(
-    new ApiResponse(200, "Event Created Successfully", event)
-  )
 
 });
 
 // // Update Event
 const updateEvent = asyncHandler(async (req, res) => {
-  const { title, date, status, connectorIcon, description } = req.body;
-
-  // Build event object
-  const eventFields = {};
-  if (title) eventFields.title = title;
-  if (date) eventFields.date = date;
-  if (status) eventFields.status = status;
-  if (connectorIcon) eventFields.connectorIcon = connectorIcon;
-  if (description) eventFields.description = description;
-
-  eventFields.updatedAt = Date.now();
-
   try {
-    let event = await Event.findById(req.params.id);
+    const eventId = req.params.id; // Access the event._id from the route parameter
+    const updatedData = req.body;  // Get the updated event data from the request body
 
-    if (!event) return res.status(404).json({ msg: 'Event not found' });
+    const updatedEvent = await Event.findByIdAndUpdate(eventId, updatedData, { new: true });
 
-    event = await Event.findByIdAndUpdate(
-      req.params.id,
-      { $set: eventFields },
-      { new: true }
-    );
-
-    res.json(event);
-  } catch (err) {
-    console.error(err.message);
-    if (err.kind === 'ObjectId') {
-      return res.status(404).json({ msg: 'Event not found' });
+    if (!updatedEvent) {
+      return res.status(404).json({ message: 'Event not found' });
     }
-    res.status(500).send('Server Error');
+
+    res.status(200).json({
+      message: 'Event updated successfully',
+      event: updatedEvent
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating event', error });
   }
 });
 
 // // Delete Event
-// exports.deleteEvent = async (req, res) => {
-//   try {
-//     let event = await Event.findById(req.params.id);
+const deleteEvent = asyncHandler(async (req, res) => {
+  try {
+    const eventId = req.params.id; // Get the event ID from the route parameter
 
-//     if (!event) return res.status(404).json({ msg: 'Event not found' });
+    // Find the event by ID and delete it
+    const deletedEvent = await Event.findByIdAndDelete(eventId);
 
-//     // Ensure user is admin
-//     if (event.createdBy.toString() !== req.user.id && req.user.role !== 'admin') {
-//       return res.status(401).json({ msg: 'User not authorized' });
-//     }
+    if (!deletedEvent) {
+      return res.status(404).json({
+        success: false,
+        message: "Event not found"
+      });
+    }
 
-//     await Event.findByIdAndRemove(req.params.id);
+    // Respond with a success message
+    res.status(200).json({
+      success: true,
+      message: "Event deleted successfully",
+      deletedEvent // Optionally send back the deleted event
+    });
 
-//     res.json({ msg: 'Event removed' });
-//   } catch (err) {
-//     console.error(err.message);
-//     if (err.kind === 'ObjectId') {
-//       return res.status(404).json({ msg: 'Event not found' });
-//     }
-//     res.status(500).send('Server Error');
-//   }
-// };
+  } catch (error) {
+    console.error("Error deleting event:", error);
+
+    // Handle server error
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while deleting the event",
+      error: error.message
+    });
+  }
+});
 
 
 export {
   getEvents,
   createEvent,
   updateEvent,
-  // deleteEvent,
+  deleteEvent,
 };
