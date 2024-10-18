@@ -11,8 +11,7 @@ const app = express();
 
 // CORS (Cross-Origin Resource Sharing)
 app.use(cors({
-    origin: 'http://localhost:3000',  // e.g., 'http://localhost:3000' or 'https://myfrontend.com'
-    // origin: process.env.CORS_ORIGIN,  // e.g., 'http://localhost:3000' or 'https://myfrontend.com'
+    origin: process.env.CORS_ORIGIN,  // e.g., 'http://localhost:3000' or 'https://myfrontend.com'
     allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
     credentials: true,
 }));
@@ -25,6 +24,7 @@ app.use(express.json());
 // routes import
 import userRouter from './src/routes/user.routes.js'
 import eventRouter from './src/routes/event.routes.js'
+import blogRouter from './src/routes/blog.routes.js'
 
 // Routes
 
@@ -34,5 +34,9 @@ app.use('/api/users', userRouter);
 
 app.use('/api/events', eventRouter);
 // http://localhost:8000/api/events/*
+
+
+app.use('/api/blogs', blogRouter);
+// http://localhost:8000/api/blogs/*
 
 export {app};

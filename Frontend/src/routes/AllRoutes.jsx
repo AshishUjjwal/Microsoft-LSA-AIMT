@@ -11,6 +11,7 @@ import NotFound from '../pages/NotFound';
 import AboutPage from '../pages/AboutPage.jsx';
 import ContactSection from '../components/contact.jsx';
 import BlogSection from '../components/Blog.jsx';
+import BlogDetail from '../components/BlogDetail.jsx';   // Detail page for individual blog
 
 import ProtectedRoute from './ProtectedRoute.jsx'; // A component to protect routes
 import AdminPanel from '../pages/AdminPage.jsx';
@@ -31,6 +32,7 @@ const AllRoutes = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/blog" element={<BlogSection />} />
+      <Route path="/blog/:slug" element={<BlogDetail />} />
       <Route path="/contact" element={<ContactSection />} />
       <Route path="/events" element={<EventPage />} />
       <Route path="/loading" element={<LoadingPage />} />

@@ -3,7 +3,6 @@
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { ApiError } from "../utils/apiError.js"
 import { ApiResponse } from "../utils/apiResponse.js"
-import jwt from "jsonwebtoken"
 import { Event } from '../Models/event.model.js';
 
 // Get All Events

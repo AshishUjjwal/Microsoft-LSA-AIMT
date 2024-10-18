@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { app } from './app.js';
 import { User } from './src/Models/user.model.js';
-import bcrypt from 'bcrypt';
 
 const PORT = process.env.PORT || 8000;
 
