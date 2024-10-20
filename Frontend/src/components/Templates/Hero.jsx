@@ -1,7 +1,7 @@
 'use client'
 
 import { Stack, Flex, Button, Text, VStack, useBreakpointValue } from '@chakra-ui/react'
-import logo from '../Images/bannermlsa.png'
+import logo from '../../Images/bannermlsa.png'
 
 export default function WithBackgroundImage() {
   return (

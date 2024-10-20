@@ -1,14 +1,18 @@
 // src/components/LoadingPage.jsx
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box, Text, Flex, Image } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import logo from '../Images/loading1.svg'
+import { AuthContext } from '../contexts/AuthContext';
 
 const MotionFlex = motion(Flex);
 const MotionBox = motion(Box);
 const MotionText = motion(Text);
 
 const LoadingPage = () => {
+  const { auth } = useContext(AuthContext);  // Access user from AuthContext
+  const user = auth?.user;
+
   return (
     <MotionFlex
       height="100vh"
@@ -35,7 +39,8 @@ const LoadingPage = () => {
         animate={{ scale: [1, 1.2, 1] }}
         transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
       >
-        Loading, please wait...
+        {!user ? 'Please log in to access this Page.': 'Loading, please wait....'}
+        
       </MotionText>
     </MotionFlex>
   );

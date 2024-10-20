@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Flex, Image, Heading, Text, VStack, Collapse, IconButton, Grid } from '@chakra-ui/react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import faqLogo from '../Images/faqs-concept-illustration_114360-5185-removebg-preview.png'; // Ensure the correct path
+import faqLogo from '../../Images/faqs-concept-illustration_114360-5185-removebg-preview.png'; // Ensure the correct path
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);

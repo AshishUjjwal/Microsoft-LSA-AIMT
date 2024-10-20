@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { useToast } from "@chakra-ui/react";
 import { getUserRole, isAuthenticated } from '../utils/auth';
-import LoadingPage from '../pages/LoadinPage';
+import LoadingPage from '../pages/LoadingPage';
 
 const ProtectedRoute = ({ children, requiredRole }) => {
   const navigate = useNavigate(); // Initialize the navigate hook

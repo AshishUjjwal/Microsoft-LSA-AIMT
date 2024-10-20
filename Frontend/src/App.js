@@ -4,7 +4,7 @@ import { Box } from '@chakra-ui/react';
 
 // Import Global Components
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Footer from './components/Templates/Footer.jsx';
 // import SocialShareBar from './components/socialshare';
 
 // Import Routes

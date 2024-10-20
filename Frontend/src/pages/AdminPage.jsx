@@ -1,8 +1,8 @@
 
-import Hero from '../components/Hero.jsx';
-import BlogPanel from '../components/BlogAdminPanel.jsx';
+import Hero from '../components/Templates/Hero.jsx';
+import BlogPanel from '../components/AdminSection/BlogAdminPanel.jsx';
 import { Flex, Box, Heading,  Stack,  } from '@chakra-ui/react';
-import UserPanel from '../components/UserAdmin.jsx';
+import UserPanel from '../components/AdminSection/UserAdmin.jsx';
 
 
 const Home = () => {

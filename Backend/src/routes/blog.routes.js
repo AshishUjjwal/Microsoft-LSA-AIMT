@@ -21,12 +21,12 @@ router.get('/getblog', verifyJWT, getBlogs);
 router.get('/getblog/:slug',verifyJWT, getfixedBlog);
 
 // @route   POST http://localhost:8000/api/blogs/create-blog
-router.route('/createblog').post(verifyAdmin, createBlog);
+router.route('/createblog').post(verifyJWT, createBlog);
 
 // @route   PUT http://localhost:8000/api/blogs/update-blog/:id
-router.route('/update-blog/:id').put(verifyAdmin, updateBlog);
+router.route('/update-blog/:id').put(verifyJWT, updateBlog);
 
 // @route   DELETE http://localhost:8000/api/blogs/delete-blog/:id
-router.delete('/delete-blog/:id', verifyAdmin, deleteBlog);
+router.delete('/delete-blog/:id', verifyJWT, deleteBlog);
 
 export default router;

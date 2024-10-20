@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import { User } from './user.model.js';
 
 // Define the schema for a blog post
 const blogSchema = new Schema(
@@ -8,15 +9,26 @@ const blogSchema = new Schema(
             required: true,
             trim: true,
         },
-        content: {
+        description: {
             type: String,
             required: true,
         },
+        content: [
+            {
+                Header: {
+                    type: String,
+                    // required: true
+                },
+                Body: {
+                    type: String,
+                    // required: true
+                }
+            }
+        ],
         author: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,  // Reference to a User model
             required: true,
-            // type: mongoose.Schema.Types.ObjectId,  // Reference to a User model
-            // ref: 'User',  // Assumes you have a User model
+            ref: 'User',  // Assumes you have a User model
         },
         authorImage: {
             type: String,
@@ -44,7 +56,7 @@ const blogSchema = new Schema(
     {
         timestamps: true, // Automatically adds createdAt and updatedAt timestamps
         versionKey: false // Removes the _v field from the document
-    } 
+    }
 );
 
 // Pre-save middleware to update the `updatedAt` field

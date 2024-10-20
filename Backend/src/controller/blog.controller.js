@@ -1,22 +1,32 @@
 import { Blog } from '../Models/blog.model.js';
+import { User } from '../Models/user.model.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import slugify from 'slugify';
 
 const createBlog = asyncHandler(async (req, res) => {
     try {
-        const { title, content, category, imageUrl, author, authorImage, tags } = req.body;
+        const { title, description, content, category, tags, imageUrl, authorImage } = req.body;
+
+        // Assuming `req.user` contains the authenticated user info after middleware (e.g., JWT auth)
+        const authorId = req.user._id;  // Get the logged-in user's ID
+
+        // Check if the author (user) exists in the database
+        const author = await User.findById(authorId);
+        if (!author) {
+            return res.status(404).json({ message: 'Author not found' });
+        }
 
         // Create a new blog post instance
         const newBlog = new Blog({
             title,
+            description,
             content,
             category,
-            slug: slugify(title, { lower: true, strict: true }),  // Generate slug from title
-            imageUrl,
-            author,
-            authorImage,
             tags,
-            // author: req.user._id,  // Assuming req.user contains authenticated user
+            imageUrl,
+            authorImage,
+            author: authorId,  // Associate the blog with the logged-in user
+            slug: slugify(title, { lower: true, strict: true }),  // Generate slug from title
         });
 
 
@@ -41,7 +51,7 @@ const createBlog = asyncHandler(async (req, res) => {
 
 const getBlogs = asyncHandler(async (req, res) => {
     try {
-        const blogs = await Blog.find().populate('author', 'name email'); // Populates author with name and email
+        const blogs = await Blog.find().populate('author', 'name email imageUrl'); // Populates author with name and email
         res.status(200).json({
             message: 'Blogs fetched successfully',
             blogs,
@@ -57,7 +67,7 @@ const getBlogs = asyncHandler(async (req, res) => {
 const getfixedBlog = asyncHandler(async (req, res) => {
     try {
         const blogSlug = req.params.slug;
-        const blog = await Blog.findOne({ slug: blogSlug });
+        const blog = await Blog.findOne({ slug: blogSlug }).populate('author', 'name email imageUrl'); // Populates author with name and email;
         if (!blog) {
             return res.status(404).json({ message: 'Blog not found' });
         }
@@ -70,19 +80,17 @@ const getfixedBlog = asyncHandler(async (req, res) => {
 
 const updateBlog = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const { title, content, author, category, imageUrl, tags } = req.body;
+    const { title, description, content, tags, imageUrl } = req.body;
 
     try {
         const updatedBlog = await Blog.findByIdAndUpdate(
             id,
             {
                 title,
+                description,
                 content,
-                author,
-                authorImage,
-                category,
-                imageUrl,
                 tags,
+                imageUrl,
                 updatedAt: Date.now(),
             },
             { new: true }  // Returns the updated blog post

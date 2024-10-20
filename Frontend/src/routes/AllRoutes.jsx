@@ -3,19 +3,18 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 // Import Page Components
-import Home from '../pages/Home';
-import Register from '../pages/Register';
-import Login from '../pages/Login';
+import Home from '../pages/Home.jsx';
+import Register from '../pages/Register.jsx';
+import Login from '../pages/Login.jsx';
 import EventPage from '../pages/EventPage.jsx';
-import NotFound from '../pages/NotFound';
+import NotFound from '../pages/NotFound.jsx';
 import AboutPage from '../pages/AboutPage.jsx';
-import ContactSection from '../components/contact.jsx';
-import BlogSection from '../components/Blog.jsx';
-import BlogDetail from '../components/BlogDetail.jsx';   // Detail page for individual blog
+import BlogSection from '../components/BlogSection/Blog.jsx';
+import BlogDetail from '../components/BlogSection/BlogDetail.jsx';   // Detail page for individual blog
 
 import ProtectedRoute from './ProtectedRoute.jsx'; // A component to protect routes
 import AdminPanel from '../pages/AdminPage.jsx';
-import LoadingPage from '../pages/LoadinPage.jsx';
+import LoadingPage from '../pages/LoadingPage.jsx';
 
 
 const AllRoutes = () => {
@@ -33,7 +32,6 @@ const AllRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/blog" element={<BlogSection />} />
       <Route path="/blog/:slug" element={<BlogDetail />} />
-      <Route path="/contact" element={<ContactSection />} />
       <Route path="/events" element={<EventPage />} />
       <Route path="/loading" element={<LoadingPage />} />
 
