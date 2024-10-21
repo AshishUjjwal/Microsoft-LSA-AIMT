@@ -9,7 +9,6 @@ import { Event } from '../Models/event.model.js';
 const getEvents = asyncHandler(async (req, res) => {
   try {
     const events = await Event.find().populate('createdBy', 'name email');
-    // res.json(events);
     return res
       .status(200)
       .json(new ApiResponse(200, "Events retrieved successfully", {

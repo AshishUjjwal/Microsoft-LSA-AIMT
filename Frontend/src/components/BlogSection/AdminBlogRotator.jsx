@@ -14,7 +14,7 @@ const AdminBlogRotator = ({ blogs, user, handleEditEvent, handleDeleteEvent }) =
     const [currentIndex, setCurrentIndex] = useState(0);
 
     // Filter to only show admin blogs
-    const adminBlogs = blogs.filter(blog => blog.author.name === 'adminuser');
+    const adminBlogs = blogs.filter(blog => blog.author?.name === 'adminuser');
 
     // Rotate through admin blogs every 5 seconds
     useEffect(() => {
@@ -62,7 +62,7 @@ const AdminBlogRotator = ({ blogs, user, handleEditEvent, handleDeleteEvent }) =
                 >
                     <Image
                         borderRadius="lg"
-                        src={blog.imageUrl}
+                        src={blog?.imageUrl}
                         alt={blog.title}
                         objectFit="contain"
                         maxWidth="100%"

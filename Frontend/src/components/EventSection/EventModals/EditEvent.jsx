@@ -49,7 +49,7 @@ const EditEventForm = ({ event, isOpen, onClose, onUpdate }) => {
 
     const handleSubmit = async () => {
         try {
-            // console.log(event._id);
+            console.log(event._id);
             const response = await axios.put(`http://localhost:8000/api/events/update-event/${event._id}`, formData,
                 {
                     withCredentials: true, // Include credentials like cookies, authorization headers, etc.
@@ -59,7 +59,7 @@ const EditEventForm = ({ event, isOpen, onClose, onUpdate }) => {
                     }
                 }
             );
-            // console.log(response);
+            console.log(`Updated Response : `,response);
             if (response.status === 200) {
                 onUpdate(response.data.event); // Assuming the API returns the updated event
                 onClose();
@@ -150,20 +150,6 @@ const EditEventForm = ({ event, isOpen, onClose, onUpdate }) => {
             </ModalContent>
         </Modal>
     );
-};
-
-EditEventForm.propTypes = {
-    event: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        title: PropTypes.string,
-        description: PropTypes.string,
-        date: PropTypes.string,
-        status: PropTypes.string,
-        connectorIcon: PropTypes.string,
-    }).isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
-    onUpdate: PropTypes.func.isRequired,
 };
 
 export default EditEventForm;

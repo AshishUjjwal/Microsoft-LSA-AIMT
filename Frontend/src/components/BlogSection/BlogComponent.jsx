@@ -1,7 +1,11 @@
 import { Button, HStack, Image, Tag, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-const BlogTags = ({ tags }) => {
+const BlogTags = ({ tags  }) => {
+    // Ensure that tags is an array before using map
+    if (!Array.isArray(tags)) {
+        return null;  // Or handle it however you need
+    }
     return (
         <HStack spacing={2} marginTop={5}>
             {tags.map((tag) => (
@@ -15,7 +19,7 @@ const BlogTags = ({ tags }) => {
 
 const TruncatedText = ({ text = '', slug }) => {
     const navigate = useNavigate();
-    const maxLength = 100;
+    const maxLength = 80;
 
     const handleReadMore = () => {
         navigate(`/blog/${slug}`); // Navigate to blog detail page
@@ -40,7 +44,7 @@ const BlogAuthor = ({ authorImage, author, date }) => {
     return (
         <HStack marginTop="2" spacing="2" display="flex" alignItems="center">
             <Image borderRadius="full" boxSize="40px" src={authorImage} alt="Avatar" />
-            <Text fontWeight="medium">{author.name.toUpperCase()}</Text>
+            <Text fontWeight="medium">{author?.name?.toUpperCase()}</Text>
             <Text>—</Text>
             <Text>{new Date(date).toLocaleDateString()}</Text>
         </HStack>

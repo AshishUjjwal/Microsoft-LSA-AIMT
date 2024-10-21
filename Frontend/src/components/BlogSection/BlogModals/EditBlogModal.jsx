@@ -98,7 +98,8 @@ const EditBlogModal = ({ blog, isOpen, onClose, onEdit }) => {
                     'Content-Type': 'application/json',
                 },
             });
-            onEdit(blog._id, response.data);
+            console.log(`Rees: `,response);
+            onEdit(blog._id, response.data.blog);
             onClose();  // Close the modal after editing
         } catch (error) {
             console.error('Error updating blog:', error);

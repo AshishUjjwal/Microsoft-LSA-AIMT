@@ -13,6 +13,7 @@ import {
     WrapItem,
     Container,
     IconButton,
+    Button,
 } from '@chakra-ui/react';
 import LoadingPage from '../../pages/LoadingPage.jsx';
 
@@ -36,6 +37,25 @@ const BlogSection = () => {
 
     const { auth } = useContext(AuthContext); // Access user from AuthContext
     const user = auth?.user;
+
+    const [currentPage, setCurrentPage] = useState(1); // Track the current page
+    const blogsPerPage = 6; // Number of blogs to show per page
+
+    // Sorting the blogs by date
+    const sortedBlogs = blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    // Get the blogs for the current page
+    const indexOfLastBlog = currentPage * blogsPerPage;
+    const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
+    const currentBlogs = blogs.slice(indexOfFirstBlog, indexOfLastBlog);
+
+    // Handle page change
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    // Calculate total pages
+    const totalPages = Math.ceil(blogs.length / blogsPerPage);
 
     // Handlers for creating, editing, and deleting
     const handleCreate = (newBlog) => {
@@ -90,7 +110,7 @@ const BlogSection = () => {
 
     return (
         <Container maxWidth={'1170px'} p="12">
-            {/* <CreateBlogModal onCreate={handleCreate} /> */}
+            <CreateBlogModal onCreate={handleCreate} />
 
             <Heading as="h1">Blogs by MLSA'S</Heading>
             <AdminBlogRotator
@@ -105,80 +125,94 @@ const BlogSection = () => {
             <Heading as="h2" marginTop="5">
                 Latest articles
             </Heading>
-                {/* <CreateBlogModal onCreate={handleCreate} /> */}
+            {/* <CreateBlogModal onCreate={handleCreate} /> */}
             <Divider marginTop="5" />
             <Wrap spacing="30px" marginTop="5" alignItems="start">
-                {blogs.map((blog) => (
-                    <WrapItem key={blog._id} width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}>
-                        <Box w="100%">
-                            <Box borderRadius="lg" overflow="hidden" height="170px">
-                                <Box textDecoration="none" _hover={{ textDecoration: 'none' }}>
-                                    <Image
-                                        transform="scale(1.0)"
-                                        src={
-                                            blog.imageUrl || 'https://plopdo.com/wp-content/uploads/2020/02/GettyImages-887987150-5c770377c9e77c00011c82e6.jpg'
-
-                                        }
-                                        alt={blog.title}
-                                        objectFit="contain"
-                                        width="100%"
-                                        maxHeight={'100%'}
-                                        transition="0.3s ease-in-out"
-                                        _hover={{
-                                            transform: 'scale(1.05)',
-                                        }}
-                                    />
+                {currentBlogs
+                    .map((blog) => (
+                        <WrapItem key={blog._id} width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}>
+                            <Box w="100%">
+                                <Box borderRadius="lg" overflow="hidden" height="170px">
+                                    <Box textDecoration="none" _hover={{ textDecoration: 'none' }}>
+                                        <Image
+                                            transform="scale(1.0)"
+                                            src={
+                                                blog.imageUrl || 'https://plopdo.com/wp-content/uploads/2020/02/GettyImages-887987150-5c770377c9e77c00011c82e6.jpg'
+                                            }
+                                            alt={blog.title}
+                                            objectFit="contain"
+                                            width="100%"
+                                            maxHeight={'100%'}
+                                            transition="0.3s ease-in-out"
+                                            _hover={{
+                                                transform: 'scale(1.05)',
+                                            }}
+                                        />
+                                    </Box>
                                 </Box>
+                                <Heading fontSize="xl" marginTop="2">
+                                    <Text textDecoration="none" _hover={{ textDecoration: 'none' }}>
+                                        {`${blog.title?.substring(0, 40)}... `}
+                                    </Text>
+                                </Heading>
+                                <BlogTags tags={blog.tags} />
+                                <TruncatedText text={blog.description} slug={blog.slug} />
+                                <BlogAuthor
+                                    authorImage={blog.authorImage}
+                                    author={blog.author}
+                                    date={blog.createdAt}
+                                />
+                                {/* Author and Edit/Delete options */}
+                                {(blog.author?._id === user._id || user.role === 'admin') && (
+                                    <HStack spacing={4} marginTop={4}>
+                                        <IconButton
+                                            size="sm"
+                                            colorScheme="yellow"
+                                            aria-label="Edit Blog"
+                                            icon={<EditIcon />}
+                                            onClick={() => handleEditEvent(blog)}
+                                            _hover={{
+                                                cursor: 'pointer',
+                                                color: 'yellow.900',
+                                                transform: 'scale(1.05)',
+                                                transition: 'transform 0.2s ease, color 0.2s ease',
+                                            }}
+                                        />
+                                        <IconButton
+                                            size="sm"
+                                            colorScheme="red"
+                                            aria-label="Delete Blog"
+                                            icon={<DeleteIcon />}
+                                            onClick={() => handleDeleteEvent(blog)}
+                                            _hover={{
+                                                cursor: 'pointer',
+                                                color: 'yellow.900',
+                                                transform: 'scale(1.05)',
+                                                transition: 'transform 0.2s ease, color 0.2s ease',
+                                            }}
+                                        />
+                                    </HStack>
+                                )}
                             </Box>
-                            <BlogTags tags={blog.tags} />
-                            <Heading fontSize="xl" marginTop="2">
-                                <Text textDecoration="none" _hover={{ textDecoration: 'none' }}>
-                                    {`${blog.title.substring(0, 50)}... `}
-                                </Text>
-                            </Heading>
-                            <TruncatedText text={blog.description} slug={blog.slug} />
-                            <BlogAuthor
-                                authorImage={blog.authorImage}
-                                author={blog.author}
-                                date={blog.createdAt}
-                            />
-
-                            {/* Add Edit and Delete Buttons */}
-                            {(blog.author._id === user._id || user.name === 'adminuser') &&
-                                <HStack spacing={4} marginTop={4}>
-                                    <IconButton
-                                        size="sm"
-                                        colorScheme="yellow"
-                                        aria-label="Edit Event"
-                                        icon={<EditIcon />}
-                                        onClick={() => handleEditEvent(blog)} // Fix the immediate invocation
-                                        _hover={{
-                                            cursor: 'pointer',
-                                            color: 'yellow.900',
-                                            transform: 'scale(1.05)',
-                                            transition: 'transform 0.2s ease, color 0.2s ease',
-                                        }}
-                                    />
-
-                                    <IconButton
-                                        size="sm"
-                                        colorScheme="red"
-                                        aria-label="Edit Event"
-                                        icon={<DeleteIcon />}
-                                        onClick={() => handleDeleteEvent(blog)} // Fix the immediate invocation
-                                        _hover={{
-                                            cursor: 'pointer',
-                                            color: 'yellow.900',
-                                            transform: 'scale(1.05)',
-                                            transition: 'transform 0.2s ease, color 0.2s ease',
-                                        }}
-                                    />
-                                </HStack>
-                            }
-                        </Box>
-                    </WrapItem>
-                ))}
+                        </WrapItem>
+                    ))}
             </Wrap>
+
+            {/* Pagination Controls */}
+            <HStack justify="center" marginTop={6}>
+                {Array.from({ length: totalPages }, (_, index) => (
+                    <Button
+                        key={index}
+                        colorScheme={currentPage === index + 1 ? 'blue' : 'gray'}
+                        onClick={() => handlePageChange(index + 1)}
+                        _hover={{
+                            backgroundColor: currentPage === index + 1 ? 'blue.500' : 'gray.500',
+                        }}
+                    >
+                        {index + 1}
+                    </Button>
+                ))}
+            </HStack>
 
             {/* Modal for Edit and Delete */}
             {isEditOpen && (

@@ -86,7 +86,7 @@ export default function Navbar() {
         toast({
           title: `Logout successful!`,
           position: "top",
-          duration: 6000,
+          duration: 2000,
           status: "success",
           isClosable: true,
         });

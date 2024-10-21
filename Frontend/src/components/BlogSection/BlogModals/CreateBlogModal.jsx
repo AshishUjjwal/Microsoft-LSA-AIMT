@@ -66,7 +66,7 @@ const CreateBlogModal = ({ onCreate }) => {
             );
 
             console.log('Blog created successfully:', response.data);
-            onCreate(response.data);  // Trigger callback for any additional logic on blog creation
+            onCreate(response.data.blog);  // Trigger callback for any additional logic on blog creation
 
             onClose(); // Close the modal after successful submission
         } catch (error) {

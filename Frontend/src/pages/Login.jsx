@@ -119,7 +119,7 @@ const Login = () => {
         toast({
           title: `Login successful!`,
           position: "top",
-          duration: 6000,
+          duration: 1000,
           status: "success",
           isClosable: true,
         });
@@ -136,7 +136,7 @@ const Login = () => {
         title: `Login failed!`,
         description: "Please check your email and password",
         position: "top",
-        duration: 6000,
+        duration: 2000,
         status: "error",
         isClosable: true,
       });
