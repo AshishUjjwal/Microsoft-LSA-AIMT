@@ -100,19 +100,26 @@ const BlogSection = () => {
         fetchBlogs();
     }, []);
 
-    if (loading) {
+    if (loading || !user) {
         return <LoadingPage />;
     }
 
-    if (!user) {
-        return <LoadingPage />;
-    }
 
     return (
         <Container maxWidth={'1170px'} p="12">
-            <CreateBlogModal onCreate={handleCreate} />
 
-            <Heading as="h1">Blogs by MLSA'S</Heading>
+            <Heading
+                as="h1"
+                fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
+                // textAlign="center"
+                bgGradient="linear(to-r, teal.300, blue.500, purple.600)"
+                bgClip="text"
+                fontWeight="extrabold"
+                textShadow="2px 2px 8px rgba(0, 0, 0, 0.4)"
+                mt={3}
+            >
+                Blogs By MLSA'S 
+            </Heading>
             <AdminBlogRotator
                 blogs={blogs}
                 user={user}
@@ -121,9 +128,19 @@ const BlogSection = () => {
                 bgGradient="linear(to-r, teal.500, green.500)" // Example gradient
             />
 
-
-            <Heading as="h2" marginTop="5">
-                Latest articles
+            <CreateBlogModal onCreate={handleCreate} />
+            
+            <Heading
+                as="h1"
+                fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
+                // textAlign="center"
+                bgGradient="linear(to-r, teal.300, blue.500, purple.600)"
+                bgClip="text"
+                fontWeight="extrabold"
+                textShadow="2px 2px 8px rgba(0, 0, 0, 0.4)"
+                mt={3}
+            >
+                Latest Articles
             </Heading>
             {/* <CreateBlogModal onCreate={handleCreate} /> */}
             <Divider marginTop="5" />

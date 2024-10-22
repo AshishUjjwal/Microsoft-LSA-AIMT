@@ -1,14 +1,7 @@
 'use client'
 
 import {
-    Heading,
-    Wrap,
-    Container,
-    useDisclosure,
-    useToast,
-    Button,
-    Modal,
-    ModalOverlay,
+    Heading, Wrap, Container, useDisclosure, useToast, Button, Modal, ModalOverlay,
     ModalContent,
     ModalHeader,
     ModalCloseButton,
@@ -22,6 +15,7 @@ import LoadingPage from '../../pages/LoadingPage.jsx';
 import { AddIcon } from '@chakra-ui/icons';
 import EventItem from './EventItem.jsx';
 import CreateEventForm from './EventModals/CreateEvent.jsx';
+import UpcomingEventRotator from './UpcomingEventRotator.jsx';
 
 // // Example Dummy Event Data for testing purposes
 // const events = [
@@ -70,6 +64,7 @@ const EventDashBoard = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [modalType, setModalType] = useState(""); // To track which modal to open
 
+
     useEffect(() => {
         const fetchEvents = async () => {
             try {
@@ -87,19 +82,21 @@ const EventDashBoard = () => {
                 setLoading(false);
             } catch (err) {
                 console.error(err.message || 'Error fetching events');
-                toast({
-                    title: "Error",
-                    description: "Failed to fetch events.",
-                    status: "error",
-                    duration: 1000,
-                    isClosable: true,
-                });
+                // toast({
+                //     title: "Error",
+                //     description: "Failed to fetch events.",
+                //     status: "error",
+                //     duration: 1000,
+                //     isClosable: true,
+                // });
             }
         }
         fetchEvents(); // Invoke the fetch function
     }, [toast]);
 
-
+    if (!user || loading) {
+        return <LoadingPage />;
+    }
 
     // Handler to remove deleted event from state
     const handleDelete = (eventId) => {
@@ -121,37 +118,65 @@ const EventDashBoard = () => {
         onOpen();
     };
 
-    if (!user || loading) {
-        return <LoadingPage />;
-    }
+    
     return (
         <Container maxW={'6xl'} p="12">
-            {user?.role === 'admin' && (
-                <Button
-                    size="sm"
-                    colorScheme="green"
-                    aria-label="Add Event"
-                    leftIcon={<AddIcon />}
-                    _hover={{
-                        cursor: 'pointer',
-                        color: 'black.900',
-                        transform: 'scale(1.05)',
-                        transition: 'transform 0.2s ease, color 0.2s ease',
-                    }}
-                    onClick={openCreateModal}
-                >
-                    Create New Event
-                </Button>
-            )}
+
             <Heading
                 as="h1"
                 fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
-                textAlign="center"
+                // textAlign="center"
                 bgGradient="linear(to-r, teal.300, blue.500, purple.600)"
                 bgClip="text"
                 fontWeight="extrabold"
                 textShadow="2px 2px 8px rgba(0, 0, 0, 0.4)"
-                // mb={6}
+                mb={6}
+            >
+                Latest Upcoming Event's ...!
+            </Heading>
+
+            <UpcomingEventRotator
+                events={events}
+                user={user}
+                // bgGradient="linear(to-r, teal.500, green.500)" // Example gradient
+                // handleEditEvent={handleEditEvent}
+                // handleDeleteEvent={handleDeleteEvent}
+            />
+
+            {user?.role === 'admin' && (
+                <Button
+                size="lg"  // Larger size for better visual hierarchy
+                mt={5}
+                alignSelf="center"  // Align to the center for a balanced look
+                colorScheme="teal"
+                bgGradient="linear(to-r, teal.500, green.400)"
+                aria-label="Add Event"
+                leftIcon={<AddIcon />}
+                _hover={{
+                  bgGradient: "linear(to-r, green.400, teal.500)",
+                  boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
+                  transform: 'scale(1.05)',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                }}
+                _active={{
+                  bgGradient: "linear(to-r, teal.600, green.500)",
+                  transform: 'scale(0.98)',
+                }}
+                onClick={openCreateModal}
+              >
+                Create New Event
+              </Button>
+            )}
+            
+            <Heading
+                as="h1"
+                fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
+                // textAlign="center"
+                bgGradient="linear(to-r, teal.300, blue.500, purple.600)"
+                bgClip="text"
+                fontWeight="extrabold"
+                textShadow="2px 2px 8px rgba(0, 0, 0, 0.4)"
+                mt={6}
             >
                 Explore Exciting Events
             </Heading>

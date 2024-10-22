@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, Textarea, FormLabel, useDisclosure, VStack, HStack, IconButton } from '@chakra-ui/react';
-import { DeleteIcon } from '@chakra-ui/icons';
+import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 
 const CreateBlogModal = ({ onCreate }) => {
@@ -76,7 +76,29 @@ const CreateBlogModal = ({ onCreate }) => {
 
     return (
         <>
-            <Button onClick={onOpen} colorScheme="green">Create A New Blog</Button>
+            {/* <Button onClick={onOpen} colorScheme="green">Create A New Blog</Button> */}
+            <Button
+                size="lg"  // Larger size for better visual hierarchy
+                mt={5}
+                alignSelf="center"  // Align to the center for a balanced look
+                colorScheme="teal"
+                bgGradient="linear(to-r, teal.500, green.400)"
+                aria-label="Add Event"
+                leftIcon={<AddIcon />}
+                _hover={{
+                  bgGradient: "linear(to-r, green.400, teal.500)",
+                  boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
+                  transform: 'scale(1.05)',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                }}
+                _active={{
+                  bgGradient: "linear(to-r, teal.600, green.500)",
+                  transform: 'scale(0.98)',
+                }}
+                onClick={onOpen}
+              >
+                Create A New Blog
+              </Button>
 
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />

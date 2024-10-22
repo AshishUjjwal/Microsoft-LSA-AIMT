@@ -84,19 +84,19 @@ const EventItem = ({ event, isAdmin, onDelete, onEdit }) => {
           src={event.connectorIcon || 'https://via.placeholder.com/150'}
           alt={event.title}
           objectFit="contain"
-          boxSize="250px"
+          boxSize="220px"
           width="100%"
           maxHeight='100%'
           mx="auto"  // Center image horizontally
         />
 
         {/* Middle Section: Content */}
-        <VStack alignItems="flex-start" flex="1" >
+        <VStack alignItems="flex-start" >
           <BlogTags tags={[event.status]} />
           <Heading fontSize="xl">
             {event.title}
           </Heading>
-          <Text as="p" fontSize="md">
+          <Text as="p" fontSize="md" textAlign="justify" >
             {event.description}
           </Text>
         </VStack>
@@ -107,9 +107,7 @@ const EventItem = ({ event, isAdmin, onDelete, onEdit }) => {
           createdAt={event.date}
           connectorIcon={event.connectorIcon}
         />
-        {/* <Text fontSize="sm" color="gray.500">
-              Last updated: {new Date(event.updatedAt).toLocaleDateString()}
-          </Text> */}
+
         <HStack mt={3} justify={'right'}>
           {isAdmin ? (
             <HStack spacing={2}>

@@ -15,10 +15,10 @@ const LoadingPage = () => {
 
   return (
     <MotionFlex
-      height="100vh"
+      height="90vh"
       align="center"
       justify="center"
-      bgGradient="linear(to-r, teal.500, green.500)"
+      bgGradient="linear(to-r, teal.500, dark.500)"
       direction="column"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -32,12 +32,12 @@ const LoadingPage = () => {
         <Image src={logo} alt="Logo" boxSize="100px" />
       </MotionBox>
       <MotionText
-        fontSize="2xl"
+        fontSize="xl"
         color="white"
         fontWeight="bold"
         mt={4}
-        animate={{ scale: [1, 1.2, 1] }}
-        transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+        // animate={{ scale: [1, 1.2, 1] }}
+        // transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
       >
         {!user ? 'Please log in to access this Page.': 'Loading, please wait....'}
         
