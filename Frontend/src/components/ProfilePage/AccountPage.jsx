@@ -4,9 +4,10 @@ import ProfilePage from './ProfilePage.jsx';
 // Example user, events, and blogs data
 const user = {
     name: 'Ashish Ujjwal',
-    email: 'ashish@example.com',
+    email: 'ashishujjwal@gmail.com',
+    location: 'Lucknow, UttarPradesh',
     bio: 'Full-stack developer passionate about coding and community building.',
-    avatarUrl: 'https://bit.ly/ryan-florence'
+    avatarUrl: 'https://100k-faces.glitch.me/random-image'
 };
 
 const events = [

@@ -11,7 +11,7 @@ import NotFound from '../pages/NotFound.jsx';
 import AboutPage from '../pages/AboutPage.jsx';
 import BlogSection from '../components/BlogSection/Blog.jsx';
 import BlogDetail from '../components/BlogSection/BlogDetail.jsx';   // Detail page for individual blog
-import Example from '../components/ProfilePage/Example.jsx'
+import Account from '../components/ProfilePage/AccountPage.jsx'
 
 import ProtectedRoute from './ProtectedRoute.jsx'; // A component to protect routes
 import AdminPanel from '../pages/AdminPage.jsx';
@@ -22,6 +22,10 @@ import { AuthContext } from '../contexts/AuthContext.js';
 const AllRoutes = () => {
   const { auth } = useContext(AuthContext);  // Access user from AuthContext
   const user = auth?.user;
+
+  // Replace underscores with spaces
+  const displayUsername = user?.name.replace(/_/g, ' ');
+
   return (
     <Routes>
       {/* Public Routes */}
@@ -55,7 +59,7 @@ const AllRoutes = () => {
       <Route path="/blog/:slug" element={<BlogDetail />} />
       <Route path="/events" element={<EventPage />} />
       <Route path="/loading" element={<LoadingPage />} />
-      <Route path="/profile" element={<Example />} />
+      <Route path={`/${user?.role}/${displayUsername}`} element={<Account />} />
 
       <Route path="/admin"
         element={

@@ -63,6 +63,8 @@ const NavLink = ({ to, children, onClick }) => (
 export default function Navbar() {
   const { auth, logout } = useContext(AuthContext);
   const user = auth?.user;
+  // Replace underscores with spaces
+  const displayUsername = user?.name.replace(/_/g, ' ');
 
   const toast = useToast();
   const navigate = useNavigate();
@@ -175,7 +177,7 @@ export default function Navbar() {
               <Text my={3}>{auth?.user === null ? 'Guest' : user?.name.toUpperCase()}</Text>
             </Center>
             <MenuDivider />
-            <MenuItem><NavLink to="/profile">Account Settings</NavLink></MenuItem>
+            <MenuItem><NavLink to={`/${user?.role}/${displayUsername}`}>Account Settings</NavLink></MenuItem>
             <MenuDivider />
             <MenuItem>
               <NavLink to="/">Home</NavLink>
@@ -198,9 +200,7 @@ export default function Navbar() {
               </MenuItem>
             }
             <MenuDivider />
-            {/* <MenuItem><NavLink to="/contact">Contact</NavLink></MenuItem> */}
-            {/* <MenuItem><NavLink to="/policy">Privacy Policy</NavLink></MenuItem> */}
-            {/* <MenuItem><NavLink to="/terms">Terms and Conditions</NavLink></MenuItem> */}
+          
             {user ?
               <MenuItem onClick={handleLogout}><NavLink to="/login">Logout</NavLink></MenuItem>
               : ''
@@ -295,7 +295,7 @@ export default function Navbar() {
                   <Text my={5}>{auth?.user === null ? 'Guest' : user?.name.toUpperCase()}</Text>
                 </Center>
                 <MenuDivider />
-                <MenuItem><NavLink to="/profile">Account Settings</NavLink></MenuItem>
+                <MenuItem><NavLink to={`/${user?.role}/${displayUsername}`}>Account Settings</NavLink></MenuItem>
                 {user ? '' :
                   <MenuItem>
                     <NavLink to="/login">Register / Login</NavLink>
