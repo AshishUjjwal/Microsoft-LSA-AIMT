@@ -32,15 +32,20 @@ const LoadingPage = () => {
         <Image src={logo} alt="Logo" boxSize="100px" />
       </MotionBox>
       <MotionText
-        fontSize="xl"
-        color="white"
+        fontSize="2xl"
+        color={user ? "blue.500" : "green.500"}
         fontWeight="bold"
         mt={4}
-        // animate={{ scale: [1, 1.2, 1] }}
-        // transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+        // animate={{ scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }}  // Adds smooth scaling and opacity change
+        transition={{
+          repeat: Infinity,
+          duration: 2,
+          ease: 'easeInOut',
+          repeatType: "reverse", // Smooth back and forth animation
+        }}
+        whileHover={{ scale: 1.0, color: "red.500" }}  // Interactive hover effect
       >
-        {!user ? 'Please log in to access this Page.': 'Loading, please wait....'}
-        
+        {!user ? 'Please log in to access this Page' : 'Loading, please wait...'}
       </MotionText>
     </MotionFlex>
   );

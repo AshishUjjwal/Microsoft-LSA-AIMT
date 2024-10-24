@@ -1,5 +1,5 @@
 // Signup.jsx
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -23,18 +23,21 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import {  AiOutlineMail } from "react-icons/ai";
+import { AiOutlineMail } from "react-icons/ai";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Signup = () => {
   const toast = useToast();
   const navigate = useNavigate();
+
+  const { auth } = useContext(AuthContext);  // Access user from AuthContext
+  const user = auth?.user;
 
   // State variables
   // const [buttonLoading, setButtonLoading] = useState(false);
   const [allRight, setAllRight] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  // const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
   const [showPass, setShowPass] = useState(false);
@@ -63,7 +66,7 @@ const Signup = () => {
   const expensiveDiv = useMemo(() => {
     return <Blur position={'absolute'} top={-10} left={-10} style={{ filter: 'blur(70px)' }} />
   }, []); // It will only re-render if 'someProp' changes
-  
+
 
   // Effect to handle navigation after successful signup
   React.useEffect(() => {
@@ -89,7 +92,7 @@ const Signup = () => {
       });
       return;
     }
-    
+
     if (password !== cpassword) {
       toast({
         title: `Passwords do not match`,
@@ -151,7 +154,7 @@ const Signup = () => {
         status: "error",
         isClosable: true,
       });
-    } 
+    }
   };
 
 
@@ -407,5 +410,6 @@ const Signup = () => {
     </Box>
   );
 };
+
 
 export default Signup;

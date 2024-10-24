@@ -175,7 +175,7 @@ export default function Navbar() {
               <Text my={3}>{auth?.user === null ? 'Guest' : user?.name.toUpperCase()}</Text>
             </Center>
             <MenuDivider />
-            <MenuItem><NavLink to="/account">Account Settings</NavLink></MenuItem>
+            <MenuItem><NavLink to="/profile">Account Settings</NavLink></MenuItem>
             <MenuDivider />
             <MenuItem>
               <NavLink to="/">Home</NavLink>
@@ -192,14 +192,19 @@ export default function Navbar() {
             <MenuItem>
               <NavLink to="/admin">Admin Panel</NavLink>
             </MenuItem>
-            <MenuItem>
-              <NavLink to="/register">Register / Login</NavLink>
-            </MenuItem>
+            {user ? '' :
+              <MenuItem>
+                <NavLink to="/login">Register / Login</NavLink>
+              </MenuItem>
+            }
             <MenuDivider />
             {/* <MenuItem><NavLink to="/contact">Contact</NavLink></MenuItem> */}
             {/* <MenuItem><NavLink to="/policy">Privacy Policy</NavLink></MenuItem> */}
             {/* <MenuItem><NavLink to="/terms">Terms and Conditions</NavLink></MenuItem> */}
-            <MenuItem onClick={handleLogout}><NavLink to="/login">Logout</NavLink></MenuItem>
+            {user ?
+              <MenuItem onClick={handleLogout}><NavLink to="/login">Logout</NavLink></MenuItem>
+              : ''
+            }
 
             {/* Social Media Icons Mobile*/}
             <Center mt={5}>
@@ -290,17 +295,22 @@ export default function Navbar() {
                   <Text my={5}>{auth?.user === null ? 'Guest' : user?.name.toUpperCase()}</Text>
                 </Center>
                 <MenuDivider />
-                <MenuItem><NavLink to="/account">Account Settings</NavLink></MenuItem>
-                <MenuItem>
-                  <NavLink to="/register">Register / Login</NavLink>
-                </MenuItem>
+                <MenuItem><NavLink to="/profile">Account Settings</NavLink></MenuItem>
+                {user ? '' :
+                  <MenuItem>
+                    <NavLink to="/login">Register / Login</NavLink>
+                  </MenuItem>
+                }
                 <MenuDivider />
                 <MenuItem><NavLink to="/contact">Contact</NavLink></MenuItem>
                 <MenuItem><NavLink to="/policy">Privacy Policy</NavLink></MenuItem>
                 <MenuItem><NavLink to="/terms">Terms & Conditions</NavLink></MenuItem>
-                <MenuItem>
-                  <NavLink onClick={handleLogout}>Logout</NavLink>
-                </MenuItem>
+                {user ?
+                  <MenuItem>
+                    <NavLink onClick={handleLogout}>Logout</NavLink>
+                  </MenuItem>
+                  : ''
+                }
                 <Center mt={5}>
                   <HStack spacing={4}>
                     <Link to="https://www.instagram.com" isExternal>

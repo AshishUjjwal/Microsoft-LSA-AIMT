@@ -1,5 +1,6 @@
 // src/contexts/AuthContext.js
 import React, { createContext, useState, useEffect } from 'react';
+import Cookies from 'js-cookie';  // Using js-cookie to handle token in cookies
 
 // Create the AuthContext with default value
 export const AuthContext = createContext(null);
@@ -11,11 +12,21 @@ export const AuthProvider = ({ children }) => {
         token: null, // JWT token
     });
 
-    // Load auth data from localStorage on initial render
+    // Load auth data from localStorage (if any) on initial render
     useEffect(() => {
+        const token = Cookies.get('accessToken');  // Fetch the token from cookies
         const storedAuth = localStorage.getItem('auth');
-        if (storedAuth) {
-            setAuth(JSON.parse(storedAuth));
+
+        if (token && storedAuth) {
+            // Parse stored auth only if token exists
+            const parsedAuth = JSON.parse(storedAuth);
+            setAuth({
+                user: parsedAuth.user,
+                token: token, // Keep token from cookies
+            });
+        } else {
+            // If no token exists, clear any leftover auth from localStorage
+            localStorage.removeItem('auth');
         }
     }, []);
 

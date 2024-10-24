@@ -1,5 +1,5 @@
 // src/routes/AllRoutes.js
-import React from 'react';
+import React, { useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 // Import Page Components
@@ -11,34 +11,56 @@ import NotFound from '../pages/NotFound.jsx';
 import AboutPage from '../pages/AboutPage.jsx';
 import BlogSection from '../components/BlogSection/Blog.jsx';
 import BlogDetail from '../components/BlogSection/BlogDetail.jsx';   // Detail page for individual blog
+import Example from '../components/ProfilePage/Example.jsx'
 
 import ProtectedRoute from './ProtectedRoute.jsx'; // A component to protect routes
 import AdminPanel from '../pages/AdminPage.jsx';
 import LoadingPage from '../pages/LoadingPage.jsx';
+import { AuthContext } from '../contexts/AuthContext.js';
 
 
 const AllRoutes = () => {
+  const { auth } = useContext(AuthContext);  // Access user from AuthContext
+  const user = auth?.user;
   return (
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={
         // <ProtectedRoute>
-          <Home />
+        <Home />
+        // </ProtectedRoute>
+      }
+      />
+      <Route path="/MLSA-AIMT" element={
+        // <ProtectedRoute>
+        <Home />
         // </ProtectedRoute>
       }
       />
       <Route path="/about" element={<AboutPage />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
+      {!user ?
+        <Route path="/register"
+          element={
+
+            <Register />
+
+          } />
+        : <Route path="*" element={<NotFound />} />
+      }
+      {!user ?
+        <Route path="/login" element={<Login />} />
+        : <Route path="*" element={<NotFound />} />
+      }
       <Route path="/blog" element={<BlogSection />} />
       <Route path="/blog/:slug" element={<BlogDetail />} />
       <Route path="/events" element={<EventPage />} />
       <Route path="/loading" element={<LoadingPage />} />
+      <Route path="/profile" element={<Example />} />
 
       <Route path="/admin"
         element={
           // <ProtectedRoute requiredRole={'admin'}>
-            <AdminPanel />
+          <AdminPanel />
           // </ProtectedRoute>
         }
       />

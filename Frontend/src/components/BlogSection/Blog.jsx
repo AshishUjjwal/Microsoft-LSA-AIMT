@@ -14,6 +14,7 @@ import {
     Container,
     IconButton,
     Button,
+    useBreakpointValue,
 } from '@chakra-ui/react';
 import LoadingPage from '../../pages/LoadingPage.jsx';
 
@@ -23,7 +24,7 @@ import EditBlogModal from './BlogModals/EditBlogModal.jsx';
 import DeleteBlogModal from './BlogModals/DeleteBlogModal.jsx';
 
 import { AuthContext } from '../../contexts/AuthContext.js';
-import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { ChevronLeftIcon, ChevronRightIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import AdminBlogRotator from './AdminBlogRotator.jsx';
 
 import { BlogAuthor, BlogTags, TruncatedText } from './BlogComponent.jsx';
@@ -39,10 +40,14 @@ const BlogSection = () => {
     const user = auth?.user;
 
     const [currentPage, setCurrentPage] = useState(1); // Track the current page
-    const blogsPerPage = 6; // Number of blogs to show per page
+    const blogsPerPage = useBreakpointValue({
+        base: 3, // For mobile (base) view
+        md: 4,   // For tablet (md) and up
+        lg: 6,   // For desktop/laptop (lg) and up
+    });
 
     // Sorting the blogs by date
-    const sortedBlogs = blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     // Get the blogs for the current page
     const indexOfLastBlog = currentPage * blogsPerPage;
@@ -118,7 +123,7 @@ const BlogSection = () => {
                 textShadow="2px 2px 8px rgba(0, 0, 0, 0.4)"
                 mt={3}
             >
-                Blogs By MLSA'S 
+                Blogs By MLSA'S
             </Heading>
             <AdminBlogRotator
                 blogs={blogs}
@@ -129,7 +134,7 @@ const BlogSection = () => {
             />
 
             <CreateBlogModal onCreate={handleCreate} />
-            
+
             <Heading
                 as="h1"
                 fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
@@ -216,19 +221,66 @@ const BlogSection = () => {
             </Wrap>
 
             {/* Pagination Controls */}
-            <HStack justify="center" marginTop={6}>
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <Button
-                        key={index}
-                        colorScheme={currentPage === index + 1 ? 'blue' : 'gray'}
-                        onClick={() => handlePageChange(index + 1)}
-                        _hover={{
-                            backgroundColor: currentPage === index + 1 ? 'blue.500' : 'gray.500',
-                        }}
-                    >
-                        {index + 1}
-                    </Button>
-                ))}
+            <HStack justify="center" marginTop={6} spacing={2}>
+                {/* Previous Button */}
+                <Button
+                    leftIcon={<ChevronLeftIcon />}
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    isDisabled={currentPage === 1}
+                    colorScheme="blue"
+                    _hover={{ bg: 'blue.400' }}
+                    variant="outline"
+                >
+                    
+                </Button>
+
+                {/* Page Numbers */}
+                {Array.from({ length: totalPages }, (_, index) => {
+                    const pageNumber = index + 1;
+
+                    // Show first two, last two, current page, and pages close to the current page
+                    if (
+                        pageNumber === 1 ||
+                        pageNumber === totalPages ||
+                        Math.abs(currentPage - pageNumber) < 2
+                    ) {
+                        return (
+                            <Button
+                                key={pageNumber}
+                                onClick={() => handlePageChange(pageNumber)}
+                                colorScheme={currentPage === pageNumber ? 'blue' : 'gray'}
+                                _hover={{
+                                    backgroundColor: currentPage === pageNumber ? 'blue.500' : 'gray.500',
+                                }}
+                                variant={currentPage === pageNumber ? 'solid' : 'outline'}
+                            >
+                                {pageNumber}
+                            </Button>
+                        );
+                    }
+
+                    // Show ellipsis for skipped pages
+                    if (
+                        (pageNumber === 2 && currentPage > 4) ||
+                        (pageNumber === totalPages - 1 && currentPage < totalPages - 3)
+                    ) {
+                        return <Text key={pageNumber}>...</Text>;
+                    }
+
+                    return null;
+                })}
+
+                {/* Next Button */}
+                <Button
+                    rightIcon={<ChevronRightIcon />}
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    isDisabled={currentPage === totalPages}
+                    colorScheme="blue"
+                    _hover={{ bg: 'blue.400' }}
+                    variant="outline"
+                >
+                    
+                </Button>
             </HStack>
 
             {/* Modal for Edit and Delete */}

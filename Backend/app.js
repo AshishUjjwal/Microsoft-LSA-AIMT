@@ -25,6 +25,7 @@ app.use(express.json());
 import userRouter from './src/routes/user.routes.js'
 import eventRouter from './src/routes/event.routes.js'
 import blogRouter from './src/routes/blog.routes.js'
+import registrationRouter from './src/routes/registration.routes.js'
 
 // Routes
 
@@ -38,5 +39,8 @@ app.use('/api/events', eventRouter);
 
 app.use('/api/blogs', blogRouter);
 // http://localhost:8000/api/blogs/*
+
+app.use('/api/registrations', registrationRouter);
+// http://localhost:8000/api/registration/*
 
 export {app};
