@@ -17,6 +17,20 @@ const userSchema = new Schema(
             lowercase: true,
             trim: true,
         },
+        location: {
+            type: String,
+            trim: true
+        },
+        description: {
+            type: String,
+        },
+        social: {
+            type: String,
+        },
+        avatarUrl: {
+            type: String,
+            default: 'https://100k-faces.glitch.me/random-image',
+        },
         password: {
             type: String,
             required: [true, 'password is required']

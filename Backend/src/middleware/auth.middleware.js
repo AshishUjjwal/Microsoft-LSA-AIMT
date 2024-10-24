@@ -46,9 +46,9 @@ export const verifyJWT = asyncHandler(async(req, _, next) =>{
         // Custom claims (user role, permissions, etc.)
     
         const user = await User.findById(decodedToken?._id).select("-password -refreshToken")
-    
+        console.log(user.name);
         if(!user) {
-            throw new ApiError("User not found", 404);
+            throw new ApiError("User not found!!", 404);
         }
     
         // it helps to fetch the user data when user is logged in. 

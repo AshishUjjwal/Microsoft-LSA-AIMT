@@ -130,6 +130,55 @@ const logoutUser = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, "Logged Out Successfully"));
 });
 
+// Update User Controller
+const updateUser = asyncHandler(async (req, res) => {
+    const user = req.user; 
+    const { name, avatarUrl, location, description, social, password } = req.body;
+
+    try {
+        // Find the user by ID
+        // const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Update fields if they are provided
+        if (name) user.name = name;
+        if (avatarUrl) user.avatarUrl = avatarUrl;
+        if (location) user.location = location;
+        if (description) user.description = description;
+        if (social) user.social = social;
+
+        // If password is provided, hash and update it
+        if (password) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            user.password = hashedPassword;
+        }
+
+        // Save the updated user
+        await user.save();
+
+        // Respond with updated user data (excluding password)
+        const updatedUser = {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            avatarUrl: user.avatarUrl,
+            location: user.location,
+            description: user.description,
+            social: user.social,
+            role: user.role,
+        };
+
+        res.status(200).json({ message: 'User updated successfully', user: updatedUser });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
+
 const refreshAccessToken = asyncHandler(async (req, res) => {
     // Implementing refresh token logic here...
     // 1. Validate the refresh token in the request cookies or body.
@@ -208,6 +257,7 @@ export {
     registerUser,
     loginUser,
     logoutUser,
+    updateUser,
     refreshAccessToken,
     getCurrentUser,
     generateAccessAndRefreshToken,

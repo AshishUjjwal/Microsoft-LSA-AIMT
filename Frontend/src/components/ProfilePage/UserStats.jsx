@@ -21,7 +21,7 @@ const StatBox = ({ icon, label, value }) => {
 };
 
 const UserStats = ({ stats }) => {
-    const gridBgColor = useColorModeValue('gray.500', 'gray.300');
+    const gridBgColor = useColorModeValue('gray.500', 'gray.500');
 
     return (
         <SimpleGrid columns={[1, 2]} spacing={6} mt={6} bg={gridBgColor} p={4} borderRadius="lg">

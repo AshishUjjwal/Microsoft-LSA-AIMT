@@ -15,7 +15,7 @@ import UserStats from './UserStats';
 import EventsList from './EventsList';
 import BlogsList from './BlogsList';
 
-const ProfilePage = ({ user, events, blogs }) => {
+const ProfilePage = ({ user, onUpdate, events, blogs }) => {
     const userStats = {
         eventsRegistered: events.length,
         blogsCreated: blogs.length
@@ -30,7 +30,7 @@ const ProfilePage = ({ user, events, blogs }) => {
     return (
         <Container maxW="5xl" py={8} bg={bgColor} borderRadius="md" boxShadow="lg">
             {/* Profile Header */}
-            <ProfileHeader user={user} />
+            <ProfileHeader user={user} onUpdate={onUpdate} />
 
             {/* User Statistics */}
             <UserStats stats={userStats} />

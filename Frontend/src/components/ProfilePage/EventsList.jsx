@@ -27,9 +27,10 @@ const EventCard = ({ event }) => {
 
 const EventsList = ({ events }) => {
     const headingColor = useColorModeValue('gray.800', 'white');
+    const sectionBgColor = useColorModeValue('gray.50', 'gray.800');
 
     return (
-        <Box mt={8}>
+        <Box bg={sectionBgColor} mt={8} p={4}>
             <Heading as="h2" size="lg" mb={4} color={headingColor}>
                 Events Registered
             </Heading>
