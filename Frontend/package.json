@@ -2,7 +2,7 @@
   "name": "mlsa-aimt",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://AshishUjjwal.github.io/MLSA-AIMT",
+  "homepage": "https://AshishUjjwal.github.io",
   "dependencies": {
     "@chakra-ui/icons": "^2.0.8",
     "@chakra-ui/react": "^2.8.2",

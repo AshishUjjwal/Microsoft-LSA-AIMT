@@ -14,20 +14,20 @@ const AdminBlogRotator = ({ blogs, user, handleEditEvent, handleDeleteEvent }) =
     const [currentIndex, setCurrentIndex] = useState(0);
 
     // Filter to only show admin blogs
-    const adminBlogs = blogs.filter(blog => blog.author?.name === 'adminuser');
+    const adminBlogs = blogs?.filter(blog => blog.author?.role === 'admin');
 
     // Rotate through admin blogs every 5 seconds
     useEffect(() => {
         const interval = setInterval(() => {
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % adminBlogs.length);
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % adminBlogs?.length);
         }, 5000); // 5 seconds
 
         // Cleanup the interval on component unmount
         return () => clearInterval(interval);
-    }, [adminBlogs.length]);
+    }, [adminBlogs?.length]);
 
     // If there are no admin blogs, show nothing
-    if (adminBlogs.length === 0) {
+    if (adminBlogs?.length === 0) {
         return <Text>No admin blogs available.</Text>;
     }
 

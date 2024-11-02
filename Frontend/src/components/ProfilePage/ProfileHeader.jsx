@@ -6,10 +6,17 @@ import axios from 'axios';
 const ProfileHeader = ({ user, onUpdate }) => {
     // Define colors for light and dark modes using useColorModeValue
     const bgColor = useColorModeValue('white', 'gray.700');
-    const textColor = useColorModeValue('gray.600', 'gray.300');
+    const textColor = useColorModeValue('gray.100', 'gray.200');
     const boxShadowColor = useColorModeValue('lg', 'dark-lg');
     const buttonBg = useColorModeValue('blue.400', 'gray.500');
     const buttonHoverBg = useColorModeValue('blue.500', 'green.700');
+
+    // Assume you have a state for the user data
+    const [prevuser, setUser] = useState(() => {
+        // Initialize from local storage
+        const savedUser = localStorage.getItem('auth');
+        return savedUser ? JSON.parse(savedUser).prevuser : null;
+    });
 
     // Modal control
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -51,7 +58,33 @@ const ProfileHeader = ({ user, onUpdate }) => {
 
             // If successful, trigger the onUpdate callback to refresh the profile data
             if (response.status === 200) {
-                onUpdate(response.data.user); // Pass the updated user data back
+                const updatedProfile = response.data.user; // Extract updated user data
+
+                // Get the existing user data from local storage
+                const existingUser = JSON.parse(localStorage.getItem('auth'));
+
+
+                if (existingUser) {
+                    // Merge the existing user data with the updated profile data
+                    const mergedUser = { ...existingUser.user, ...updatedProfile };
+
+                    // Create a new auth object with the updated user but keep the existing token and other properties
+                    const updatedAuth = {
+                        ...existingUser,    // keep the token and other auth properties
+                        user: mergedUser   // update only the user part
+                    };
+
+                    // Save the merged user data back to local storage
+                    localStorage.setItem('auth', JSON.stringify(updatedAuth));
+
+
+                    onUpdate(updatedProfile); // Pass the updated user data back
+                    // Also update the React state to trigger a re-render
+                    setUser(updatedAuth);
+                }
+                else {
+                    console.log('No auth data found in local storage.');
+                }
                 toast({
                     title: 'Profile updated.',
                     description: "Your profile has been successfully updated.",
@@ -91,6 +124,10 @@ const ProfileHeader = ({ user, onUpdate }) => {
                 mx="auto"
                 transition="all 0.3s ease"
                 _hover={{ boxShadow: 'xl' }}
+                backgroundImage="url('https://img.freepik.com/premium-photo/black-laptop-coffee-cup-plants-dark-tabletop_1271306-2097.jpg?semt=ais_hybrid')"  // Replace with your image URL
+                backgroundSize="cover"  // Adjust the image size to cover the entire flex area
+                backgroundPosition="center"  // Center the image
+                backgroundRepeat="no-repeat"  // Avoid repeating the image
             >
                 {/* Left Side - Profile Image */}
                 <Flex justify="center" w={{ base: '100%', md: '40%' }} mb={{ base: 6, md: 0 }}>
@@ -99,7 +136,7 @@ const ProfileHeader = ({ user, onUpdate }) => {
 
                 {/* Right Side - User Details */}
                 <Box w={{ base: '100%', md: '60%' }}>
-                    <Heading as="h1" fontSize="2xl" fontWeight="bold" mb={2}>
+                    <Heading as="h1" fontSize="2xl" color={useColorModeValue('gray.100', 'gray.200')} fontWeight="bold" mb={2}>
                         {user.name}
                     </Heading>
                     <Text fontSize="lg" color={textColor} display="flex" alignItems="center" mb={1}>
@@ -108,14 +145,17 @@ const ProfileHeader = ({ user, onUpdate }) => {
                     <Text fontSize="lg" color={textColor} display="flex" alignItems="center" mb={1}>
                         <Icon as={MdLocationOn} mr={2} /> {user.location}
                     </Text>
-                    <Text fontSize="md" color={useColorModeValue('gray.700', 'gray.300')} mt={2} mb={2}>
+                    <Text fontSize="md" color={useColorModeValue('gray.100', 'gray.200')} mt={2} mb={2}>
                         {user.description}
                     </Text>
-                    <Link href={user.social} isExternal color={useColorModeValue('blue.500', 'blue.300')}>
-                        <Text fontSize="md" mt={2} mb={6}>
-                            {user.social}
-                        </Text>
-                    </Link>
+                    <Box my={2}>
+                        <Flex align="center">
+                            <Text mr={2}>Let's Connect :</Text>
+                            <Link href={user.social} isExternal color={useColorModeValue('blue.500', 'blue.300')}>
+                                <Text fontSize="md">{user.social}</Text>
+                            </Link>
+                        </Flex>
+                    </Box>
 
                     {/* Action Buttons */}
                     <Stack direction="row" spacing={4}>

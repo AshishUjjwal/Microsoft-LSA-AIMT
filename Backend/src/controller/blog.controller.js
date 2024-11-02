@@ -51,7 +51,7 @@ const createBlog = asyncHandler(async (req, res) => {
 
 const getBlogs = asyncHandler(async (req, res) => {
     try {
-        const blogs = await Blog.find().populate('author', 'name email imageUrl'); // Populates author with name and email
+        const blogs = await Blog.find().populate('author', 'name email imageUrl role'); // Populates author with name and email
         res.status(200).json({
             message: 'Blogs fetched successfully',
             blogs,
@@ -75,6 +75,22 @@ const getfixedBlog = asyncHandler(async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Controller to get blogs for a logged-in user
+const getBlogsForUser = asyncHandler(async (req, res) => {
+    try {
+        // Get the user ID from the authenticated request
+        const userId = req.user._id;
+
+        // Fetch blogs where the author matches the logged-in user
+        const blogs = await Blog.find({ author: userId }).sort({ date: -1 });
+
+        res.status(200).json({ success: true, data: blogs });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Server error' });
     }
 });
 
@@ -141,6 +157,7 @@ export {
     createBlog,
     getBlogs,
     getfixedBlog,
+    getBlogsForUser,
     updateBlog,
     deleteBlog,
 };

@@ -9,6 +9,7 @@ import {
     createBlog,
     getBlogs,
     getfixedBlog,
+    getBlogsForUser,
     updateBlog,
     deleteBlog,
 } from '../controller/blog.controller.js';
@@ -23,8 +24,14 @@ router.get('/getblog/:slug',verifyJWT, getfixedBlog);
 // @route   POST http://localhost:8000/api/blogs/create-blog
 router.route('/createblog').post(verifyJWT, createBlog);
 
+// @route   POST http://localhost:8000/api/blogs/create-blog
+router.route('/createblog').post(verifyJWT, createBlog);
+
 // @route   PUT http://localhost:8000/api/blogs/update-blog/:id
 router.route('/update-blog/:id').put(verifyJWT, updateBlog);
+
+// @route   PUT http://localhost:8000/api/blogs/getuserblog
+router.route('/getuserblog').get(verifyJWT, getBlogsForUser);
 
 // @route   DELETE http://localhost:8000/api/blogs/delete-blog/:id
 router.delete('/delete-blog/:id', verifyJWT, deleteBlog);

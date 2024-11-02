@@ -17,8 +17,8 @@ import BlogsList from './BlogsList';
 
 const ProfilePage = ({ user, onUpdate, events, blogs }) => {
     const userStats = {
-        eventsRegistered: events.length,
-        blogsCreated: blogs.length
+        eventsRegistered: events.events?.length,
+        blogsCreated: blogs?.length
     };
 
     // Color mode values for light and dark modes

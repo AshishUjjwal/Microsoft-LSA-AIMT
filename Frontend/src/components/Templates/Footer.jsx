@@ -251,7 +251,7 @@ const Footer = () => {
       bottom="0"
       width="100%"
     >
-      <Container maxW="6xl">
+      <Container maxW="5xl">
         <Stack spacing={10}>
           {/* Top Section: Branding, Links, Newsletter */}
           <Stack

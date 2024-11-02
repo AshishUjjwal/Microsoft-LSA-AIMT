@@ -6,19 +6,19 @@ const EventCard = ({ event }) => {
     const textColor = useColorModeValue('gray.700', 'gray.300');
     const dateColor = useColorModeValue('gray.500', 'gray.400');
     const boxShadowColor = useColorModeValue('md', 'dark-lg');
-
+    
     return (
-        <Flex direction="column" p={4} bg={bgColor} borderRadius="md" boxShadow={boxShadowColor} transition="all 0.3s ease">
+        <Flex direction="column"  p={4} bg={bgColor} borderRadius="md" boxShadow={boxShadowColor} transition="all 0.3s ease">
             <Heading as="h3" size="md" mb={2} color={textColor}>
                 {event.title}
             </Heading>
-            <Text fontSize="sm" color={dateColor} mb={2}>
+            <Text fontSize="sm" color={dateColor}  mb={2}>
                 {event.date}
             </Text>
-            <Text fontSize="sm" color={textColor} mb={4}>
+            <Text fontSize="sm" color={textColor} textAlign="Justify" mb={4}>
                 {event.description}
             </Text>
-            <Button colorScheme="teal" size="sm">
+            <Button mt="auto" colorScheme="teal"  size="sm">
                 View Event
             </Button>
         </Flex>
@@ -35,7 +35,7 @@ const EventsList = ({ events }) => {
                 Events Registered
             </Heading>
             <SimpleGrid columns={[1, 2, 3]} spacing={6}>
-                {events.map((event) => (
+                {events.events && events.events.map((event) => (
                     <EventCard key={event._id} event={event} />
                 ))}
             </SimpleGrid>
