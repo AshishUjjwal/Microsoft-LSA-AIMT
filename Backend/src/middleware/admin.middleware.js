@@ -9,7 +9,7 @@ export const  verifyAdmin = asyncHandler(async (req, res, next) => {
     // Assuming you have an authentication middleware that attaches user info to req.user
     const token = req.cookies?.accessToken || req.header('Authorization')?.split(' ')[1];
 
-    console.log(token);
+    // console.log(token);
     
     if (!token) {
       throw new Error('Not authorized... token is required');

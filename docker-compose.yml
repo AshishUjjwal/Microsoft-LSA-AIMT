@@ -1,0 +1,44 @@
+services:
+  backend:
+    # image: assimujjwal/be_resource_allocation:latest
+    build: 
+      context: ./Backend
+    volumes:
+      - /app/node_modules
+      - ./Backend:/app
+    ports:
+      - "8000:8000"  
+    networks:
+      - mern_network
+    environment:
+      MONGODB_URI: "mongodb+srv://ashishfrommohania:ZHUhggMYkrmCQZ9Z@mlsa-aimt.l4fdy.mongodb.net/?retryWrites=true&w=majority&appName=mlsa-aimt"
+      DB_NAME: "Backend"
+      PORT: 8000
+      CORS_ORIGIN: "http://localhost:3000"
+      ACCESS_TOKEN: "accesstokencode"
+      ACCESS_TOKEN_EXPIRY: "1d"
+      REFRESH_TOKEN: "refreshtokencode"
+      REFRESH_TOKEN_EXPIRY: "10d"
+      ADMIN_EMAIL: "admin@example.com"
+      ADMIN_PASSWORD: "Admin@12345"
+      ADMIN_USERNAME: "adminUser"
+
+
+  frontend:
+    stdin_open: true
+    # image: assimujjwal/fe_resource_allocation:latest
+    build: 
+      context: ./Frontend
+    volumes:
+      - /app/node_modules
+      - ./Frontend:/app
+    ports:
+      - "3000:3000"  
+    networks:
+      - mern_network
+    environment:
+      REACT_APP_BASE_URL: http://localhost:8000
+
+networks:
+  mern_network:
+    driver: bridge 

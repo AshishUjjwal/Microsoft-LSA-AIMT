@@ -68,7 +68,6 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
-    console.log(email);
     const user = await User.findOne({ email: email })
     if (!user) {
         throw new ApiError('User not found', 404);
@@ -204,16 +203,16 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     //     message: "ok"
     // })
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
-    console.log(incomingRefreshToken);
+    // console.log(incomingRefreshToken);
     if (!incomingRefreshToken) {
         throw new ApiError('Refresh token is required', 401);
     }
 
     try {
         const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN);
-        console.log(decodedToken);
+        // console.log(decodedToken);
         const user = await User.findById(decodedToken?._id)
-        console.log(user);
+        // console.log(user);
         if (!user) {
             throw new ApiError('Invalid refresh token', 401);
         }
@@ -237,7 +236,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
             .cookie("refreshToken", refreshToken, options)
             .json(new ApiResponse(200, "Refreshed Access Token", {
                 user: user,
-                refreshToken: refreshToken
+                accessToken: accessToken
             }));
 
     } catch (error) {

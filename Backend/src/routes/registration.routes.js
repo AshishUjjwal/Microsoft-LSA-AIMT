@@ -20,7 +20,7 @@ router.route('/register/:eventId').post(verifyJWT, registerForEvent);
 router.route('/unregister/:eventId').delete(verifyJWT, unregisterForEvent);
 
 // Check registration status
-// GET http://localhost:8000/api/registrations/:eventId/registration-status
+// GET http://localhost:8000/api/registrations/registration-status/:eventId
 router.route('/registration-status/:eventId').get( verifyJWT, getRegistrationStatus);
 
 // Get all events registered by the logged-in user

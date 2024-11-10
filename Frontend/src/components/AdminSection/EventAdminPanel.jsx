@@ -172,7 +172,7 @@ const CreateEventForm = () => {
         try {
 
             // Make a POST request to the backend API
-            const response = await fetch('http://localhost:8000/api/events/create-event', {
+            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/events/create-event`, {
                 method: 'POST',
                 body: JSON.stringify(formData), // Convert the data to JSON
                 headers: { 

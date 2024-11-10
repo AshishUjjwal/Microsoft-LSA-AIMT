@@ -19,6 +19,7 @@ import { AddIcon, ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import EventItem from './EventItem.jsx';
 import CreateEventForm from './EventModals/CreateEvent.jsx';
 import UpcomingEventRotator from './UpcomingEventRotator.jsx';
+import apiClient from '../../api/axiosInstance.js';
 
 const EventDashBoard = () => {
     const [events, setEvents] = useState([]);  // To store fetched events
@@ -42,7 +43,8 @@ const EventDashBoard = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/events/getevent', {
+                // const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/events/getevent`, {
+                const response = await apiClient.get(`/api/events/getevent`, {
                     withCredentials: true,
                     headers: {
                         'Content-Type': 'application/json',
@@ -69,6 +71,10 @@ const EventDashBoard = () => {
     // Handler to update the event in state after editing
     const handleUpdate = (updatedEvent) => {
         setEvents(prevEvents => prevEvents.map(event => event._id === updatedEvent._id ? updatedEvent : event));
+    };
+
+    const handleRegister = (newEvent) => {
+        setEvents(prevEvents => [...prevEvents, newEvent]);
     };
 
     // Handler to create the event in state after adding a new event
@@ -154,7 +160,7 @@ const EventDashBoard = () => {
                         isAdmin={user?.role === 'admin'}
                         onDelete={handleDelete}
                         onEdit={handleUpdate}
-                        // onRegister={handleRegister}
+                        onRegister={handleRegister}
                     />
                 ))}
             </Wrap>

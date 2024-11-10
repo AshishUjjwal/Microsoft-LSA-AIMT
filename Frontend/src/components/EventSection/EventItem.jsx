@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   VStack,
   HStack,
@@ -11,10 +11,13 @@ import {
   Box,
   Heading,
   Tag,
+  useToast,
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon, AddIcon } from '@chakra-ui/icons';
 import EditEventForm from './EventModals/EditEvent.jsx'; // Import the EditEventForm component
 import DeleteEvent from './EventModals/DeleteEvent.jsx'; // Import the DeleteEvent component
+import axios from "axios";
+import apiClient from "../../api/axiosInstance.js";
 
 const BlogTags = (props) => {
   const { marginTop = 0, tags } = props;
@@ -50,8 +53,10 @@ const BlogAuthor = (props) => {
 // EventItem Component
 const EventItem = ({ event, isAdmin, onDelete, onEdit }) => {
 
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalType, setModalType] = useState(""); // To track which modal to open
+  const [isRegistered, setIsRegistered] = useState(false);
 
   // Handlers for different modals
   const handleEditEvent = () => {
@@ -63,6 +68,92 @@ const EventItem = ({ event, isAdmin, onDelete, onEdit }) => {
     setModalType("delete");
     onOpen();
   };
+
+  // Check if the user is registered for this event on component mount
+  useEffect(() => {
+    const checkRegistration = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/registrations/registration-status/${event._id}`,
+          {
+            withCredentials: true, // Include credentials
+            headers: {
+              // Authorization: `Bearer ${token}`, // Attach the token here
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        setIsRegistered(response.data.isRegistered);
+      } catch (error) {
+        console.error("Failed to check registration status:", error);
+      }
+    };
+    checkRegistration();
+  }, [event._id]);
+
+  // Function to handle event registration with an API call
+  const handleRegisterEvent = async () => {
+    try {
+      // const token = localStorage.getItem('token'); // Retrieve token from local storage or context
+
+      const response = await apiClient.post(
+        `${process.env.REACT_APP_BASE_URL}/api/registrations/register/${event._id}`,
+        {}, // Empty body if no data is sent
+        {
+          withCredentials: true, // Include credentials
+          headers: {
+            // Authorization: `Bearer ${token}`, // Attach the token here
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      toast({
+        title: `Registration Successfull For this Event`,
+        position: "top",
+        duration: 2000,
+        status: "success",
+        isClosable: true,
+      });
+      setIsRegistered(true);
+    } catch (error) {
+      toast({
+        title: `Already Registered For this Event!`,
+        position: "top",
+        duration: 2000,
+        status: "error",
+        isClosable: true,
+      });
+    }
+  };
+
+  // Function to handle event Unregistration with an API call
+  const handleUnregisterEvent = async () => {
+    try {
+      // const token = localStorage.getItem("token");
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}/api/registrations/unregister/${event._id}`,
+        {
+          withCredentials: true,
+          headers: {
+            // Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      toast({
+        title: `Unregistered For this Event!`,
+        position: "top",
+        duration: 2000,
+        status: "error",
+        isClosable: true,
+      });
+      setIsRegistered(false); // Update the state to reflect the unregistration status
+    } catch (error) {
+      console.error("Unregistration failed:", error);
+      alert("Failed to unregister from the event. Please try again.");
+    }
+  };
+
 
   return (
     <WrapItem key={event._id} width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}>
@@ -141,20 +232,39 @@ const EventItem = ({ event, isAdmin, onDelete, onEdit }) => {
           ) :
             (
               event.status === "Upcoming" && (
-                <Button
-                  size="sm"
-                  colorScheme="blue"
-                  aria-label="Register Event"
-                  leftIcon={<AddIcon />}
-                  _hover={{
-                    cursor: 'pointer',
-                    color: 'black.900',
-                    transform: 'scale(1.05)',
-                    transition: 'transform 0.2s ease, color 0.2s ease',
-                  }}
-                >
-                  Register
-                </Button>
+                isRegistered ? (
+                  <Button
+                    size="sm"
+                    colorScheme="red"
+                    aria-label="Unregister Event"
+                    onClick={handleUnregisterEvent}
+                    // leftIcon={<SubtractIcon />}
+                    _hover={{
+                      cursor: "pointer",
+                      color: "red.900",
+                      transform: "scale(1.05)",
+                      transition: "transform 0.2s ease, color 0.2s ease",
+                    }}
+                  >
+                    Unregister
+                  </Button>
+                ) : (
+                  <Button
+                    size="sm"
+                    colorScheme="blue"
+                    aria-label="Register Event"
+                    onClick={handleRegisterEvent}
+                    leftIcon={<AddIcon />}
+                    _hover={{
+                      cursor: "pointer",
+                      color: "black.900",
+                      transform: "scale(1.05)",
+                      transition: "transform 0.2s ease, color 0.2s ease",
+                    }}
+                  >
+                    Register
+                  </Button>
+                )
               )
             )
           }

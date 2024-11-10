@@ -22,6 +22,7 @@ import {
 } from "@chakra-ui/react";
 
 import { AuthContext } from '../contexts/AuthContext';
+import apiClient from "../api/axiosInstance";
 
 const Login = () => {
   const toast = useToast();
@@ -97,21 +98,23 @@ const Login = () => {
       // TODO: Replace with your actual API call
       // Example using fetch:
 
-      const response = await fetch("http://localhost:8000/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-        credentials: 'include' // Important to send and receive cookies
-        // credentials: 'include': This tells the browser to include cookies in the request and also save cookies sent from the backend. By default, cookies are not included in cross-origin requests, so this is necessary for cross-origin API calls.
-      });
-
-      const result = await response.json();
-      console.log('result', result);
+      // const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/users/login`, {
+      const response = await apiClient.post('/api/users/login',
+        { email, password }, // Request body (data) for POST
+        {
+          withCredentials: true, // Include credentials like cookies
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
 
-      if (response.ok) {
+      const result = await response.data;
+      // console.log('result', result);
+
+
+      if (result.statusCode === 200) {
         // Assuming the backend sends user data in the response
         login(result.data.user, result.token); // Update auth context
         // console.log(`userdata`, result.data.user.name);
@@ -154,7 +157,7 @@ const Login = () => {
       textColor={useColorModeValue('black.800', 'black.900')}
       maxWidth="1100px"
       mx="auto"
-      mt={{base: '19', md: '0'}}
+      mt={{ base: '19', md: '0' }}
     >
       <Flex p={5} flex={1} align={'center'} justify={'center'} >
         <Stack spacing={4} w={'full'} maxW={'md'}>

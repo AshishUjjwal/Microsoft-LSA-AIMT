@@ -15,7 +15,7 @@ const App = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/api/registrations/registered-events`, {
+                const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/registrations/registered-events`, {
                     withCredentials: true, // Include credentials
                     headers: {
                         'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ const App = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/api/blogs/getuserblog`, {
+                const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/blogs/getuserblog`, {
                     withCredentials: true, // Include credentials
                     headers: {
                         'Content-Type': 'application/json',

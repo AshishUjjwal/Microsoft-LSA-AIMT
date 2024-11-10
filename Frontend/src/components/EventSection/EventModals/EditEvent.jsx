@@ -50,7 +50,7 @@ const EditEventForm = ({ event, isOpen, onClose, onUpdate }) => {
     const handleSubmit = async () => {
         try {
             console.log(event._id);
-            const response = await axios.put(`http://localhost:8000/api/events/update-event/${event._id}`, formData,
+            const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/events/update-event/${event._id}`, formData,
                 {
                     withCredentials: true, // Include credentials like cookies, authorization headers, etc.
                     headers: {

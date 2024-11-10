@@ -60,7 +60,7 @@ const CreateBlogModal = ({ onCreate }) => {
 
             // Make POST request to the API
             const response = await axios.post(
-                'http://localhost:8000/api/blogs/createblog', // Replace with your actual API endpoint
+                `${process.env.REACT_APP_BASE_URL}/api/blogs/createblog`, // Replace with your actual API endpoint
                 formData,
                 { headers, withCredentials: true } // Include credentials
             );

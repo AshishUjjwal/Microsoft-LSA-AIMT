@@ -12,6 +12,7 @@ import {
 import LoadingPage from '../../pages/LoadingPage.jsx';
 
 import { BlogAuthor, BlogTags } from './BlogComponent.jsx';
+import apiClient from '../../api/axiosInstance.js';
 
 const BlogDetail = () => {
     const { slug } = useParams();
@@ -20,7 +21,8 @@ const BlogDetail = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/api/blogs/getblog/${slug}`, {
+                // const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/blogs/getblog/${slug}`,
+                const response = await apiClient.get(`/api/blogs/getblog/${slug}`, {
                     withCredentials: true, // Include credentials
                     headers: {
                         // 'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // Replace with your token
@@ -52,7 +54,7 @@ const BlogDetail = () => {
                 <Divider my={5} />
                 <Image
                     // src={'https://plopdo.com/wp-content/uploads/2020/02/GettyImages-887987150-5c770377c9e77c00011c82e6.jpg' || blog.imageUrl }
-                    src={ blog.imageUrl }
+                    src={blog.imageUrl}
                     alt={blog.title}
                     borderRadius="lg"
                 />

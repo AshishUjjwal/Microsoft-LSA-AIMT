@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Heading, Image, Spinner, Text, useColorModeValue } from '@chakra-ui/react'
 import { EventAuthor, EventTags, TruncatedText } from './EventComponent';
-import { AddIcon } from '@chakra-ui/icons';
+import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 
 const UpcomingEventRotator = ({ events, user }) => {
 
@@ -10,6 +10,7 @@ const UpcomingEventRotator = ({ events, user }) => {
         'radial(orange.300 1px, transparent 1px)'
     );
 
+    const [isRegistered, setIsRegistered] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     // Filter to only show admin blogs
@@ -104,23 +105,45 @@ const UpcomingEventRotator = ({ events, user }) => {
                     date={event.date}
                 />
                 
-                {user.role === 'admin' | user.role === 'user' && (
-                <Button
-                    size="sm"
-                    mt={5}
-                    colorScheme="blue"
-                    aria-label="Register Event"
-                    leftIcon={<AddIcon />}
-                    _hover={{
-                        cursor: 'pointer',
-                        color: 'black.900',
-                        transform: 'scale(1.01)',
-                        transition: 'transform 0.2s ease, color 0.2s ease',
-                    }}
-                >
-                    <b>REGISTER</b>
-                </Button>
-                )}
+                {/* {user.role === 'admin' | user.role === 'user' && (
+                event.status === "Upcoming" && (
+                    isRegistered ? (
+                      <Button
+                        size="sm"
+                        mt={5}
+                        colorScheme="red"
+                        aria-label="Unregister Event"
+                        onClick={handleUnregisterEvent}
+                        leftIcon={<DeleteIcon />}
+                        _hover={{
+                          cursor: "pointer",
+                          color: "red.900",
+                          transform: "scale(1.05)",
+                          transition: "transform 0.2s ease, color 0.2s ease",
+                        }}
+                      >
+                        Unregister
+                      </Button>
+                    ) : (
+                      <Button
+                        size="sm"
+                        mt="auto"
+                        colorScheme="blue"
+                        aria-label="Register Event"
+                        // onClick={handleRegisterEvent}
+                        leftIcon={<AddIcon />}
+                        _hover={{
+                          cursor: "pointer",
+                          color: "black.900",
+                        //   transform: "scale(1.05)",
+                          transition: "transform 0.2s ease, color 0.2s ease",
+                        }}
+                      >
+                        Register
+                      </Button>
+                    )
+                  )
+                )} */}
                 
             </Box>
         </Box>

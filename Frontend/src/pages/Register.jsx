@@ -118,7 +118,7 @@ const Signup = () => {
       // TODO: Replace with your API call
       // Example using fetch:
 
-      const response = await fetch("http://localhost:8000/api/users/register", {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/users/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

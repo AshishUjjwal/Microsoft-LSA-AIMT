@@ -15,20 +15,19 @@ import { ApiResponse } from "../utils/apiResponse.js"
 // If the event or user does not exist, return a 404 erro
 export const registerForEvent = asyncHandler(async (req, res) => {
     const { eventId } = req.params;
-    const userId = req.user.id;  // Retrieved from verifyJWT middleware
+    const userId = req.user._id;  // Retrieved from verifyJWT middleware
 
     try {
         // Check if the event exists
         const event = await Event.findById(eventId);
         if (!event) {
-            console.log(hii);
-            return res.status(404).json({ message: 'Event not found' });
+            throw new ApiError('Event not found', 404);
         }
 
         // Check if the user is already registered for the event
         const existingRegistration = await Registration.findOne({ userId, eventId });
         if (existingRegistration) {
-            return res.status(400).json({ message: 'User already registered for this event' });
+            throw new ApiError('User already registered for this event', 400);
         }
 
         // Create a new registration
@@ -44,8 +43,10 @@ export const registerForEvent = asyncHandler(async (req, res) => {
             registration: newRegistration,
         });
     } catch (error) {
-        console.error(error.message);
-        return res.status(500).json({ message: 'Server error' });
+        // console.error(error.message);
+        // return res.status(500).json({ message: 'Server error' });
+        // throw new ApiError('Server error', 500);
+        throw new ApiError(error?.message || "Server error", 401);
     }
 });
 
@@ -86,7 +87,7 @@ export const unregisterForEvent = asyncHandler(async (req, res) => {
 // @access  Private
 export const getRegistrationStatus = asyncHandler(async (req, res) => {
     const { eventId } = req.params;
-    const userId = req.user.id;  // Retrieved from the JWT middleware
+    const userId = req.user._id;  // Retrieved from the JWT middleware
 
     try {
         // Check if a registration exists for this user and event

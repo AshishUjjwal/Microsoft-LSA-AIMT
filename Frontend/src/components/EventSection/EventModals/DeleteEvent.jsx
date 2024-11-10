@@ -22,7 +22,7 @@ const DeleteEvent = ({ event, isOpen, onClose, onDelete }) => {
     const confirmDelete = async () => {
         setIsDeleting(true);
         try {
-            await axios.delete(`http://localhost:8000/api/events/delete-event/${event._id}`,
+            await axios.delete(`${process.env.REACT_APP_BASE_URL}/api/events/delete-event/${event._id}`,
                 {
                     withCredentials: true, // Include credentials like cookies, authorization headers, etc.
                     headers: {

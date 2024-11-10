@@ -92,7 +92,7 @@ const EditBlogModal = ({ blog, isOpen, onClose, onEdit }) => {
     // Handle form submission and trigger axios API call
     const handleSubmit = async () => {
         try {
-            const response = await axios.put(`http://localhost:8000/api/blogs/update-blog/${blog._id}`, formData, {
+            const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/blogs/update-blog/${blog._id}`, formData, {
                 withCredentials: true, // Include credentials
                 headers: {
                     'Content-Type': 'application/json',

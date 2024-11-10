@@ -28,6 +28,7 @@ import { ChevronLeftIcon, ChevronRightIcon, DeleteIcon, EditIcon } from '@chakra
 import AdminBlogRotator from './AdminBlogRotator.jsx';
 
 import { BlogAuthor, BlogTags, TruncatedText } from './BlogComponent.jsx';
+import apiClient from '../../api/axiosInstance.js';
 
 const BlogSection = () => {
     const [blogs, setBlogs] = useState([]);
@@ -88,7 +89,8 @@ const BlogSection = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/blogs/getblog', {
+                // const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/blogs/getblog`, {
+                const response = await apiClient.get('/api/blogs/getblog',{
                     withCredentials: true, // Include credentials
                     headers: {
                         'Content-Type': 'application/json',

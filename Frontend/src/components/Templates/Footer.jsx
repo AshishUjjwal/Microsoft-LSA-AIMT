@@ -279,7 +279,7 @@ const Footer = () => {
             align="center"
           >
             <Text>
-              © {new Date().getFullYear()} Microsoft Learn Student Ambassadors - AIMT.
+              © {new Date().getFullYear()} Microsoft Learn Student Ambassadors  - AIMT.
             </Text>
             <ThemeToggleButton />
           </Stack>

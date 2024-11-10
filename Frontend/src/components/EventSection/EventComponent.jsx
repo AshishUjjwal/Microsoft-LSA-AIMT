@@ -32,7 +32,7 @@ const EventAuthor = ({ authorImage, author, date }) => {
         authorImage = 'https://100k-faces.glitch.me/random-image'; // Placeholder image URL
     // }
     return (
-        <HStack marginTop="2" spacing="2" display="flex" alignItems="center">
+        <HStack marginTop="5" spacing="2" display="flex" alignItems="center">
             <Image borderRadius="full" boxSize="40px" src={authorImage} alt="Avatar" />
             <Text fontWeight="medium">{author?.name?.toUpperCase()}</Text>
             <Text>—</Text>

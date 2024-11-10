@@ -1,0 +1,32 @@
+# Ignore node_modules to avoid copying it into the container
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Ignore build output (for production builds)
+build
+
+# Ignore local environment files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore logs
+logs
+*.log
+
+# Ignore temporary files and editor-specific files
+*.swp
+*.tmp
+*.temp
+*.cache
+.vscode
+.idea
+
+# Ignore version control files
+.git
+.gitignore

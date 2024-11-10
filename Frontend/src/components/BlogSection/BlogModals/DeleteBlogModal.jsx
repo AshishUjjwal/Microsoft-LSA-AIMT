@@ -18,7 +18,7 @@ const DeleteBlogModal = ({ blog, isOpen, onClose, onDelete }) => {
     const handleDelete = async () => {
         try {
             // Send DELETE request to the server
-            await axios.delete(`http://localhost:8000/api/blogs/delete-blog/${blog._id}`, {
+            await axios.delete(`${process.env.REACT_APP_BASE_URL}/api/blogs/delete-blog/${blog._id}`, {
                 withCredentials: true,  // Include cookies for authentication
                 headers: {
                     'Content-Type': 'application/json',

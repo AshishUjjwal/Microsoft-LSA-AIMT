@@ -28,6 +28,8 @@ export const verifyJWT = asyncHandler(async(req, _, next) =>{
 
         const token = req.cookies?.accessToken || 
             req.header("Authorization")?.replace("Bearer ", "");
+
+            // console.log(token);
     
         if (!token) {
             throw new ApiError("Not authorized,... token is required", 401);
@@ -46,7 +48,7 @@ export const verifyJWT = asyncHandler(async(req, _, next) =>{
         // Custom claims (user role, permissions, etc.)
     
         const user = await User.findById(decodedToken?._id).select("-password -refreshToken")
-        console.log(user.name);
+        // console.log(user.name);
         if(!user) {
             throw new ApiError("User not found!!", 404);
         }
@@ -56,7 +58,8 @@ export const verifyJWT = asyncHandler(async(req, _, next) =>{
         req.user = user; 
         next();
     } catch (error) {
-        throw new ApiError(error?.message || "Invalid access token", 401);
+        console.log(error);
+        throw new ApiError(error?.message || "Invalid access token", 405);
     }
 
 })
