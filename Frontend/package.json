@@ -38,7 +38,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "babel src -d dist",
+    "build": "npx babel src -d dist",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
