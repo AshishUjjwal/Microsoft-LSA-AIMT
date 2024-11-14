@@ -16,9 +16,9 @@ const Home = () => {
         direction={{ base: "column", md: "row" }} // Stack vertically on small screens, side by side on medium+ screens
         mx={'auto'}
       >
-        <Box flex="1">
+        {/* <Box flex="1">
           <BlogPanel />
-        </Box>
+        </Box> */}
       </Flex>
       <UserPanel/>
     </Stack>
