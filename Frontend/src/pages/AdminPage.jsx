@@ -20,7 +20,7 @@ const Home = () => {
           <BlogPanel />
         </Box> */}
       </Flex>
-      <UserPanel/>
+      {/* <UserPanel/> */}
     </Stack>
   );
 };
