@@ -27,7 +27,7 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response?.status === 405) {
+    if (error.response.status === 405) {
       originalRequest._retry = true;
       const newAccessToken = await getNewAccessToken();
       console.log(`newAccessToken45`,newAccessToken);
