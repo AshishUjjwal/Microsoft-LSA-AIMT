@@ -1,6 +1,6 @@
 services:
   backend:
-    # image: assimujjwal/be_resource_allocation:latest
+    # image: ashishujjwal/be_resource_allocation:latest
     build: 
       context: ./Backend
     volumes:
