@@ -63,9 +63,9 @@ const AllRoutes = () => {
 
       <Route path="/admin"
         element={
-          // <ProtectedRoute requiredRole={'admin'}>
+          <ProtectedRoute requiredRole={'admin'}>
           <AdminPanel />
-          // </ProtectedRoute>
+          </ProtectedRoute>
         }
       />
 
