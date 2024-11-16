@@ -29,14 +29,16 @@ export const verifyJWT = asyncHandler(async(req, _, next) =>{
         const token = req.cookies?.accessToken || 
             req.header("Authorization")?.replace("Bearer ", "");
 
-            // console.log(token);
+            console.log(token);
     
         if (!token) {
             throw new ApiError("Not authorized,... token is required", 401);
         }
         
         // Verify the JWT token using the secret key.
+        // console.log("Hii");
         const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN);
+        // console.log(`Decoded Token`,decodedToken?._id);
         // What Happens if the Token is Verified?
         // If the token is valid, the function jwt.verifyJWT() will decode the token, returning the payload (which contains the user data or other information encoded in the JWT).
 
@@ -58,8 +60,9 @@ export const verifyJWT = asyncHandler(async(req, _, next) =>{
         req.user = user; 
         next();
     } catch (error) {
-        console.log(error);
+        console.log("Invalid access token");
         throw new ApiError(error?.message || "Invalid access token", 405);
+        // throw new ApiError("Invalid access token", 405);
     }
 
 })

@@ -116,8 +116,7 @@ const Login = () => {
 
       if (result.statusCode === 200) {
         // Assuming the backend sends user data in the response
-        login(result.data.user, result.token); // Update auth context
-        // console.log(`userdata`, result.data.user.name);
+        login(result.data.user, result.data.accessToken); // Update auth context
 
         toast({
           title: `Login successful!`,
@@ -135,6 +134,7 @@ const Login = () => {
 
     } catch (error) {
       // Handle errors
+      console.log(error);
       toast({
         title: `Login failed!`,
         description: "Please check your email and password",

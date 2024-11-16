@@ -35,6 +35,8 @@ import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { Link as RouterLink } from 'react-router-dom'; // Import the Link from react-router-dom
 import logo from '../Images/01MLSAAIMT.png'
+import apiClient from '../api/axiosInstance';
+import axios from 'axios';
 
 const MotionMenuList = motion(MenuList);
 
@@ -73,17 +75,20 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/users/logout`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      // const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/users/logout`, {
+      const response = await apiClient.post(
+        `/api/users/logout`,
+        {}, // Pass an empty object for the request body if there is none
+        {
+          withCredentials: true, // Include credentials like cookies
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response);
 
-      const responseBody = await response.json();
-
-      if (response.ok) {
+      if (response.status === 200) {
         logout();
         toast({
           title: `Logout successful!`,
@@ -93,8 +98,6 @@ export default function Navbar() {
           isClosable: true,
         });
         navigate("/login");
-      } else {
-        throw new Error(responseBody.message || "Logout failed!");
       }
     } catch (error) {
       console.log('An error occurred during logout', error);
@@ -200,7 +203,7 @@ export default function Navbar() {
               </MenuItem>
             }
             <MenuDivider />
-          
+
             {user ?
               <MenuItem onClick={handleLogout}><NavLink to="/login">Logout</NavLink></MenuItem>
               : ''

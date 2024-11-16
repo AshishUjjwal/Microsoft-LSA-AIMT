@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { useToast } from "@chakra-ui/react";
-import { getUserRole, isAuthenticated } from '../utils/auth';
+import { getUserRole, isAuthenticated } from '../utils/auth.jsx';
 import LoadingPage from '../pages/LoadingPage';
 
 const ProtectedRoute = ({ children, requiredRole }) => {
@@ -43,7 +43,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
         });
 
         // Redirect to unauthorized page or login
-        navigate('/login', { replace: true });
+        // navigate('/login', { replace: true });
       }
     };
 

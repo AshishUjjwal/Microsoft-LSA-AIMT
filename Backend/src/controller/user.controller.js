@@ -83,6 +83,7 @@ const loginUser = asyncHandler(async (req, res) => {
     // console.log("RefreshToken : ", refreshToken);
 
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken");  // select command remove the give argument for accessing.
+    console.log(loggedInUser.email);
 
     const options = {
         // httpOnly: false,   // To make it accessible to JavaScript
@@ -97,7 +98,7 @@ const loginUser = asyncHandler(async (req, res) => {
         .cookie("refreshToken", refreshToken, options)
         .json(new ApiResponse(200, "Logged In Successfully", {
             user: loggedInUser,
-            refreshToken: refreshToken
+            accessToken: accessToken
         }));
 });
 
@@ -131,7 +132,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 // Update User Controller
 const updateUser = asyncHandler(async (req, res) => {
-    const user = req.user; 
+    const user = req.user;
     const { name, avatarUrl, location, description, social, password } = req.body;
 
     try {
@@ -233,14 +234,29 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
         return res
             .status(200)
             .cookie("accessToken", accessToken, options)
-            .cookie("refreshToken", refreshToken, options)
+            // .cookie("refreshToken", refreshToken, options)
             .json(new ApiResponse(200, "Refreshed Access Token", {
                 user: user,
                 accessToken: accessToken
             }));
 
     } catch (error) {
-        throw new ApiError(error?.message || "Invalid refresh token", 401);
+        const options = {
+            // httpOnly: true,
+            secure: true
+        }
+        console.log("Invalid Refresh Token : ", error);
+        res
+            .status(401)
+            .clearCookie("accessToken", options)
+            .clearCookie("refreshToken", options)
+            .json({
+                error: "Refresh Token Expired",
+                message: "Please login again",
+                statusCode: 401,
+                action: "CLEAR_STORAGE", // Signal to the client to clear local storage
+            });
+        // throw new ApiError(error?.message || "Invalid refresh token", 401);
     }
 });
 

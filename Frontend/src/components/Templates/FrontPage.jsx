@@ -72,13 +72,13 @@ const FrontPage = () => {
           color={useColorModeValue('gray.100', 'whiteAlpha.900')}
           transition="color 0.3s ease"
         >
-          Empowering students to code their future, master AI and shape tomorrow's tech culture.
+          Empowering students to code their future, master AI and shape tomorrow's Tech Culture.
         </Heading>
 
         <Text
           fontSize={textFontSize}
           color={useColorModeValue('gray.200', 'gray.300')}
-          maxW="600px"
+          maxW="700px"
           lineHeight="1.6"
           transition="color 0.3s ease"
         >
@@ -92,7 +92,7 @@ const FrontPage = () => {
               variant="solid"
               size={buttonSize}
               m={2}
-              colorScheme="linkedin"
+              colorScheme="blue"
               _hover={{ transform: 'scale(1.05)', boxShadow: 'lg' }} // Hover animation
               transition="all 0.3s ease"
             >
@@ -118,7 +118,7 @@ const FrontPage = () => {
         <Link href="https://wa.me/1234567890" isExternal>
           <Button
             leftIcon={<FaWhatsapp />}
-            colorScheme="whatsapp"
+            colorScheme="green"
             size={buttonSize}
             _hover={{ transform: 'scale(1.05)', boxShadow: 'lg' }}
             transition="all 0.3s ease"

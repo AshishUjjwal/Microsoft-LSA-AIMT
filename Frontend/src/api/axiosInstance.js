@@ -27,15 +27,22 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response.status === 405) {
-      originalRequest._retry = true;
-      const newAccessToken = await getNewAccessToken();
-      console.log(`newAccessToken45`,newAccessToken);
+    if (error?.response?.status === 405 && !originalRequest._retry) {
+      originalRequest._retry = true;  // Mark the request as retried to prevent infinite loops
+      
+      const newAccessToken = await getNewAccessToken(); // return null if the new access token is not generated due to exiry of RefreshToken
+      console.log(`newAccessToken45`, newAccessToken);
       if (newAccessToken) {
         localStorage.setItem('accessToken', JSON.stringify(newAccessToken));
         // localStorage.setItem('auth', JSON.stringify(auth));
         apiClient.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
         return apiClient(originalRequest);
+      }
+      else {
+        localStorage.removeItem('accessToken');
+        console.log("Failed to refresh Access token. Redirecting to login page...");
+        window.location.href = "/login";
+        return Promise.reject(error);
       }
     }
     return Promise.reject(error);

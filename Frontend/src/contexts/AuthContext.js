@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
     // Load auth data from localStorage (if any) on initial render
     useEffect(() => {
-        const token = Cookies.get('accessToken');  // Fetch the token from cookies
+        const token = localStorage.getItem('accessToken');  // Fetch the token from cookies
         const storedAuth = localStorage.getItem('auth');
 
         if (token && storedAuth) {
@@ -34,8 +34,10 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (auth.user || auth.token) {
             localStorage.setItem('auth', JSON.stringify(auth));
+            localStorage.setItem('accessToken', JSON.stringify(auth.token));
         } else {
             localStorage.removeItem('auth');
+            localStorage.removeItem('cookies', JSON.stringify(auth.token));
         }
     }, [auth]);
 
