@@ -3,7 +3,7 @@ import React from 'react';
 // import Hero from '../components/Templates/Hero.jsx';
 import Event from '../components/EventSection/EventDashboard.jsx';
 
-const AboutPage = () => {
+const EventPage = () => {
   return (
     <>
       {/* <Hero/> */}
@@ -12,4 +12,4 @@ const AboutPage = () => {
   );
 };
 
-export default AboutPage;
+export default EventPage;

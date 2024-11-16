@@ -195,6 +195,9 @@ export default function Navbar() {
               <NavLink to="/events">Events</NavLink>
             </MenuItem>
             <MenuItem>
+              <NavLink to="/gallary">Gallary</NavLink>
+            </MenuItem>
+            <MenuItem>
               <NavLink to="/admin">Admin Panel</NavLink>
             </MenuItem>
             {user ? '' :
@@ -253,6 +256,7 @@ export default function Navbar() {
             <NavLink to="/about">About</NavLink>
             <NavLink to="/blog">Blog</NavLink>
             <NavLink to="/events">Events</NavLink>
+            <NavLink to="/gallary">Gallary</NavLink>
             <NavLink to="/admin">AdminPanel</NavLink>
 
             {/* Dark/Light Mode Toggle */}

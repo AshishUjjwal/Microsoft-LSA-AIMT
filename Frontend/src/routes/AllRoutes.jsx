@@ -8,6 +8,7 @@ import Home from '../pages/Home.jsx';
 import Register from '../pages/Register.jsx';
 import Login from '../pages/Login.jsx';
 import EventPage from '../pages/EventPage.jsx';
+import GallaryPage from '../pages/GallaryPage.jsx';
 import NotFound from '../pages/NotFound.jsx';
 import AboutPage from '../pages/AboutPage.jsx';
 import BlogSection from '../components/BlogSection/Blog.jsx';
@@ -62,7 +63,7 @@ const AllRoutes = () => {
         <Route path="/blog" element={<BlogSection />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/events" element={<EventPage />} />
-        <Route path="/gallary" element={<EventGallery />} />
+        <Route path="/gallary" element={<GallaryPage />} />
         <Route path="/loading" element={<LoadingPage />} />
         <Route path={`/${user?.role}/${displayUsername}`} element={<Account />} />
 
