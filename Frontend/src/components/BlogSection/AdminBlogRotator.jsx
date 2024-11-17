@@ -14,7 +14,7 @@ const AdminBlogRotator = ({ blogs, user, handleEditEvent, handleDeleteEvent }) =
     const [currentIndex, setCurrentIndex] = useState(0);
 
     // Filter to only show admin blogs
-    const adminBlogs = blogs?.filter(blog => blog.author?.role === 'admin');
+    const adminBlogs = blogs?.filter(blog => blog?.author?.role === 'admin');
 
     // Rotate through admin blogs every 5 seconds
     useEffect(() => {
@@ -103,7 +103,7 @@ const AdminBlogRotator = ({ blogs, user, handleEditEvent, handleDeleteEvent }) =
                 />
 
                 {/* Add Edit and Delete Buttons for admin */}
-                {(user.role === 'admin') &&
+                {/* {(user.role === 'admin') &&
                     <HStack spacing={4} marginTop={4}>
                         <IconButton
                             size="sm"
@@ -133,7 +133,7 @@ const AdminBlogRotator = ({ blogs, user, handleEditEvent, handleDeleteEvent }) =
                             }}
                         />
                     </HStack>
-                }
+                } */}
             </Box>
         </Box>
     );

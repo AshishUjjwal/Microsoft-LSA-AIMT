@@ -15,6 +15,7 @@ import {
     IconButton,
     Button,
     useBreakpointValue,
+    Flex,
 } from '@chakra-ui/react';
 import LoadingPage from '../../pages/LoadingPage.jsx';
 
@@ -24,7 +25,7 @@ import EditBlogModal from './BlogModals/EditBlogModal.jsx';
 import DeleteBlogModal from './BlogModals/DeleteBlogModal.jsx';
 
 import { AuthContext } from '../../contexts/AuthContext.js';
-import { ChevronLeftIcon, ChevronRightIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { CheckIcon, ChevronLeftIcon, ChevronRightIcon, CloseIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import AdminBlogRotator from './AdminBlogRotator.jsx';
 
 import { BlogAuthor, BlogTags, TruncatedText } from './BlogComponent.jsx';
@@ -48,12 +49,12 @@ const BlogSection = () => {
     });
 
     // Sorting the blogs by date
-    blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    blogs?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     // Get the blogs for the current page
     const indexOfLastBlog = currentPage * blogsPerPage;
     const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
-    const currentBlogs = blogs.slice(indexOfFirstBlog, indexOfLastBlog);
+    const currentBlogs = blogs?.slice(indexOfFirstBlog, indexOfLastBlog);
 
     // Handle page change
     const handlePageChange = (pageNumber) => {
@@ -61,7 +62,7 @@ const BlogSection = () => {
     };
 
     // Calculate total pages
-    const totalPages = Math.ceil(blogs.length / blogsPerPage);
+    const totalPages = Math.ceil(blogs?.length / blogsPerPage);
 
     // Handlers for creating, editing, and deleting
     const handleCreate = (newBlog) => {
@@ -90,13 +91,25 @@ const BlogSection = () => {
         const fetchBlogs = async () => {
             try {
                 // const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/blogs/getblog`, {
-                const response = await apiClient.get('/api/blogs/getblog',{
-                    withCredentials: true, // Include credentials
+                // Determine the API endpoint based on the user's role
+                const endpoint =
+                    user?.role === 'admin'
+                        ? '/api/blogs/getallblog'
+                        : '/api/blogsapprove/getapprovedblogs';
+
+                const response = await apiClient.get(endpoint, {
+                    withCredentials: true,
                     headers: {
                         'Content-Type': 'application/json',
                     },
                 });
-                setBlogs(response.data.blogs);
+                const blogs = response?.data?.approvedBlogs?.map(item => ({
+                    ...item.blog, // Spread the blog details
+                    approvalDate: item.approvalDate, // Add the approval date
+                    approvedBy: item.approvedBy, // Add approvedBy details
+                }));
+                setBlogs(blogs); // Store in state
+                console.log(`Response : `, response?.data?.approvedBlogs);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching blogs:', error);
@@ -105,9 +118,9 @@ const BlogSection = () => {
         };
 
         fetchBlogs();
-    }, []);
+    }, [user]);
 
-    if (loading || !user) {
+    if (loading || !user || !blogs || !blogs?.length) {
         return <LoadingPage />;
     }
 
@@ -130,8 +143,8 @@ const BlogSection = () => {
             <AdminBlogRotator
                 blogs={blogs}
                 user={user}
-                handleEditEvent={handleEditEvent}
-                handleDeleteEvent={handleDeleteEvent}
+                // handleEditEvent={handleEditEvent}
+                // handleDeleteEvent={handleDeleteEvent}
                 bgGradient="linear(to-r, teal.500, green.500)" // Example gradient
             />
 
@@ -152,10 +165,11 @@ const BlogSection = () => {
             {/* <CreateBlogModal onCreate={handleCreate} /> */}
             <Divider marginTop="5" />
             <Wrap spacing="30px" marginTop="5" alignItems="start">
-                {currentBlogs
-                    .map((blog) => (
-                        <WrapItem key={blog._id} width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}>
-                            <Box w="100%">
+                {currentBlogs.map((blog) => (
+                    <WrapItem key={blog._id} width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}>
+                        <Box w="100%" height="100%" display="flex" flexDirection="column" justifyContent="space-between" >
+                            {/* Top Section */}
+                            <Box>
                                 <Box borderRadius="lg" overflow="hidden" height="170px">
                                     <Box textDecoration="none" _hover={{ textDecoration: 'none' }}>
                                         <Image
@@ -179,14 +193,21 @@ const BlogSection = () => {
                                         {`${blog.title?.substring(0, 40)}... `}
                                     </Text>
                                 </Heading>
+                            </Box>
+
+                            {/* Middle Section */}
+                            <Box my="auto" width="100%">
                                 <BlogTags tags={blog.tags} />
                                 <TruncatedText text={blog.description} slug={blog.slug} />
+                            </Box>
+
+                            {/* Bottom Section */}
+                            <Box mt="auto">
                                 <BlogAuthor
                                     authorImage={blog.authorImage}
                                     author={blog.author}
                                     date={blog.createdAt}
                                 />
-                                {/* Author and Edit/Delete options */}
                                 {(blog.author?._id === user._id || user.role === 'admin') && (
                                     <HStack spacing={4} marginTop={4}>
                                         <IconButton
@@ -215,12 +236,30 @@ const BlogSection = () => {
                                                 transition: 'transform 0.2s ease, color 0.2s ease',
                                             }}
                                         />
+                                        {user.role === 'admin' && (
+                                            <Button
+                                                size="sm"
+                                                colorScheme={blog.isApproved ? "red" : "green"}
+                                                leftIcon={blog.isApproved ? <CloseIcon /> : <CheckIcon />}
+                                                // onClick={() => blog.isApproved ? handleUnapproveEvent(blog) : handleApproveEvent(blog)} // Function based on state
+                                                _hover={{
+                                                    cursor: 'pointer',
+                                                    color: blog.isApproved ? 'red.900' : 'green.900',
+                                                    transform: 'scale(1.05)',
+                                                    transition: 'transform 0.2s ease, color 0.2s ease',
+                                                }}
+                                            >
+                                                {blog.isApproved ? "UnApprove" : "Approve"}
+                                            </Button>
+                                        )}
                                     </HStack>
                                 )}
                             </Box>
-                        </WrapItem>
-                    ))}
+                        </Box>
+                    </WrapItem>
+                ))}
             </Wrap>
+
 
             {/* Pagination Controls */}
             <HStack justify="center" marginTop={6} spacing={2}>
@@ -233,7 +272,7 @@ const BlogSection = () => {
                     _hover={{ bg: 'blue.400' }}
                     variant="outline"
                 >
-                    
+
                 </Button>
 
                 {/* Page Numbers */}
@@ -281,7 +320,7 @@ const BlogSection = () => {
                     _hover={{ bg: 'blue.400' }}
                     variant="outline"
                 >
-                    
+
                 </Button>
             </HStack>
 

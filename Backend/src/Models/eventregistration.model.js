@@ -25,4 +25,4 @@ const registrationSchema = new Schema(
 );
 
 // Export the Registration model
-export const Registration = mongoose.model('Registration', registrationSchema);
+export const Registration = mongoose.model('EventRegistration', registrationSchema);

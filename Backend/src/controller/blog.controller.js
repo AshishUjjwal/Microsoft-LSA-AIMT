@@ -2,25 +2,30 @@ import { Blog } from '../Models/blog.model.js';
 import { User } from '../Models/user.model.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import slugify from 'slugify';
+import { approveBlog } from './blogapproval.controller.js';
 
 const createBlog = asyncHandler(async (req, res) => {
     try {
-        const { title, description, content, category, tags, imageUrl, authorImage } = req.body;
+        const { title, description, content, category, tags, imageUrl, authorImage, isApproved } = req.body;
 
         // Assuming `req.user` contains the authenticated user info after middleware (e.g., JWT auth)
         const authorId = req.user._id;  // Get the logged-in user's ID
+        const userRole = req.user.role; // Get the user's role (e.g., 'admin', 'user')
 
         // Check if the author (user) exists in the database
         const author = await User.findById(authorId);
         if (!author) {
             return res.status(404).json({ message: 'Author not found' });
         }
+        // Ensure isApproved is always true if the user is an admin
+        const finalIsApproved = userRole === 'admin' ? true : isApproved;
 
         // Create a new blog post instance
         const newBlog = new Blog({
             title,
             description,
             content,
+            isApproved : finalIsApproved,
             category,
             tags,
             imageUrl,
@@ -29,13 +34,21 @@ const createBlog = asyncHandler(async (req, res) => {
             slug: slugify(title, { lower: true, strict: true }),  // Generate slug from title
         });
 
-
         const savedBlog = await newBlog.save();
         if (!savedBlog) {
-            throw new ApiError('Failed to create Event', 500);
+            throw new ApiError('Failed to create Blog', 500);
         }
 
-        console.log('Event created successfully:', savedBlog);
+        // Automatically add approval entry if the creator is an admin
+        if (userRole === 'admin') {
+            const approval = new approveBlog({
+                blog: savedBlog._id,
+                approvedBy: authorId, // Admin is the approver
+            });
+            await approval.save();
+        }
+
+        console.log('Blog created successfully:', savedBlog);
 
         res.status(200).json({
             message: 'Blog created successfully',
@@ -49,7 +62,22 @@ const createBlog = asyncHandler(async (req, res) => {
     }
 });
 
-const getBlogs = asyncHandler(async (req, res) => {
+const getApprovedBlogs = asyncHandler(async (req, res) => {
+    try {
+        const blogs = await Blog.find({ isApproved: true }).populate('author', 'name email imageUrl role'); // Populates author with name and email
+        res.status(200).json({
+            message: 'Blogs fetched successfully',
+            blogs,
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error fetching blogs',
+            error: error.message,
+        });
+    }
+});
+
+const getAllBlogs = asyncHandler(async (req, res) => {
     try {
         const blogs = await Blog.find().populate('author', 'name email imageUrl role'); // Populates author with name and email
         res.status(200).json({
@@ -155,7 +183,8 @@ const deleteBlog = asyncHandler(async (req, res) => {
 
 export {
     createBlog,
-    getBlogs,
+    getApprovedBlogs,
+    getAllBlogs,
     getfixedBlog,
     getBlogsForUser,
     updateBlog,

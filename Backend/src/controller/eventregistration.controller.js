@@ -1,4 +1,4 @@
-import { Registration } from '../Models/registration.model.js'; // Assuming you have a Registration model
+import { Registration } from '../Models/eventregistration.model.js'; // Assuming you have a Registration model
 import { Event } from '../Models/event.model.js';
 import { User } from '../Models/user.model.js';
 

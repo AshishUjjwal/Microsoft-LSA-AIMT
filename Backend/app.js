@@ -25,20 +25,22 @@ app.use(express.json());
 import userRouter from './src/routes/user.routes.js'
 import eventRouter from './src/routes/event.routes.js'
 import blogRouter from './src/routes/blog.routes.js'
-import registrationRouter from './src/routes/registration.routes.js'
+import blogApprove from './src/routes/blogapproved.routes.js'
+import registrationRouter from './src/routes/eventregistration.routes.js'
 
 // Routes
 
 app.use('/api/users', userRouter);
 // http://localhost:8000/api/users/*
 
-
 app.use('/api/events', eventRouter);
 // http://localhost:8000/api/events/*
 
-
 app.use('/api/blogs', blogRouter);
 // http://localhost:8000/api/blogs/*
+
+app.use('/api/blogsapprove', blogApprove);
+// http://localhost:8000/api/blogsapprove/*
 
 app.use('/api/registrations', registrationRouter);
 // http://localhost:8000/api/registration/*

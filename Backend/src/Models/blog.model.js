@@ -37,6 +37,12 @@ const blogSchema = new Schema(
             // ref: 'User',  // Assumes you have a User model
             // required: true,
         },
+        isApproved: {
+            type: Boolean,
+            default: false,
+            required: true,  // Blog posts must be approved by an admin
+        },
+        blogApproval: { type: mongoose.Schema.Types.ObjectId, ref: 'BlogApproved' }, // Reference to BlogApproved
         slug: { type: String, unique: true },  // Add slug field
         category: {
             type: String,

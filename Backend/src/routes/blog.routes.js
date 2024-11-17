@@ -7,7 +7,8 @@ import { verifyAdmin } from '../middleware/admin.middleware.js';
 
 import {
     createBlog,
-    getBlogs,
+    getAllBlogs,
+    getApprovedBlogs,
     getfixedBlog,
     getBlogsForUser,
     updateBlog,
@@ -15,14 +16,14 @@ import {
 } from '../controller/blog.controller.js';
 
 
-// @route   GET:  http://localhost:8000/api/blogs/getblog
-router.get('/getblog', verifyJWT, getBlogs);
+// @route   GET:  http://localhost:8000/api/blogs/getallblog
+router.get('/getallblog', verifyJWT, getAllBlogs);
+
+// @route   GET:  http://localhost:8000/api/blogs/getapprovedblog
+router.get('/getapprovedblog', verifyJWT, getApprovedBlogs);
 
 // Define API route to get a specific blog by ID
 router.get('/getblog/:slug',verifyJWT, getfixedBlog);
-
-// @route   POST http://localhost:8000/api/blogs/create-blog
-router.route('/createblog').post(verifyJWT, createBlog);
 
 // @route   POST http://localhost:8000/api/blogs/create-blog
 router.route('/createblog').post(verifyJWT, createBlog);

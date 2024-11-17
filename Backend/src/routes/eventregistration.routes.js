@@ -8,7 +8,7 @@ import {
     unregisterForEvent,
     getRegisteredEventsByUser,
     getRegistrationStatus,
-} from '../controller/registration.controller.js';
+} from '../controller/eventregistration.controller.js';
 
 // @route   POST: Register a user for an event
 // @url     POST http://localhost:8000/api/registrations/register/:eventId
