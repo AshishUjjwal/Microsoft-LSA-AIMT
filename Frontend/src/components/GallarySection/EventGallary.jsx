@@ -72,9 +72,9 @@ const EventGallery = () => {
             <Box mx={'auto'} maxW={'1000px'} mb={10}>
 
 
-                <VStack spacing={2} mb={8}>
+                <VStack spacing={2} my={8}>
                     <Heading as="h1" size="xl" color="teal.600" textAlign="center">
-                        MLSA AIMT EVENT GALLARY
+                        EVENT GALLARY
                     </Heading>
                     <Text fontSize="lg" color="gray.600" textAlign="center">
                         A GLIMPSE INTO THE WONDERFUL MONENTS OF THE EVENT

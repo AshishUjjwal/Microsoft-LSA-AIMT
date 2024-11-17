@@ -34,10 +34,10 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (auth.user || auth.token) {
             localStorage.setItem('auth', JSON.stringify(auth));
-            localStorage.setItem('accessToken', JSON.stringify(auth.token));
+            localStorage.setItem('accessToken', auth.token);
         } else {
             localStorage.removeItem('auth');
-            localStorage.removeItem('cookies', JSON.stringify(auth.token));
+            localStorage.removeItem('accessToken', auth.token);
         }
     }, [auth]);
 

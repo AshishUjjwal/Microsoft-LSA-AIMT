@@ -86,10 +86,9 @@ const loginUser = asyncHandler(async (req, res) => {
     console.log(loggedInUser.email);
 
     const options = {
-        // httpOnly: false,   // To make it accessible to JavaScript
+        httpOnly: true,   // To make it accessible to JavaScript
         secure: true,  // to make it accessible to JavaScript
         sameSite: 'Strict', // To prevent CSRF attacks
-        path: '/',        // Make it available on all routes
     }
 
     return res
@@ -118,7 +117,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 
     const options = {
         // expires: new Date(0),  // cookie will expire when browser is closed
-        // httpOnly: true,
+        httpOnly: true,
         secure: true
     }
 
@@ -223,7 +222,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
         }
 
         const options = {
-            // httpOnly: true,
+            httpOnly: true,
             secure: true
         }
 
