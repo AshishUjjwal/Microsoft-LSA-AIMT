@@ -16,7 +16,12 @@ app.use(cors({
     credentials: true,
     methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
 }));
-app.use(express.urlencoded({ extended : true , limit: '5mb'}));
+allowedHeaders: [
+    'Content-Type',
+    'Origin',
+    'Authorization'
+],
+    app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());
@@ -46,4 +51,4 @@ app.use('/api/blogsapprove', blogApprove);
 app.use('/api/registrations', registrationRouter);
 // http://localhost:8000/api/registration/*
 
-export {app};
+export { app };
