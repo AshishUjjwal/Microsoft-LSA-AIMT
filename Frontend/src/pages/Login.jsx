@@ -137,7 +137,7 @@ const Login = () => {
       console.log(error);
       toast({
         title: `Login failed!`,
-        description: "Please check your email and password",
+        description: error.message,
         position: "top",
         duration: 2000,
         status: "error",
