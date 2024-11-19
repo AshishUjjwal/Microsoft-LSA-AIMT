@@ -1,4 +1,4 @@
-import { Box, Heading, SimpleGrid, Text, Flex, Button, useColorModeValue } from '@chakra-ui/react';
+import { Box, Heading, SimpleGrid, Text, Flex, Button, useColorModeValue, space } from '@chakra-ui/react';
 
 const BlogCard = ({ blog }) => {
     // Use useColorModeValue to adjust colors for light and dark modes
@@ -8,17 +8,17 @@ const BlogCard = ({ blog }) => {
     const boxShadow = useColorModeValue('md', 'dark-lg');
 
     return (
-        <Flex direction="column" p={4} bg={bgColor} borderRadius="md" boxShadow={boxShadow}>
+        <Flex direction="column" p={4} bg={bgColor} borderRadius="md" boxShadow={boxShadow} transition="all 0.3s ease">
             <Heading as="h3" size="md" mb={2} color={textColor}>
                 {blog.title}
             </Heading>
             <Text fontSize="sm" color={dateColor} mb={2}>
                 {blog.date}
             </Text>
-            <Text fontSize="sm" color={textColor} mb={4}>
+            <Text fontSize="sm" color={textColor} mb={4} textAlign={'justify'}>
                 {blog.description}
             </Text>
-            <Button colorScheme="teal" size="sm">
+            <Button mt="auto" colorScheme="teal" size="sm">
                 View Blog
             </Button>
         </Flex>
@@ -30,7 +30,7 @@ const BlogsList = ({ blogs }) => {
     const sectionTextColor = useColorModeValue('gray.700', 'gray.300');
 
     return (
-        <Box mt={8} bg={sectionBgColor} p={4} borderRadius="lg">
+        <Box mt={8} bg={sectionBgColor} p={4}>
             <Heading as="h2" size="lg" mb={4} color={sectionTextColor}>
                 Blogs Created
             </Heading>
