@@ -302,7 +302,7 @@ export default function Navbar() {
                   <Text my={5}>{auth?.user === null ? 'Guest' : user?.name.toUpperCase()}</Text>
                 </Center>
                 <MenuDivider />
-                <MenuItem><NavLink to={`/${user?.role}/${displayUsername}`}>Account Settings</NavLink></MenuItem>
+                <MenuItem><NavLink to={`/${user?.role}/${displayUsername}`}>View Yr Account</NavLink></MenuItem>
                 {user ? '' :
                   <MenuItem>
                     <NavLink to="/login">Register / Login</NavLink>

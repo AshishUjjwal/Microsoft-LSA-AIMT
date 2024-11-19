@@ -3,6 +3,7 @@ import axios from 'axios';
 import ProfilePage from './ProfilePage.jsx';
 import { AuthContext } from '../../contexts/AuthContext.js';
 import LoadingPage from '../../pages/LoadingPage.jsx'
+import apiClient from '../../api/axiosInstance.js';
 
 const App = () => {
     const { auth } = useContext(AuthContext); // Access user from AuthContext
@@ -15,7 +16,7 @@ const App = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/registrations/registered-events`, {
+                const response = await apiClient.get(`/api/registrations/registered-events`, {
                     withCredentials: true, // Include credentials
                     headers: {
                         'Content-Type': 'application/json',
@@ -37,7 +38,7 @@ const App = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/blogs/getuserblog`, {
+                const response = await apiClient.get(`/api/blogs/getuserblog`, {
                     withCredentials: true, // Include credentials
                     headers: {
                         'Content-Type': 'application/json',

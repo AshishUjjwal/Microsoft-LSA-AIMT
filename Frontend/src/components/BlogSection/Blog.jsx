@@ -252,6 +252,7 @@ const BlogSection = () => {
                             </Box>
 
                             {/* Middle Section */}
+                            {console.log(blog.slug)}
                             <Box my="auto" width="100%">
                                 <BlogTags tags={blog.tags} />
                                 <TruncatedText text={blog.description} slug={blog.slug} />

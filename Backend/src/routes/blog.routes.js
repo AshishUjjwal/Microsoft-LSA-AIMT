@@ -17,7 +17,7 @@ import {
 
 
 // @route   GET:  http://localhost:8000/api/blogs/getallblog
-router.get('/getallblog', getAllBlogs);
+router.get('/getallblog', verifyAdmin, getAllBlogs);
 
 // @route   GET:  http://localhost:8000/api/blogs/getapprovedblog
 router.get('/getapprovedblog', verifyJWT, getApprovedBlogs);

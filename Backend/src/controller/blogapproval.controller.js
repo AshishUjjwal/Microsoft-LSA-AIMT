@@ -50,7 +50,7 @@ const getApprovedBlogs = async (req, res) => {
         const approvedBlogs = await BlogApproved.find()
             .populate({
                 path: 'blog',
-                select: 'title description content imageUrl category tags author authorImage createdAt',
+                select: 'title description content imageUrl slug category tags author authorImage createdAt',
                 populate: {
                     path: 'author', // Populating the author field
                     select: 'name email role', // Include only the name and email of the author
