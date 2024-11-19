@@ -65,9 +65,10 @@ const BlogSection = () => {
     const totalPages = Math.ceil(blogs?.length / blogsPerPage);
 
     // Handlers for creating, editing, and deleting
-    const handleCreate = (newBlog) => {
+    const handleCreate = user?.role === 'admin' 
+    ? (newBlog) => {
         setBlogs([...blogs, newBlog]);
-    };
+    } : {}
 
     const handleEdit = (id, updatedBlog) => {
         setBlogs(blogs.map((blog) => (blog._id === id ? updatedBlog : blog)));
@@ -87,15 +88,61 @@ const BlogSection = () => {
         setDeleteOpen(true); // Open the delete modal
     };
 
+    // Approve the blog by only Admin users
+    const handleApproveEvent = async (blogId) => {
+        try {
+            await apiClient.post(`/api/blogsapprove/approve/${blogId}`, {}, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            // Update the state to reflect the approved blog
+            setBlogs((prevBlogs) =>
+                prevBlogs.map((blog) =>
+                    blog._id === blogId ? { ...blog, isApproved: true } : blog
+                )
+            );
+        } catch (err) {
+            console.error('Error approving blog:', err);
+            alert('Failed to approve blog.');
+        }
+    };
+
+    // Revoke the Approval of the blog by only Admin users
+    // Handle blog revoke
+    const handleUnapproveEvent = async (blogId) => {
+        try {
+            await apiClient.delete(`/api/blogsapprove/unapprove/${blogId}`, {}, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            // Update the state to reflect the unapproved blog
+            setBlogs((prevBlogs) =>
+                prevBlogs.map((blog) =>
+                    blog._id === blogId ? { ...blog, isApproved: false } : blog
+                )
+            );
+        } catch (err) {
+            console.error('Error revoking blog:', err);
+            alert('Failed to revoke blog approval.');
+        }
+    };
+
+    // Fetch Blog based on User Role
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
                 // const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/blogs/getblog`, {
                 // Determine the API endpoint based on the user's role
+                // console.log(`user role : `, user?.role);
+
                 const endpoint =
                     user?.role === 'admin'
                         ? '/api/blogs/getallblog'
-                        : '/api/blogsapprove/getapprovedblogs';
+                        : '/api/blogsapprove/getapprovedblogs'
 
                 const response = await apiClient.get(endpoint, {
                     withCredentials: true,
@@ -103,13 +150,22 @@ const BlogSection = () => {
                         'Content-Type': 'application/json',
                     },
                 });
-                const blogs = response?.data?.approvedBlogs?.map(item => ({
-                    ...item.blog, // Spread the blog details
-                    approvalDate: item.approvalDate, // Add the approval date
-                    approvedBy: item.approvedBy, // Add approvedBy details
-                }));
+                const blogs = user?.role === 'admin'
+                    ? response?.data?.blogs?.map(item => ({
+                        ...item, // Spread the blog details
+                        approvalDate: item.approvalDate, // Add the approval date
+                        approvedBy: item.approvedBy, // Add approvedBy details
+                    }))
+                    : response?.data?.approvedBlogs?.map(item => ({
+                        ...item.blog, // Spread the blog details
+                        approvalDate: item.approvalDate, // Add the approval date
+                        approvedBy: item.approvedBy, // Add approvedBy details
+                    }));
+
+                // console.log(`Blogs : `, blogs);
+
                 setBlogs(blogs); // Store in state
-                console.log(`Response : `, response?.data?.approvedBlogs);
+                console.log(`Response : `, response?.data);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching blogs:', error);
@@ -177,7 +233,7 @@ const BlogSection = () => {
                                             src={
                                                 blog.imageUrl || 'https://plopdo.com/wp-content/uploads/2020/02/GettyImages-887987150-5c770377c9e77c00011c82e6.jpg'
                                             }
-                                            alt={blog.title}
+                                            alt={blog?.title}
                                             objectFit="contain"
                                             width="100%"
                                             maxHeight={'100%'}
@@ -190,7 +246,7 @@ const BlogSection = () => {
                                 </Box>
                                 <Heading fontSize="xl" marginTop="2">
                                     <Text textDecoration="none" _hover={{ textDecoration: 'none' }}>
-                                        {`${blog.title?.substring(0, 40)}... `}
+                                        {`${blog?.title?.substring(0, 40)}... `}
                                     </Text>
                                 </Heading>
                             </Box>
@@ -203,11 +259,7 @@ const BlogSection = () => {
 
                             {/* Bottom Section */}
                             <Box mt="auto">
-                                <BlogAuthor
-                                    authorImage={blog.authorImage}
-                                    author={blog.author}
-                                    date={blog.createdAt}
-                                />
+                                
                                 {(blog.author?._id === user._id || user.role === 'admin') && (
                                     <HStack spacing={4} marginTop={4}>
                                         <IconButton
@@ -241,7 +293,7 @@ const BlogSection = () => {
                                                 size="sm"
                                                 colorScheme={blog.isApproved ? "red" : "green"}
                                                 leftIcon={blog.isApproved ? <CloseIcon /> : <CheckIcon />}
-                                                // onClick={() => blog.isApproved ? handleUnapproveEvent(blog) : handleApproveEvent(blog)} // Function based on state
+                                                onClick={() => blog.isApproved ? handleUnapproveEvent(blog?._id) : handleApproveEvent(blog?._id)} // Function based on state
                                                 _hover={{
                                                     cursor: 'pointer',
                                                     color: blog.isApproved ? 'red.900' : 'green.900',
@@ -254,6 +306,11 @@ const BlogSection = () => {
                                         )}
                                     </HStack>
                                 )}
+                                <BlogAuthor
+                                    authorImage={blog.authorImage}
+                                    author={blog.author}
+                                    date={blog.createdAt}
+                                />
                             </Box>
                         </Box>
                     </WrapItem>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, Textarea, FormLabel, useDisclosure, VStack, HStack, IconButton } from '@chakra-ui/react';
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import axios from 'axios';
+import apiClient from '../../../api/axiosInstance';
 
 const CreateBlogModal = ({ onCreate }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -59,13 +60,13 @@ const CreateBlogModal = ({ onCreate }) => {
             };
 
             // Make POST request to the API
-            const response = await axios.post(
-                `${process.env.REACT_APP_BASE_URL}/api/blogs/createblog`, // Replace with your actual API endpoint
+            const response = await apiClient.post(
+                `/api/blogs/createblog`, // Replace with your actual API endpoint
                 formData,
                 { headers, withCredentials: true } // Include credentials
             );
 
-            console.log('Blog created successfully:', response.data);
+            console.log('Blog created successfully:', response);
             onCreate(response.data.blog);  // Trigger callback for any additional logic on blog creation
 
             onClose(); // Close the modal after successful submission

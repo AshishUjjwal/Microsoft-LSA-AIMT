@@ -2,7 +2,7 @@ import { Blog } from '../Models/blog.model.js';
 import { User } from '../Models/user.model.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import slugify from 'slugify';
-import { approveBlog } from './blogapproval.controller.js';
+import { BlogApproved } from '../Models/blogapproved.model.js';
 
 const createBlog = asyncHandler(async (req, res) => {
     try {
@@ -41,7 +41,7 @@ const createBlog = asyncHandler(async (req, res) => {
 
         // Automatically add approval entry if the creator is an admin
         if (userRole === 'admin') {
-            const approval = new approveBlog({
+            const approval = new BlogApproved({
                 blog: savedBlog._id,
                 approvedBy: authorId, // Admin is the approver
             });

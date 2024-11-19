@@ -6,15 +6,15 @@ import { verifyAdmin } from '../middleware/admin.middleware.js';
 const router = express.Router();
 
 // Approve a blog (Admin only)
-// http://localhost:8000/api/blogsapprove/:id/approve
-router.post('/:id/approve',  verifyAdmin, approveBlog);
+// http://localhost:8000/api/blogsapprove/approve/:id
+router.post('/approve/:id',  verifyAdmin, approveBlog);
 
 // Get all approved blogs
 // http://localhost:8000/api/blogsapprove/getapprovedblogs
 router.get('/getapprovedblogs', verifyJWT,  getApprovedBlogs);
 
 // Revoke blog approval (Admin only)
-// http://localhost:8000/api/blogsapprove/:id/unapprove
-router.delete('/:id/unapprove',  verifyAdmin, revokeApproval);
+// http://localhost:8000/api/blogsapprove/unapprove/:id
+router.delete('/unapprove/:id',  verifyAdmin, revokeApproval);
 
 export default router;

@@ -88,7 +88,7 @@ const revokeApproval = async (req, res) => {
 
         res.status(200).json({ message: 'Blog approval revoked successfully' });
     } catch (error) {
-        console.error('Error revoking blog approval:', error);
+        console.log('Error revoking blog approval:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
