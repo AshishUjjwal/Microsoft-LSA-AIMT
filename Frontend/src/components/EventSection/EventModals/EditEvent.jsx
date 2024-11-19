@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import apiClient from '../../../api/axiosInstance';
 
 const EditEventForm = ({ event, isOpen, onClose, onUpdate }) => {
     const [formData, setFormData] = useState({
@@ -49,8 +50,8 @@ const EditEventForm = ({ event, isOpen, onClose, onUpdate }) => {
 
     const handleSubmit = async () => {
         try {
-            console.log(event._id);
-            const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/events/update-event/${event._id}`, formData,
+            // console.log(event._id);
+            const response = await apiClient.put(`/api/events/update-event/${event._id}`, formData,
                 {
                     withCredentials: true, // Include credentials like cookies, authorization headers, etc.
                     headers: {
@@ -59,7 +60,7 @@ const EditEventForm = ({ event, isOpen, onClose, onUpdate }) => {
                     }
                 }
             );
-            console.log(`Updated Response : `,response);
+            // console.log(`Updated Response : `,response);
             if (response.status === 200) {
                 onUpdate(response.data.event); // Assuming the API returns the updated event
                 onClose();

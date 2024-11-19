@@ -73,8 +73,8 @@ const EventItem = ({ event, isAdmin, onDelete, onEdit }) => {
   useEffect(() => {
     const checkRegistration = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/registrations/registration-status/${event._id}`,
+        const response = await apiClient.get(
+          `/api/registrations/registration-status/${event._id}`,
           {
             withCredentials: true, // Include credentials
             headers: {
@@ -130,8 +130,8 @@ const EventItem = ({ event, isAdmin, onDelete, onEdit }) => {
   const handleUnregisterEvent = async () => {
     try {
       // const token = localStorage.getItem("token");
-      const response = await axios.delete(
-        `${process.env.REACT_APP_BASE_URL}/api/registrations/unregister/${event._id}`,
+      const response = await apiClient.delete(
+        `/api/registrations/unregister/${event._id}`,
         {
           withCredentials: true,
           headers: {

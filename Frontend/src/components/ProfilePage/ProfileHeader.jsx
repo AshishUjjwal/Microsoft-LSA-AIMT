@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Flex, Avatar, Text, Heading, Stack, Button, Icon, useColorModeValue, Link, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
 import { MdEmail, MdLocationOn, MdEdit } from 'react-icons/md';
 import axios from 'axios';
+import apiClient from '../../api/axiosInstance';
 
 const ProfileHeader = ({ user, onUpdate }) => {
     // Define colors for light and dark modes using useColorModeValue
@@ -46,7 +47,7 @@ const ProfileHeader = ({ user, onUpdate }) => {
     const handleFormSubmit = async () => {
         try {
             // Assuming the backend endpoint is `/api/users/${user._id}`
-            const response = await axios.patch(`${process.env.REACT_APP_BASE_URL}/api/users/update-account`, formData,
+            const response = apiClient.patch(`/api/users/update-account`, formData,
                 {
                     withCredentials: true,
                     headers: {

@@ -17,7 +17,7 @@ import apiClient from '../../api/axiosInstance.js';
 const BlogDetail = () => {
     const { slug } = useParams();
     const [blog, setBlog] = useState(null);
-    console.log(`slug: `, slug);
+    // console.log(`slug: `, slug);
     useEffect(() => {
         const fetchBlog = async () => {
             try {
@@ -29,7 +29,7 @@ const BlogDetail = () => {
                         'Content-Type': 'application/json',
                     },
                 });
-                console.log(`Resopnse : `, response);
+                // console.log(`Resopnse : `, response);
                 setBlog(response.data);
             } catch (error) {
                 console.error('Error fetching blog:', error);

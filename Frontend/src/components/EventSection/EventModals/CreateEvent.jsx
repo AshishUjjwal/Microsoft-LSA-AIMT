@@ -11,6 +11,7 @@ import {
     Textarea,
 } from "@chakra-ui/react";
 import axios from 'axios';
+import apiClient from "../../../api/axiosInstance";
 
 
 const CreateEventForm = ({onClose, onCreate}) => {
@@ -52,7 +53,7 @@ const CreateEventForm = ({onClose, onCreate}) => {
         try {
 
             // Make a POST request to the backend API
-            const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/events/create-event`, formData, {
+            const response = await apiClient.post(`/api/events/create-event`, formData, {
                 withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json',  // Make sure content type is set correctly

@@ -1,14 +1,15 @@
 // Optional: For auth-specific API calls
 // src/api/authService.js
 import axios from 'axios';
+import apiClient from './axiosInstance';
 
-const API_URL = process.env.REACT_APP_BASE_URL; // Base URL for API
+// const API_URL = process.env.REACT_APP_BASE_URL; // Base URL for API
 
 // Function to get a new access token using the refresh token
 export const getNewAccessToken = async () => {
   try {
     // Make a request to the refresh endpoint
-    const response = await axios.post(`${API_URL}/api/users/refresh-token`, {}, {
+    const response = await apiClient.post(`/api/users/refresh-token`, {}, {
       withCredentials: true, // Allows sending cookies if the refresh token is stored as an HTTP-only cookie
       headers: {
         'Content-Type': 'application/json',

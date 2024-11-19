@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import apiClient from '../../../api/axiosInstance';
 
 const DeleteEvent = ({ event, isOpen, onClose, onDelete }) => {
     const [isDeleting, setIsDeleting] = useState(false); // For managing loading state
@@ -22,7 +23,7 @@ const DeleteEvent = ({ event, isOpen, onClose, onDelete }) => {
     const confirmDelete = async () => {
         setIsDeleting(true);
         try {
-            await axios.delete(`${process.env.REACT_APP_BASE_URL}/api/events/delete-event/${event._id}`,
+            await apiClient.delete(`/api/events/delete-event/${event._id}`,
                 {
                     withCredentials: true, // Include credentials like cookies, authorization headers, etc.
                     headers: {

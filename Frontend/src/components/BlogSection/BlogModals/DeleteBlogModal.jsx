@@ -12,13 +12,14 @@ import {
     VStack
 } from '@chakra-ui/react';
 import axios from 'axios';
+import apiClient from '../../../api/axiosInstance';
 
 const DeleteBlogModal = ({ blog, isOpen, onClose, onDelete }) => {
     // Handle blog deletion with axios
     const handleDelete = async () => {
         try {
             // Send DELETE request to the server
-            await axios.delete(`${process.env.REACT_APP_BASE_URL}/api/blogs/delete-blog/${blog._id}`, {
+            await apiClient.delete(`/api/blogs/delete-blog/${blog._id}`, {
                 withCredentials: true,  // Include cookies for authentication
                 headers: {
                     'Content-Type': 'application/json',
