@@ -44,7 +44,7 @@ const App = () => {
                         'Content-Type': 'application/json',
                     },
                 });
-                console.log(`blog res`,response);
+                // console.log(`blog res`,response);
                 setBlogs(response.data.data); // Set blogs data
             } catch (err) {
                 console.log("Failed to fetch blogs.", err);

@@ -47,7 +47,7 @@ const ProfileHeader = ({ user, onUpdate }) => {
     const handleFormSubmit = async () => {
         try {
             // Assuming the backend endpoint is `/api/users/${user._id}`
-            const response = apiClient.patch(`/api/users/update-account`, formData,
+            const response = await apiClient.post(`/api/users/update-account`, formData,
                 {
                     withCredentials: true,
                     headers: {
@@ -55,7 +55,7 @@ const ProfileHeader = ({ user, onUpdate }) => {
                     },
                 }
             );
-            console.log(`Response: ${response}`, response);
+            // console.log(`Response: `, response);
 
             // If successful, trigger the onUpdate callback to refresh the profile data
             if (response.status === 200) {
@@ -151,7 +151,7 @@ const ProfileHeader = ({ user, onUpdate }) => {
                     </Text>
                     <Box my={2}>
                         <Flex align="center">
-                            <Text mr={2} color={useColorModeValue('gray.100', 'gray.200')}>Let's Connect :</Text>
+                            <Text mr={2} color={useColorModeValue('gray.100', 'gray.200')}>Let's Connect </Text>
                             <Link href={user.social} isExternal color={useColorModeValue('blue.500', 'blue.300')}>
                                 <Text fontSize="md">{user.social}</Text>
                             </Link>

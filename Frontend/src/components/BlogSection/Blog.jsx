@@ -165,7 +165,7 @@ const BlogSection = () => {
                 // console.log(`Blogs : `, blogs);
 
                 setBlogs(blogs); // Store in state
-                console.log(`Response : `, response?.data);
+                // console.log(`Response : `, response?.data);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching blogs:', error);
