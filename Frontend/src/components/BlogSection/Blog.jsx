@@ -30,6 +30,7 @@ import AdminBlogRotator from './AdminBlogRotator.jsx';
 
 import { BlogAuthor, BlogTags, TruncatedText } from './BlogComponent.jsx';
 import apiClient from '../../api/axiosInstance.js';
+import ScrollToTop from '../../routes/ScrollToTop.jsx';
 
 const BlogSection = () => {
     const [blogs, setBlogs] = useState([]);
@@ -59,16 +60,21 @@ const BlogSection = () => {
     // Handle page change
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
+        // Scroll to the top of the container or page
+        window.scrollTo({
+            top: 500,
+            behavior: 'smooth', // Optional: Adds a smooth scrolling effect
+        });
     };
 
     // Calculate total pages
     const totalPages = Math.ceil(blogs?.length / blogsPerPage);
 
     // Handlers for creating, editing, and deleting
-    const handleCreate = user?.role === 'admin' 
-    ? (newBlog) => {
-        setBlogs([...blogs, newBlog]);
-    } : (newBlog) => {}
+    const handleCreate = user?.role === 'admin'
+        ? (newBlog) => {
+            setBlogs([...blogs, newBlog]);
+        } : (newBlog) => { }
 
     const handleEdit = (id, updatedBlog) => {
         setBlogs(blogs.map((blog) => (blog._id === id ? updatedBlog : blog)));
@@ -183,7 +189,6 @@ const BlogSection = () => {
 
     return (
         <Container maxWidth={'1170px'} p="12">
-
             <Heading
                 as="h1"
                 fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
@@ -259,7 +264,7 @@ const BlogSection = () => {
 
                             {/* Bottom Section */}
                             <Box mt="auto">
-                                
+
                                 {(blog.author?._id === user._id || user.role === 'admin') && (
                                     <HStack spacing={4} marginTop={4}>
                                         <IconButton

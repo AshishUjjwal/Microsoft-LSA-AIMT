@@ -1,4 +1,5 @@
 import { Box, Heading, SimpleGrid, Text, Flex, Button, useColorModeValue, space } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 const BlogCard = ({ blog }) => {
     // Use useColorModeValue to adjust colors for light and dark modes
@@ -6,6 +7,10 @@ const BlogCard = ({ blog }) => {
     const textColor = useColorModeValue('gray.700', 'gray.300');
     const dateColor = useColorModeValue('gray.500', 'gray.400');
     const boxShadow = useColorModeValue('md', 'dark-lg');
+    const navigate = useNavigate();
+    const handleReadMore = (slug) => {
+        navigate(`/blog/${slug}`); // Navigate to blog detail page
+    };
 
     return (
         <Flex direction="column" p={4} bg={bgColor} borderRadius="md" boxShadow={boxShadow} transition="all 0.3s ease">
@@ -18,7 +23,7 @@ const BlogCard = ({ blog }) => {
             <Text fontSize="sm" color={textColor} mb={4} textAlign={'justify'}>
                 {blog.description}
             </Text>
-            <Button mt="auto" colorScheme="teal" size="sm">
+            <Button mt="auto" colorScheme="teal" size="sm" onClick={() => handleReadMore(blog.slug)}>
                 View Blog
             </Button>
         </Flex>

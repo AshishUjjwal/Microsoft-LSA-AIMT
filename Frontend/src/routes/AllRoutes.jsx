@@ -1,6 +1,6 @@
 // src/routes/AllRoutes.js
 import React, { useContext } from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import ScrollToTop from "./ScrollToTop";
 
 // Import Page Components
