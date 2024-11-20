@@ -127,6 +127,14 @@ const updateBlog = asyncHandler(async (req, res) => {
     const { title, description, content, tags, imageUrl } = req.body;
 
     try {
+        await BlogApproved.findOneAndDelete({ blog: id });
+
+        // Mark the blog as unapproved
+        const blog = await Blog.findById(id);
+        if (blog) {
+            blog.isApproved = false;
+            await blog.save();
+        }
         const updatedBlog = await Blog.findByIdAndUpdate(
             id,
             {
@@ -162,6 +170,14 @@ const deleteBlog = asyncHandler(async (req, res) => {
     const { id } = req.params;
 
     try {
+        await BlogApproved.findOneAndDelete({ blog: id });
+
+        // Mark the blog as unapproved
+        const blog = await Blog.findById(id);
+        if (blog) {
+            blog.isApproved = false;
+            await blog.save();
+        }
         const deletedBlog = await Blog.findByIdAndDelete(id);
 
         if (!deletedBlog) {

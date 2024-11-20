@@ -43,10 +43,10 @@ const BlogDetail = () => {
     return (
         <Container maxWidth={'900px'} p="12">
             <VStack spacing="4">
-                <Heading as="h1" textAlign="center">
+                <Heading as="h1" textAlign="justify">
                     {blog.title}
                 </Heading>
-                <Text as="h4" textAlign="center">
+                <Text as="h4" textAlign="Justify">
                     {blog.description}
                 </Text>
                 <BlogTags tags={blog.tags} />
@@ -66,7 +66,7 @@ const BlogDetail = () => {
                             <Heading as="h3" size="lg">
                                 {section.Header}
                             </Heading>
-                            <Text fontSize="lg">{section.Body}</Text>
+                            <Text fontSize="lg" textAlign="Justify">{section.Body}</Text>
                         </VStack>
                     ))
                 ) : (

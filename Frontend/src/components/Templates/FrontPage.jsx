@@ -64,7 +64,7 @@ const FrontPage = () => {
         filter="brightness(60%)" // Darken background for text readability
       />
 
-      <VStack spacing={6} align="center" zIndex={1} maxW="1000px">
+      <VStack spacing={6} align="center" maxW="1000px" position="relative" zIndex={10} >
         <Heading
           as="h1"
           fontSize={headingFontSize}
@@ -85,8 +85,8 @@ const FrontPage = () => {
           Join our community to learn, innovate, and thrive in the tech world together.
         </Text>
 
-        <Flex justify="center" align="center">
-          <Link href="https://www.linkedin.com/in/your-profile" isExternal>
+        <Flex justify="center" align="center" zIndex={20}>
+          <Link href="https://www.linkedin.com/company/mlsa-aimt/" isExternal>
             <Button
               leftIcon={<FaLinkedin />}
               variant="solid"
@@ -95,11 +95,12 @@ const FrontPage = () => {
               colorScheme="blue"
               _hover={{ transform: 'scale(1.05)', boxShadow: 'lg' }} // Hover animation
               transition="all 0.3s ease"
+              zIndex={20} // Add this if needed to make the button clickable
             >
               LinkedIn
             </Button>
           </Link>
-          <Link href="https://github.com/your-profile" isExternal>
+          <Link href="https://github.com/Microsoft-LSA-AIMT" isExternal>
             <Button
               leftIcon={<FaGithub />}
               variant="solid"
@@ -109,13 +110,15 @@ const FrontPage = () => {
               color="white"
               _hover={{ transform: 'scale(1.05)', boxShadow: 'lg' }}
               transition="all 0.3s ease"
+              zIndex={20} // Same here
             >
               GitHub
             </Button>
           </Link>
         </Flex>
 
-        <Link href="https://wa.me/1234567890" isExternal>
+
+        <Link href="https://chat.whatsapp.com/LpoQfKYpS9M3eS5GXojKoj" isExternal>
           <Button
             leftIcon={<FaWhatsapp />}
             colorScheme="green"

@@ -241,7 +241,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
     } catch (error) {
         const options = {
-            // httpOnly: true,
+            httpOnly: true,
             secure: true
         }
         console.log("Invalid Refresh Token : ", error);

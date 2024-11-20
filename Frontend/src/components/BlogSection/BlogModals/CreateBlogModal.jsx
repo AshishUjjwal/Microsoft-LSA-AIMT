@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, Textarea, FormLabel, useDisclosure, VStack, HStack, IconButton } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, Textarea, FormLabel, useDisclosure, VStack, HStack, IconButton, useToast } from '@chakra-ui/react';
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
-import axios from 'axios';
 import apiClient from '../../../api/axiosInstance';
 
 const CreateBlogModal = ({ onCreate }) => {
+    const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [formData, setFormData] = useState({
         title: '',
@@ -67,9 +67,20 @@ const CreateBlogModal = ({ onCreate }) => {
             );
 
             console.log('Blog created successfully:', response);
-            onCreate(response.data.blog);  // Trigger callback for any additional logic on blog creation
+            // onCreate(response.data.blog);  // Trigger callback for any additional logic on blog creation
+            console.log(response.data.blog);
 
-            onClose(); // Close the modal after successful submission
+            if (response.status === 200) {
+                onCreate(response.data.blog); // Assuming the API returns the Added event
+                onClose();
+                toast({
+                    title: "Blog Created, Wait for Admin Approval",
+                    description: response.data.message,
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                });
+            }
         } catch (error) {
             console.error('Error creating blog:', error.response?.data || error.message);
         }
@@ -98,7 +109,7 @@ const CreateBlogModal = ({ onCreate }) => {
                 }}
                 onClick={onOpen}
               >
-                Create A New Blog
+                LET'S WRITE A BLOG ... 📝
               </Button>
 
             <Modal isOpen={isOpen} onClose={onClose}>

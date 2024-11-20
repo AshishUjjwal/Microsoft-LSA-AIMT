@@ -74,7 +74,7 @@ const AdminBlogRotator = ({ blogs, user, handleEditEvent, handleDeleteEvent }) =
                     <Box
                         bgGradient={bgGradient}
                         backgroundSize="20px 20px"
-                        opacity="0.2"
+                        // opacity="0.2"
                         height="100%"
                     />
                 </Box>

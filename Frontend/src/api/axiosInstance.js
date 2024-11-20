@@ -27,6 +27,7 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    console.log(error);
     if (error?.response?.status === 405 && !originalRequest._retry) {
       originalRequest._retry = true;  // Mark the request as retried to prevent infinite loops
       

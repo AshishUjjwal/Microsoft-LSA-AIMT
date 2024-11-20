@@ -68,7 +68,7 @@ const BlogSection = () => {
     const handleCreate = user?.role === 'admin' 
     ? (newBlog) => {
         setBlogs([...blogs, newBlog]);
-    } : {}
+    } : (newBlog) => {}
 
     const handleEdit = (id, updatedBlog) => {
         setBlogs(blogs.map((blog) => (blog._id === id ? updatedBlog : blog)));
@@ -194,7 +194,7 @@ const BlogSection = () => {
                 textShadow="2px 2px 8px rgba(0, 0, 0, 0.4)"
                 mt={3}
             >
-                Blogs By MLSA'S
+                LATEST ADMIN BLOG ...👨🏻‍💻
             </Heading>
             <AdminBlogRotator
                 blogs={blogs}

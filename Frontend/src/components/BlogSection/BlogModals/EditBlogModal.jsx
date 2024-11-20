@@ -15,12 +15,14 @@ import {
     VStack,
     Box,
     HStack,
-    IconButton
+    IconButton,
+    useToast
 } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import apiClient from '../../../api/axiosInstance';
 
 const EditBlogModal = ({ blog, isOpen, onClose, onEdit }) => {
+    const toast = useToast();
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -99,9 +101,20 @@ const EditBlogModal = ({ blog, isOpen, onClose, onEdit }) => {
                     'Content-Type': 'application/json',
                 },
             });
-            console.log(`Rees: `,response);
-            onEdit(blog._id, response.data.blog);
-            onClose();  // Close the modal after editing
+            // console.log(`Rees: `,response);
+            // onEdit(blog._id, response.data.blog);
+            // onClose();  // Close the modal after editing
+            if (response.status === 200) {
+                onEdit(blog._id, response.data.blog);
+                onClose();
+                toast({
+                    title: "Blog Edited",
+                    description: response.data.message,
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                });
+            }
         } catch (error) {
             console.error('Error updating blog:', error);
         }

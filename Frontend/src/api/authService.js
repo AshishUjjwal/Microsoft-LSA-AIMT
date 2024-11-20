@@ -17,7 +17,7 @@ export const getNewAccessToken = async () => {
     });
     // console.log(`Responsejkbkj`,response.data.data.accessToken);
 
-    const accessToken = response.data.data.accessToken; // Assuming response includes the new access token in `accessToken`
+    const accessToken = response?.data?.data?.accessToken; // Assuming response includes the new access token in `accessToken`
     // console.log(`NewAccessToken1`,accessToken);
 
     return accessToken;
