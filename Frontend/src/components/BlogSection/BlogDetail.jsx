@@ -43,7 +43,7 @@ const BlogDetail = () => {
     return (
         <Container maxWidth={'900px'} p="12">
             <VStack spacing="4">
-                <Heading as="h1" textAlign="justify">
+                <Heading as="h1" >
                     {blog.title}
                 </Heading>
                 <Text as="h4" textAlign="Justify">
