@@ -196,26 +196,26 @@ const FooterBranding = () => {
       <HStack spacing={4}>
         <SocialButton
           label="Twitter"
-          href="https://twitter.com/yourprofile"
+          href="https://twitter.com/"
         >
           <FaTwitter />
         </SocialButton>
         <SocialButton
           label="Github"
-          href="https://github.com/yourprofile"
+          href="https://github.com/Microsoft-LSA-AIMT"
         >
           <FaGithub />
         </SocialButton>
         <SocialButton
           label="LinkedIn"
           _hover={{ color: 'linkedin.500', transform: 'scale(1.2)' }}
-          href="https://linkedin.com/in/yourprofile"
+          href="https://www.linkedin.com/company/mlsa-aimt/"
         >
           <FaLinkedin />
         </SocialButton>
         <SocialButton
           label="Instagram"
-          href="https://instagram.com/yourprofile"
+          href="https://instagram.com/"
         >
           <FaInstagram />
         </SocialButton>

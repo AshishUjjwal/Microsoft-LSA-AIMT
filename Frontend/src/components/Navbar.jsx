@@ -222,7 +222,7 @@ export default function Navbar() {
                     _hover={{ color: 'pink.500', transform: 'scale(1.2)' }}
                   />
                 </Link>
-                <Link to="https://www.linkedin.com" isExternal>
+                <Link to="https://www.linkedin.com/company/mlsa-aimt/" isExternal>
                   <Icon
                     as={FaLinkedin}
                     boxSize={6}
@@ -236,7 +236,7 @@ export default function Navbar() {
                     _hover={{ color: 'twitter.500', transform: 'scale(1.2)' }}
                   />
                 </Link>
-                <Link to="https://wa.me/1234567890" isExternal>
+                <Link to="https://chat.whatsapp.com/LpoQfKYpS9M3eS5GXojKoj" isExternal>
                   <Icon
                     as={FaWhatsapp}
                     boxSize={6}
@@ -323,13 +323,13 @@ export default function Navbar() {
                     <Link to="https://www.instagram.com" isExternal>
                       <Icon as={FaInstagram} boxSize={6} _hover={{ color: 'pink.500', transform: 'scale(1.2)' }} />
                     </Link>
-                    <Link to="https://www.linkedin.com" isExternal>
+                    <Link to="https://www.linkedin.com/company/mlsa-aimt/" isExternal>
                       <Icon as={FaLinkedin} boxSize={6} _hover={{ color: 'linkedin.500', transform: 'scale(1.2)' }} />
                     </Link>
                     <Link to="https://twitter.com" isExternal>
                       <Icon as={FaTwitter} boxSize={6} _hover={{ color: 'twitter.500', transform: 'scale(1.2)' }} />
                     </Link>
-                    <Link to="https://wa.me/1234567890" isExternal>
+                    <Link to="https://chat.whatsapp.com/LpoQfKYpS9M3eS5GXojKoj" isExternal>
                       <Icon as={FaWhatsapp} boxSize={6} _hover={{ color: 'whatsapp.500', transform: 'scale(1.2)' }} />
                     </Link>
                   </HStack>
