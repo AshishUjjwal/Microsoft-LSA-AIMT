@@ -154,6 +154,7 @@ const EventItem = ({ event, isAdmin, onDelete, onEdit }) => {
     }
   };
 
+  const link = "https://www.youtube.com/playlist?list=PLillGF-RfqbY3c2r0htQyVbDJJoBFE6Rb";
 
   return (
     <WrapItem key={event._id} width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}>
@@ -268,6 +269,23 @@ const EventItem = ({ event, isAdmin, onDelete, onEdit }) => {
               )
             )
           }
+          {event.status === "Upcoming" && (
+            <Button
+              size="sm"
+              colorScheme="green"
+              aria-label="Form"
+              onClick={() => event.link ? window.open(event.link, '_blank') : alert("No link provided")}
+              _hover={{
+                cursor: "pointer",
+                color: "blue.900",
+                transform: "scale(1.05)",
+                transition: "transform 0.2s ease, color 0.2s ease",
+              }}
+            >
+              {/* Fill The Form */} Meeting Link
+            </Button>
+          )}
+
         </HStack>
       </Box>
       {/* Modal for Edit and Delete */}

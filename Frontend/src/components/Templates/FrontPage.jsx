@@ -17,7 +17,6 @@ const images = [
   'https://png.pngtree.com/thumb_back/fw800/background/20230722/pngtree-d-rendering-of-a-home-office-with-a-responsive-digital-marketing-image_3870151.jpg',
   'https://w0.peakpx.com/wallpaper/435/732/HD-wallpaper-laptop-numbers-dark.jpg',
   'https://c1.wallpaperflare.com/preview/427/745/192/notebook-natural-laptop-macbook.jpg',
-  // 'https://c1.wallpaperflare.com/preview/427/745/192/notebook-natural-laptop-macbook.jpg'
 ];
 
 const FrontPage = () => {
@@ -32,7 +31,6 @@ const FrontPage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Responsive font sizes and padding for different screen sizes
   const headingFontSize = useBreakpointValue({ base: '30px', md: '40px', lg: '50px' });
   const textFontSize = useBreakpointValue({ base: '15px', md: '18px', lg: '20px' });
   const buttonSize = useBreakpointValue({ base: 'md', md: 'md', lg: 'lg' });
@@ -47,7 +45,6 @@ const FrontPage = () => {
       p={4}
       position="relative"
       overflow="hidden"
-      zIndex={-1}
     >
       {/* Background Image */}
       <Box
@@ -61,10 +58,11 @@ const FrontPage = () => {
         backgroundPosition="center"
         transition="background-image 1s ease-in-out"
         zIndex={-1}
-        filter="brightness(60%)" // Darken background for text readability
+        filter="brightness(60%)"
+        pointerEvents="none" // Prevent background from blocking clicks
       />
 
-      <VStack spacing={6} align="center" maxW="1000px" position="relative" zIndex={10} >
+      <VStack spacing={6} align="center" maxW="1000px" position="relative" zIndex={10}>
         <Heading
           as="h1"
           fontSize={headingFontSize}
@@ -93,9 +91,8 @@ const FrontPage = () => {
               size={buttonSize}
               m={2}
               colorScheme="blue"
-              _hover={{ transform: 'scale(1.05)', boxShadow: 'lg' }} // Hover animation
+              _hover={{ transform: 'scale(1.05)', boxShadow: 'lg' }}
               transition="all 0.3s ease"
-              zIndex={20} // Add this if needed to make the button clickable
             >
               LinkedIn
             </Button>
@@ -110,13 +107,11 @@ const FrontPage = () => {
               color="white"
               _hover={{ transform: 'scale(1.05)', boxShadow: 'lg' }}
               transition="all 0.3s ease"
-              zIndex={20} // Same here
             >
               GitHub
             </Button>
           </Link>
         </Flex>
-
 
         <Link href="https://chat.whatsapp.com/LpoQfKYpS9M3eS5GXojKoj" isExternal>
           <Button

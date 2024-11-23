@@ -30,7 +30,6 @@ import AdminBlogRotator from './AdminBlogRotator.jsx';
 
 import { BlogAuthor, BlogTags, TruncatedText } from './BlogComponent.jsx';
 import apiClient from '../../api/axiosInstance.js';
-import ScrollToTop from '../../routes/ScrollToTop.jsx';
 
 const BlogSection = () => {
     const [blogs, setBlogs] = useState([]);

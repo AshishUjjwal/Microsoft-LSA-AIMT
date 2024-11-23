@@ -112,7 +112,7 @@ export default function Navbar() {
       )}
       position="sticky"
       top={0}
-      zIndex={10}
+      zIndex={9999} // Ensure it stays above all other elements
       shadow="md"
     >
       {/* Main Container */}
