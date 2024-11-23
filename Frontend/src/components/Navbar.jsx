@@ -111,7 +111,7 @@ export default function Navbar() {
       )}
       position="sticky"
       top={0}
-      zIndex={9999} // Ensure it stays above all other elements
+      zIndex={1000} // Ensure it stays above all other elements
       shadow="md"
       fontFamily="'Alice', serif"  // Apply Alice font here
     >
