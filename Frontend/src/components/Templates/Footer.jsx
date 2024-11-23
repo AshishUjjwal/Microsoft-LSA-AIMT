@@ -140,7 +140,7 @@ const FooterLinks = () => {
   const linkHoverColor = useColorModeValue("teal.600", "teal.200");
 
   const links = {
-    Company: ["About Us", "Careers", "Blog"],
+    Company: ["About Us", "Blog", "Careers"],
     Support: ["Contact Us", "FAQs", "Live Chat"],
     Legal: ["Privacy Policy", "Terms of Service", "Cookie Policy"],
   };
@@ -155,7 +155,7 @@ const FooterLinks = () => {
     >
       {Object.keys(links).map((section) => (
         <VStack key={section} align="flex-start">
-          <Text fontWeight="500" fontSize="lg" mb={2}>
+          <Text fontWeight="500" fontSize="lg" mb={2} textDecoration="underline" textDecorationColor="black.500">
             {section}
           </Text>
           {links[section].map((link) => (
@@ -178,7 +178,7 @@ const FooterLinks = () => {
 // Footer Branding Component
 const FooterBranding = () => {
   return (
-    <VStack align="flex-start" spacing={4} width={{ base: '', md: '400px' }}>
+    <VStack align="flex-start" spacing={4} width={{ base: '', md: '400px' }} fontFamily="'Alice', serif"  >
       <Box justify={'center'} align={'center'}>
         {/* Replace with your company logo */}
         {/* If using an image logo, replace the above Text component with the Image component as shown below */}
@@ -250,6 +250,7 @@ const Footer = () => {
       position="relative"
       bottom="0"
       width="100%"
+      fontFamily="'Alice', serif"  // Apply Alice font here
     >
       <Container maxW="6xl">
         <Stack spacing={10}>

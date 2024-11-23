@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Flex, Avatar, Text, Heading, Stack, Button, Icon, useColorModeValue, Link, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
 import { MdEmail, MdLocationOn, MdEdit } from 'react-icons/md';
-import axios from 'axios';
 import apiClient from '../../api/axiosInstance';
 
 const ProfileHeader = ({ user, onUpdate }) => {

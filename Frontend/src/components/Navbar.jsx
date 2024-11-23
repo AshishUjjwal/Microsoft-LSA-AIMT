@@ -36,7 +36,6 @@ import { AuthContext } from '../contexts/AuthContext';
 import { Link as RouterLink } from 'react-router-dom'; // Import the Link from react-router-dom
 import logo from '../Images/01MLSAAIMT.png'
 import apiClient from '../api/axiosInstance';
-import axios from 'axios';
 
 const MotionMenuList = motion(MenuList);
 
@@ -114,12 +113,13 @@ export default function Navbar() {
       top={0}
       zIndex={9999} // Ensure it stays above all other elements
       shadow="md"
+      fontFamily="'Alice', serif"  // Apply Alice font here
     >
       {/* Main Container */}
       <Flex
-        maxWidth="1100px"
+        maxWidth="1200px"
         mx="auto"
-        h={{ base: '20', md: '24' }}
+        h={{ base: '28', md: '32' }}
         alignItems={'center'}
         justifyContent={'space-between'}
         px={{ base: '8px', md: '0' }} // Add padding for mobile
@@ -128,17 +128,23 @@ export default function Navbar() {
         <Box
           fontFamily="'Dancing Script'"
           fontWeight="bold"
-          fontSize={{ base: 'lg', md: '2xl' }}
+          fontSize={{ base: '4xl', md: '4xl' }}
           color="white"
-          ml={{ base: '5px', md: '1' }}
-          w={{ base: '60px', md: '85px' }}
+          ml={{ base: '10px', md: '' }}
+          w={{ base: '90px', md: '100px' }}
         >
           {/* MLSA AIMT */}
-          <img src={logo} alt="Logo" style={{ height: 'auto' }} /> {/* Adjust width/height as needed */}
+          <RouterLink to="/">
+            <img
+              src={logo}
+              alt="Logo"
+              style={{ height: 'auto', cursor: 'pointer' }}
+            />
+          </RouterLink>
         </Box>
 
         {/* Dark/Light Mode Toggle */}
-        <Flex display={{ base: 'flex', md: 'none' }} mr={-44}>
+        <Flex display={{ base: 'flex', md: 'none' }} mr={-40} mt={3} >
           <Button onClick={toggleColorMode} variant="ghost">
             {colorMode === 'light' ? <FaMoon color="yellow.400" /> : <FaSun color="yellow.300" />}
           </Button>
@@ -152,7 +158,7 @@ export default function Navbar() {
             aria-label="Options"
             icon={
               <Avatar
-                size={'sm'}
+                size={'md'}
                 src={
                   'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'
                 }
@@ -166,6 +172,7 @@ export default function Navbar() {
             display={{ base: 'block', md: 'none' }} // Show on mobile only
             bg={useColorModeValue('gray.200', 'gray.900')}
             zIndex={1500}
+            fontFamily="'Alice', serif"  // Apply Alice font here
           >
             <Center>
               <Avatar
@@ -195,7 +202,7 @@ export default function Navbar() {
               <NavLink to="/events">Events</NavLink>
             </MenuItem>
             <MenuItem>
-              <NavLink to="/gallary">Gallary</NavLink>
+              <NavLink to="/gallary">Gallery</NavLink>
             </MenuItem>
             <MenuItem>
               <NavLink to="/admin">Admin Panel</NavLink>
@@ -256,7 +263,7 @@ export default function Navbar() {
             <NavLink to="/about">About</NavLink>
             <NavLink to="/blog">Blog</NavLink>
             <NavLink to="/events">Events</NavLink>
-            <NavLink to="/gallary">Gallary</NavLink>
+            <NavLink to="/gallary">Gallery</NavLink>
             <NavLink to="/admin">AdminPanel</NavLink>
 
             {/* Dark/Light Mode Toggle */}
@@ -275,7 +282,7 @@ export default function Navbar() {
                 onClick={onOpen}
               >
                 <Avatar
-                  size={'sm'}
+                  size={'md'}
                   src={'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'}
                 />
               </MenuButton>

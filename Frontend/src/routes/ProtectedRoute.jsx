@@ -43,7 +43,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
         });
 
         // Redirect to unauthorized page or login
-        // navigate('/login', { replace: true });
+        navigate('/', { replace: true });
       }
     };
 

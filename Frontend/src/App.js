@@ -12,7 +12,7 @@ import AllRoutes from './routes/AllRoutes';
 
 function App() {
   return (
-    <Box minHeight="100vh" display="flex" flexDirection="column">
+    <Box minHeight="100vh" display="flex" flexDirection="column" >
       {/* Navbar */}
       <Navbar />
 
