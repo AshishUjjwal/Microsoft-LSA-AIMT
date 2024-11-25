@@ -70,7 +70,7 @@ const FAQ = () => {
                 shadow="lg"
                 cursor="pointer"
                 onClick={() => toggleFAQ(index)}
-                _hover={{ bg: 'blue.200' }}
+                _hover={{ bg: 'black.900' }}
                 transition="background 0.2s ease"
               >
                 <Flex h="100%" alignItems="center" justify="space-between">

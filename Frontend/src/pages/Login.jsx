@@ -134,10 +134,11 @@ const Login = () => {
 
     } catch (error) {
       // Handle errors
-      console.log(error);
+      // console.log(error);
       toast({
         title: `Login failed!`,
-        description: error.message,
+        description: error?.response?.data?.message ,
+        // description: `Pls. Check your email and password!`,
         position: "top",
         duration: 2000,
         status: "error",

@@ -106,8 +106,8 @@ export default function Navbar() {
   return (
     <Box
       bgGradient={useColorModeValue(
-        "linear(to-r, teal.400, green.500)",
-        "linear(to-r, teal.800, green.900)"
+        "linear(to-r, teal.400, green.700)",
+        "linear(to-r, teal.800, green.800)"
       )}
       position="sticky"
       top={0}
@@ -119,7 +119,7 @@ export default function Navbar() {
       <Flex
         maxWidth="1200px"
         mx="auto"
-        h={{ base: '28', md: '32' }}
+        h={{ base: '24', md: '28' }}
         alignItems={'center'}
         justifyContent={'space-between'}
         px={{ base: '8px', md: '0' }} // Add padding for mobile
@@ -144,9 +144,13 @@ export default function Navbar() {
         </Box>
 
         {/* Dark/Light Mode Toggle */}
-        <Flex display={{ base: 'flex', md: 'none' }} mr={-40} mt={3} >
+        <Flex display={{ base: 'flex', md: 'none' }} mr={-40} mt={3}>
           <Button onClick={toggleColorMode} variant="ghost">
-            {colorMode === 'light' ? <FaMoon color="yellow.400" /> : <FaSun color="yellow.300" />}
+            {colorMode === 'light' ? (
+              <FaMoon color="yellow.400" size="24px" /> // Increased size for FaMoon
+            ) : (
+              <FaSun color="yellow.300" size="24px" /> // Increased size for FaSun
+            )}
           </Button>
         </Flex>
 
@@ -159,9 +163,10 @@ export default function Navbar() {
             icon={
               <Avatar
                 size={'md'}
-                src={
-                  'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'
-                }
+                // src={
+                //   'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'
+                // }
+                src={user?.avatarUrl}
               />
             }
             variant="ghost"
@@ -178,9 +183,10 @@ export default function Navbar() {
               <Avatar
                 size={'xl'}
                 m={2}
-                src={
-                  'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'
-                }
+                // src={
+                //   'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'
+                // }
+                src={user?.avatarUrl}
               />
             </Center>
             <Center>
@@ -283,7 +289,8 @@ export default function Navbar() {
               >
                 <Avatar
                   size={'md'}
-                  src={'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'}
+                  // src={'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'}
+                  src={user?.avatarUrl}
                 />
               </MenuButton>
 
@@ -301,7 +308,8 @@ export default function Navbar() {
                 <Center>
                   <Avatar
                     size={'2xl'}
-                    src={'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'}
+                    // src={'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'}
+                    src={user?.avatarUrl}
                   />
                 </Center>
                 <Center>
