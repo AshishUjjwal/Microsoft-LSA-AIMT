@@ -137,7 +137,7 @@ const Login = () => {
       // console.log(error);
       toast({
         title: `Login failed!`,
-        description: error?.response?.data?.message ,
+        description: error?.response?.data?.message,
         // description: `Pls. Check your email and password!`,
         position: "top",
         duration: 2000,
@@ -211,7 +211,11 @@ const Login = () => {
               <Checkbox>Remember me</Checkbox>
               <Text color={'blue.500'}>Forgot password?</Text>
             </Stack>
-            <Button isLoading={buttonLoading} colorScheme={'blue'} variant={'solid'} onClick={submitHandler}>
+            <Button isLoading={buttonLoading} colorScheme={'blue'} variant={'solid'} bgGradient="linear(to-r, green.400,pink.400)"
+              _hover={{
+                bgGradient: 'linear(to-r, blue.400, green.400)',
+                boxShadow: 'xl',
+              }} onClick={submitHandler}>
               Sign in
             </Button>
           </Stack>

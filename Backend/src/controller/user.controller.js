@@ -1,8 +1,8 @@
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { ApiError } from "../utils/apiError.js"
 import { ApiResponse } from "../utils/apiResponse.js"
-import jwt from "jsonwebtoken"
 import { User } from '../Models/user.model.js';
+import jwt from "jsonwebtoken"
 
 
 const generateAccessAndRefreshToken = async (userId) => {
@@ -41,7 +41,10 @@ const registerUser = asyncHandler(async (req, res) => {
     // check if user already exists
     const userExists = await User.findOne({ email });
     if (userExists) {
-        throw new ApiError('User already exists', 409);
+        // throw new ApiError("User Already Exists", 409);
+        return res.status(409).json(
+            new ApiResponse(409, "User Already Exist")
+        )
     }
 
     // Save the user object in the database.

@@ -25,6 +25,8 @@ import {
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { AiOutlineMail } from "react-icons/ai";
 import { AuthContext } from "../contexts/AuthContext";
+import apiClient from "../api/axiosInstance.js";
+import axios from "axios";
 
 const Signup = () => {
   const toast = useToast();
@@ -79,9 +81,9 @@ const Signup = () => {
   // Form submission handler
   const submitHandler = async () => {
     // Basic validation
-    console.log(name);
-    console.log(email);
-    console.log(password);
+    // console.log(name);
+    // console.log(email);
+    // console.log(password);
     if (!name || !email || !password || !cpassword) {
       toast({
         title: `All fields are required`,
@@ -118,18 +120,18 @@ const Signup = () => {
       // TODO: Replace with your API call
       // Example using fetch:
 
-      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/users/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, password }),
-        credentials: 'include', // Include this if you're sending cookies or need credentials
-      });
+      const response = await apiClient.post(`/api/users/register`,
+        { name, email, password }, // Request body (data) for POST
+        {
+          withCredentials: true, // Include credentials like cookies
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      // console.log(`Response :`,response);
 
-      const result = await response.json();
-
-      if (response.ok) {
+      if (response?.status === 201) {
         toast({
           title: `Registration successful!`,
           description: `Now you can Login`,
@@ -141,14 +143,15 @@ const Signup = () => {
         setAllRight(true);
         navigate('/login')
       } else {
-        throw new Error(result.message || "Registration failed!");
+        throw new Error(response?.message || "Registration failed!");
       }
 
     } catch (error) {
       // Handle errors
+      // console.log(`error`,error);
       toast({
         title: `Registration failed!`,
-        description: error.message || "An unexpected error occurred.",
+        description: error?.response?.data?.message || "An unexpected error occurred.",
         position: "top",
         duration: 6000,
         status: "error",

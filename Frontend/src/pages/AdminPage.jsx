@@ -1,5 +1,5 @@
 import Hero from '../components/Templates/Hero.jsx';
-import { Flex, Heading,  Stack,  } from '@chakra-ui/react';
+import { Flex, Stack,  } from '@chakra-ui/react';
 import Sidebar from '../components/AdminSection/SideBar.Admin.jsx';
 import UserManagement from '../components/AdminSection/UserManagement.Admin.jsx';
 // import BlogPanel from '../components/AdminSection/BlogAdminPanel.jsx';

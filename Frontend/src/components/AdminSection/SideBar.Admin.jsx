@@ -10,7 +10,7 @@ const Sidebar = ({ children }) => {
         bg="blue.800"
         color="white"
         p={5}
-        display={{ base: "none", md: "block" }}
+        // display={{ base: "none", md: "block" }}
         borderRadius="15px"
         boxShadow="lg"
       >
@@ -30,7 +30,7 @@ const Sidebar = ({ children }) => {
           {/* Links */}
           {[
             { to: "/", label: "Dashboard" },
-            { to: "/user-management", label: "User Management" },
+            { to: "/user-management", label: "Users" },
             { to: "/events", label: "Events" },
             { to: "/blog", label: "Blogs" },
             { to: "/projects", label: "Projects" },
