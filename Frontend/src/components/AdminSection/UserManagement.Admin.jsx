@@ -14,6 +14,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import apiClient from "../../api/axiosInstance.js";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -142,12 +143,15 @@ const UserManagement = () => {
         {/* Pagination */}
         <Flex justify="center" mt={4} gap={2} flexWrap="wrap">
           <Button
+            leftIcon={<ChevronLeftIcon />}
             size="sm"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            width={["100px", "auto"]}
+            width={["auto", "auto"]}
+            colorScheme="blue"
+            _hover={{ bg: 'blue.400' }}
+            variant="outline"
           >
-            Previous
           </Button>
           {getPaginationNumbers().map((page, index) =>
             typeof page === "number" ? (
@@ -168,12 +172,15 @@ const UserManagement = () => {
             )
           )}
           <Button
+            leftIcon={<ChevronRightIcon />}
             size="sm"
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            width={["100px", "auto"]}
+            width={["auto", "auto"]}
+            colorScheme="blue"
+            _hover={{ bg: 'blue.400' }}
+            variant="outline"
           >
-            Next
           </Button>
         </Flex>
       </Stack>
