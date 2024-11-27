@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import {
   Table,
   Thead,
@@ -14,7 +13,7 @@ import {
   Stack,
   Flex,
 } from "@chakra-ui/react";
-import apiClient from "../../api/axiosInstance";
+import apiClient from "../../api/axiosInstance.js";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -46,9 +45,9 @@ const UserManagement = () => {
     fetchUsers();
   }, []);
 
-  const handleDelete = (id) => {
-    setUsers(users.filter((user) => user.id !== id));
-  };
+  // const handleDelete = (id) => {
+  //   setUsers(users.filter((user) => user.id !== id));
+  // };
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -98,14 +97,16 @@ const UserManagement = () => {
   );
 
   return (
-    <Box>
-      <Heading mb={5}>User Management</Heading>
+    <Box p={[4, 8]} maxWidth="100vw" mx="auto">
+      <Heading mb={5} textAlign={["center", "left"]}>
+        User Management
+      </Heading>
       <Stack spacing={4}>
-        <Button colorScheme="blue" onClick={() => alert("Add User Modal")}>
+        <Button colorScheme="blue" onClick={() => alert("Add User Modal")} width={["100%", "auto"]}>
           Add User
         </Button>
         <TableContainer>
-          <Table variant="simple">
+          <Table variant="simple" size={["sm", "md"]}>
             <Thead>
               <Tr>
                 <Th>ID</Th>
@@ -126,7 +127,8 @@ const UserManagement = () => {
                     <Button
                       colorScheme="green"
                       size="sm"
-                      // onClick={() => handleDelete(user._id)}
+                      width={["100%", "auto"]}
+                    // onClick={() => handleDelete(user._id)}
                     >
                       View Profile
                     </Button>
@@ -138,11 +140,12 @@ const UserManagement = () => {
         </TableContainer>
 
         {/* Pagination */}
-        <Flex justify="center" mt={4} gap={2}>
+        <Flex justify="center" mt={4} gap={2} flexWrap="wrap">
           <Button
             size="sm"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
+            width={["100px", "auto"]}
           >
             Previous
           </Button>
@@ -154,6 +157,7 @@ const UserManagement = () => {
                 onClick={() => handlePageChange(page)}
                 bg={page === currentPage ? "blue.500" : "gray.200"}
                 color={page === currentPage ? "white" : "black"}
+                width={["40px", "auto"]}
               >
                 {page}
               </Button>
@@ -167,12 +171,14 @@ const UserManagement = () => {
             size="sm"
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
+            width={["100px", "auto"]}
           >
             Next
           </Button>
         </Flex>
       </Stack>
     </Box>
+
   );
 };
 

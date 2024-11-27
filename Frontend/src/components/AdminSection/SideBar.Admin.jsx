@@ -10,7 +10,7 @@ const Sidebar = ({ children }) => {
         bg="blue.800"
         color="white"
         p={5}
-        // display={{ base: "none", md: "block" }}
+        display={{ base: "none", md: "block" }}
         borderRadius="15px"
         boxShadow="lg"
       >
