@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Table,
   Thead,
@@ -13,21 +14,37 @@ import {
   Stack,
   Flex,
 } from "@chakra-ui/react";
-
-const initialUsers = Array.from({ length: 500 }, (_, i) => ({
-  id: i + 1,
-  name: `Ashish Ujjwal ${i + 1}`,
-  email: `userfrommohania12345${i + 1}@example.com`,
-  role: i % 2 === 0 ? "Admin" : "User",
-}));
+import apiClient from "../../api/axiosInstance";
 
 const ITEMS_PER_PAGE = 5;
 
 const UserManagement = () => {
-  const [users, setUsers] = useState(initialUsers);
+
+  const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(users.length / ITEMS_PER_PAGE);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await apiClient.get(`api/users/getalluser`, {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        // console.log(`Response :`, response);
+        setUsers(response.data.users || []); // Assuming the API returns users in `data.users`
+        // setLoading(false);
+      } catch (err) {
+        console.error('Error fetching blogs:', err);
+        // setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   const handleDelete = (id) => {
     setUsers(users.filter((user) => user.id !== id));
@@ -99,9 +116,9 @@ const UserManagement = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {currentUsers.map((user) => (
-                <Tr key={user.id}>
-                  <Td>{user.id}</Td>
+              {currentUsers.map((user, index) => (
+                <Tr key={user._id}>
+                  <Td>{(currentPage - 1) * ITEMS_PER_PAGE + index + 1}</Td>
                   <Td>{user.name}</Td>
                   <Td>{user.email}</Td>
                   <Td>{user.role}</Td>
@@ -109,7 +126,7 @@ const UserManagement = () => {
                     <Button
                       colorScheme="green"
                       size="sm"
-                      onClick={() => handleDelete(user.id)}
+                      // onClick={() => handleDelete(user._id)}
                     >
                       View Profile
                     </Button>

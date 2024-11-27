@@ -15,6 +15,7 @@ import {
     searchUsers,
 }  from '../controller/Admin.controller.js';
 
+// http://localhost:8000/api/users
 router.route('/register').post(registerUser);
 router.route('/login').post(loginUser);
 router.route('/logout').post(verifyJWT ,logoutUser);
@@ -26,21 +27,27 @@ router.route('/update-account').post(verifyJWT, updateUser);
 
 // #--------------------------Admin Control-------------------------------------#
 // Get all users
+// http://localhost:8000/api/users/getalluser
 router.get('/getalluser', verifyAdmin, getAllUsers);
 
 // See specific user profile
+// http://localhost:8000/api/users/profile/:userId
 router.get('/profile/:userId', verifyAdmin, seeUserProfile);
 
 // Update user profile
-router.put('/profile/:userId', verifyAdmin, updateUserProfile);
+// http://localhost:8000/api/users/update/:userId
+// router.put('/update/:userId', verifyAdmin, updateUserProfile);
 
 // Delete user
-router.delete('/profile/:userId', verifyAdmin, deleteUser);
-
-// Search users by name, email, or role
-router.get('/users/search', verifyAdmin, searchUsers);
+// http://localhost:8000/api/users/delete/:userId
+// router.delete('/delete/:userId', verifyAdmin, deleteUser);
 
 // Block/Unblock user
-router.patch('/profile/:userId/status', verifyAdmin, toggleUserStatus);
+// http://localhost:8000/api/users/profile/status/:userId
+// router.patch('/profile/status/:userId', verifyAdmin, toggleUserStatus);
+
+// Search users by name, email, or role
+// http://localhost:8000/api/users/profile/search
+// router.get('/profile/search', verifyAdmin, searchUsers);
 
 export default router;
