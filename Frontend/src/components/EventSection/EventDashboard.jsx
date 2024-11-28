@@ -12,7 +12,6 @@ import {
     useBreakpointValue
 } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
 import { AuthContext } from '../../contexts/AuthContext.js';
 import LoadingPage from '../../pages/LoadingPage.jsx';
 import { AddIcon, ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
@@ -95,8 +94,31 @@ const EventDashBoard = () => {
     const totalPages = Math.ceil(events.length / eventsPerPage);
 
     // Handle page change
-    const nextPage = () => setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
-    const prevPage = () => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+    const nextPage = () => {
+        setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+        // Scroll to the top of the container or page
+        window.scrollTo({
+            top: 500,
+            behavior: 'smooth', // Optional: Adds a smooth scrolling effect
+        });
+    }
+    const prevPage = () => {
+        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+        // Scroll to the top of the container or page
+        window.scrollTo({
+            top: 500,
+            behavior: 'smooth', // Optional: Adds a smooth scrolling effect
+        });
+    }
+    // Handle page change
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        // Scroll to the top of the container or page
+        window.scrollTo({
+            top: 500,
+            behavior: 'smooth', // Optional: Adds a smooth scrolling effect
+        });
+    };
 
     return (
         <Container maxW={'6xl'} p="12">
@@ -192,7 +214,7 @@ const EventDashBoard = () => {
                         return (
                             <Button
                                 key={pageNumber}
-                                onClick={() => setCurrentPage(pageNumber)}
+                                onClick={() => handlePageChange(pageNumber)}
                                 colorScheme={currentPage === pageNumber ? 'blue' : 'gray'}
                                 _hover={{
                                     backgroundColor: currentPage === pageNumber ? 'blue.500' : 'gray.500',

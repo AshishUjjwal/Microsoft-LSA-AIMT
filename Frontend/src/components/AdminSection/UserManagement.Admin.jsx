@@ -16,12 +16,14 @@ import {
 import apiClient from "../../api/axiosInstance.js";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import LoadingPage from "./Shimmer.jsx";
 
 const ITEMS_PER_PAGE = 5;
 
 const UserManagement = () => {
 
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
 
@@ -37,16 +39,22 @@ const UserManagement = () => {
           },
         });
         // console.log(`Response :`, response);
-        setUsers(response.data.users || []); // Assuming the API returns users in `data.users`
-        // setLoading(false);
+        const getusers = response?.data?.users;
+        const sortedUsers = getusers.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setUsers(sortedUsers || []); // Assuming the API returns users in `data.users`
+        setLoading(false);
       } catch (err) {
         console.error('Error fetching blogs:', err);
-        // setLoading(false);
+        setLoading(false);
       }
     };
 
     fetchUsers();
   }, []);
+
+  if (loading) {
+    return <LoadingPage />;
+  }
 
   // const handleDelete = (id) => {
   //   setUsers(users.filter((user) => user.id !== id));
@@ -101,8 +109,8 @@ const UserManagement = () => {
 
   return (
     <Box p={[4, 4]} maxWidth="100vw" mx="auto" h={'80vh'}>
-      <Heading mb={5} textAlign={["center", "left"]}>
-        User Management
+      <Heading mb={5}  textAlign={["center", "center"]}>
+        USER PROFILE MANAGEMENT
       </Heading>
       <Stack spacing={4}>
         <Button colorScheme="blue" onClick={() => alert("Add User Modal")} width={["100%", "auto"]}>
@@ -120,7 +128,8 @@ const UserManagement = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {currentUsers.map((user, index) => (
+              {currentUsers.slice()
+              .map((user, index) => (
                 <Tr key={user._id}>
                   <Td>{(currentPage - 1) * ITEMS_PER_PAGE + index + 1}</Td>
                   <Td>{user.name}</Td>
