@@ -19,7 +19,8 @@ import ProtectedRoute from './ProtectedRoute.jsx'; // A component to protect rou
 import AdminPanel from '../pages/AdminPage.jsx';
 import LoadingPage from '../pages/LoadingPage.jsx';
 import { AuthContext } from '../contexts/AuthContext.js';
-import EventGallery from '../components/GallarySection/EventGallary.jsx';
+// import EventGallery from '../components/GallarySection/EventGallary.jsx';
+import AccountPageAccessByAdmin from '../components/ProfilePage/AccountPageAccessByAdmin.jsx';
 
 
 const AllRoutes = () => {
@@ -75,9 +76,17 @@ const AllRoutes = () => {
           }
         />
 
-        {/* Catch-All Route for 404 Not Found */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+        <Route path="/profile/:userId" 
+        element={
+          <ProtectedRoute requiredRole={'admin'}>
+            <AccountPageAccessByAdmin />
+          </ProtectedRoute>
+          }
+        />
+
+      {/* Catch-All Route for 404 Not Found */}
+      <Route path="*" element={<NotFound />} />
+    </Routes >
     </>
   );
 };

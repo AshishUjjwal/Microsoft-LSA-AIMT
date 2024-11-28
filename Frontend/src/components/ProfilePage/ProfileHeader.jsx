@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Flex, Avatar, Text, Heading, Stack, Button, Icon, useColorModeValue, Link, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
 import { MdEmail, MdLocationOn, MdEdit } from 'react-icons/md';
 import apiClient from '../../api/axiosInstance';
+import { useParams } from 'react-router-dom';
 
 const ProfileHeader = ({ user, onUpdate }) => {
     // Define colors for light and dark modes using useColorModeValue
@@ -23,14 +24,15 @@ const ProfileHeader = ({ user, onUpdate }) => {
 
     // Chakra's toast hook
     const toast = useToast();
+    const { userId } = useParams(); // Extract userId from the URL
 
     // State for form data (editable fields)
     const [formData, setFormData] = useState({
-        name: user.name,
-        avatarUrl: user.avatarUrl,
-        location: user.location,
-        description: user.description,
-        social: user.social
+        name: user?.name,
+        avatarUrl: user?.avatarUrl,
+        location: user?.location,
+        description: user?.description,
+        social: user?.social
     });
 
     // Handle input change
@@ -45,26 +47,28 @@ const ProfileHeader = ({ user, onUpdate }) => {
     // Handle form submit (Edit Profile)
     const handleFormSubmit = async () => {
         try {
-            // Assuming the backend endpoint is `/api/users/${user._id}`
-            const response = await apiClient.post(`/api/users/update-account`, formData,
-                {
-                    withCredentials: true,
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
+            // Determine endpoint based on the presence of `targetUserId`
+            const endpoint = userId
+                ? `/api/users/update/${userId}`  // Admin updating another user's profile
+                : `/api/users/update-account`;   // User or admin updating their own profile
+
+            const response = await apiClient.post(endpoint, formData, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
             // console.log(`Response: `, response);
 
             // If successful, trigger the onUpdate callback to refresh the profile data
             if (response.status === 200) {
-                const updatedProfile = response.data.user; // Extract updated user data
+                const updatedProfile = response?.data?.user || response?.data?.updatedUser // Extract updated user data
 
                 // Get the existing user data from local storage
                 const existingUser = JSON.parse(localStorage.getItem('auth'));
 
 
-                if (existingUser) {
+                if (existingUser && !userId) {
                     // Merge the existing user data with the updated profile data
                     const mergedUser = { ...existingUser.user, ...updatedProfile };
 
@@ -75,21 +79,19 @@ const ProfileHeader = ({ user, onUpdate }) => {
                     };
 
                     // Save the merged user data back to local storage
-                    localStorage.setItem('auth', JSON.stringify(updatedAuth));
-
+                    if(!userId)
+                        localStorage.setItem('auth', JSON.stringify(updatedAuth));
 
                     onUpdate(updatedProfile); // Pass the updated user data back
                     // Also update the React state to trigger a re-render
                     setUser(updatedAuth);
                 }
-                else {
-                    console.log('No auth data found in local storage.');
-                }
+                onUpdate(updatedProfile); // Pass the updated user data back
                 toast({
                     title: 'Profile updated.',
-                    description: "Your profile has been successfully updated.",
+                    description: "Profile has been successfully updated.",
                     status: 'success',
-                    duration: 5000,
+                    duration: 1000,
                     isClosable: true,
                     position: 'top-right',
                 });
@@ -99,9 +101,9 @@ const ProfileHeader = ({ user, onUpdate }) => {
             console.error('Error updating profile:', error);
             toast({
                 title: 'Update failed.',
-                description: "There was an error updating your profile. Please try again.",
+                description: "There was an error updating profile. Please try again.",
                 status: 'error',
-                duration: 5000,
+                duration: 1000,
                 isClosable: true,
                 position: 'top-right',
             });
@@ -131,28 +133,28 @@ const ProfileHeader = ({ user, onUpdate }) => {
             >
                 {/* Left Side - Profile Image */}
                 <Flex justify="center" w={{ base: '100%', md: '40%' }} mb={{ base: 6, md: 0 }}>
-                    <Avatar size="2xl" boxSize={{ base: '150px', md: '150px' }} src={user.avatarUrl} name={user.name} boxShadow="lg" />
+                    <Avatar size="2xl" boxSize={{ base: '150px', md: '150px' }} src={user?.avatarUrl} name={user?.name} boxShadow="lg" />
                 </Flex>
 
                 {/* Right Side - User Details */}
                 <Box w={{ base: '100%', md: '60%' }}>
                     <Heading as="h1" fontSize="2xl" color={useColorModeValue('gray.100', 'gray.200')} fontWeight="bold" mb={2}>
-                        {user.name}
+                        {user?.name}
                     </Heading>
                     <Text fontSize="lg" color={textColor} display="flex" alignItems="center" mb={1}>
-                        <Icon as={MdEmail} mr={2} /> {user.email}
+                        <Icon as={MdEmail} mr={2} /> {user?.email}
                     </Text>
                     <Text fontSize="lg" color={textColor} display="flex" alignItems="center" mb={1}>
-                        <Icon as={MdLocationOn} mr={2} /> {user.location}
+                        <Icon as={MdLocationOn} mr={2} /> {user?.location}
                     </Text>
                     <Text fontSize="md" color={useColorModeValue('gray.100', 'gray.200')} mt={2} mb={2}>
-                        {user.description}
+                        {user?.description}
                     </Text>
                     <Box my={2}>
                         <Flex align="center">
                             <Text mr={2} color={useColorModeValue('gray.100', 'gray.200')}>Let's Connect </Text>
-                            <Link href={user.social} isExternal color={useColorModeValue('blue.500', 'blue.300')}>
-                                <Text fontSize="md">{user.social}</Text>
+                            <Link href={user?.social} isExternal color={useColorModeValue('blue.500', 'blue.300')}>
+                                <Text fontSize="md">{user?.social}</Text>
                             </Link>
                         </Flex>
                     </Box>

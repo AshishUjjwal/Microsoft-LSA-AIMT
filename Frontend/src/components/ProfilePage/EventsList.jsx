@@ -35,7 +35,9 @@ const EventsList = ({ events }) => {
                 Events Registered
             </Heading>
             <SimpleGrid columns={[1, 2, 3]} spacing={6}>
-                {events.events && events.events.map((event) => (
+                {events.events ? events.events.map((event) => (
+                    <EventCard key={event._id} event={event} />
+                )) : events.map((event) => (
                     <EventCard key={event._id} event={event} />
                 ))}
             </SimpleGrid>

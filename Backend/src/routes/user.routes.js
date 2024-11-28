@@ -36,7 +36,7 @@ router.get('/profile/:userId', verifyAdmin, seeUserProfile);
 
 // Update user profile
 // http://localhost:8000/api/users/update/:userId
-// router.put('/update/:userId', verifyAdmin, updateUserProfile);
+router.post('/update/:userId', verifyAdmin, updateUserProfile);
 
 // Delete user
 // http://localhost:8000/api/users/delete/:userId

@@ -17,7 +17,7 @@ import BlogsList from './BlogsList';
 
 const ProfilePage = ({ user, onUpdate, events, blogs }) => {
     const userStats = {
-        eventsRegistered: events.events?.length,
+        eventsRegistered: events?.events?.length || events?.length,
         blogsCreated: blogs?.length
     };
 

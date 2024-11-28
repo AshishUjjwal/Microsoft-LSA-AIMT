@@ -41,6 +41,7 @@ const Sidebar = ({ children }) => {
             <Link
               as={RouterLink}
               to={link.to}
+              key={link.to} // Add unique key here
               position="relative"
               fontSize="lg"
               fontWeight="medium"

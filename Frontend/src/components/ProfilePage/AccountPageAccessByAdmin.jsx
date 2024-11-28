@@ -3,6 +3,7 @@ import ProfilePage from './ProfilePage.jsx';
 import { AuthContext } from '../../contexts/AuthContext.js';
 import LoadingPage from '../../pages/LoadingPage.jsx'
 import apiClient from '../../api/axiosInstance.js';
+import { useParams } from 'react-router-dom';
 
 const App = () => {
     const { auth } = useContext(AuthContext); // Access user from AuthContext
@@ -11,49 +12,33 @@ const App = () => {
     const [blogs, setBlogs] = useState([]); // State to store fetched blogs
     const [loading, setLoading] = useState(true);
 
-    // Fetch events data
+    const { userId } = useParams();
+    // console.log(events);
+
+    // Fetch User data
     useEffect(() => {
-        const fetchEvents = async () => {
+        const fetchUserDetails = async () => {
             try {
-                const response = await apiClient.get(`/api/registrations/registered-events`, {
+                const response = await apiClient.get(`/api/users/profile/${userId}`, {
                     withCredentials: true, // Include credentials
                     headers: {
                         'Content-Type': 'application/json',
                     },
                 });
                 // console.log(`Response : `,response);
-                setEvents(response.data); // Set events data
+                setUser(response.data.user); // Set events data
+                setEvents(response.data.events); // Set events data
+                setBlogs(response.data.blogs); // Set events data
             } catch (err) {
-                console.log("Failed to fetch events.", err);
+                console.log("Failed to fetch userData.", err);
             } finally {
                 setLoading(false);
             }
         };
 
-        if (user) fetchEvents();
-    }, [user]);
+        if (userId) fetchUserDetails();
+    }, [userId]);
 
-    // Fetch blogs data
-    useEffect(() => {
-        const fetchBlogs = async () => {
-            try {
-                const response = await apiClient.get(`/api/blogs/getuserblog`, {
-                    withCredentials: true, // Include credentials
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-                // console.log(`blog res`,response);
-                setBlogs(response.data.data); // Set blogs data
-            } catch (err) {
-                console.log("Failed to fetch blogs.", err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (user) fetchBlogs();
-    }, [user]);
 
     const handleUserUpdate = (updatedUser) => {
         setUser(updatedUser); // Update the user state with the newly updated user data

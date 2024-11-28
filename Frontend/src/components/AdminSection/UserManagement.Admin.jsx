@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import apiClient from "../../api/axiosInstance.js";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -22,6 +23,7 @@ const UserManagement = () => {
 
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
 
   const totalPages = Math.ceil(users.length / ITEMS_PER_PAGE);
 
@@ -98,7 +100,7 @@ const UserManagement = () => {
   );
 
   return (
-    <Box p={[4, 8]} maxWidth="100vw" mx="auto">
+    <Box p={[4, 4]} maxWidth="100vw" mx="auto" h={'80vh'}>
       <Heading mb={5} textAlign={["center", "left"]}>
         User Management
       </Heading>
@@ -129,7 +131,7 @@ const UserManagement = () => {
                       colorScheme="green"
                       size="sm"
                       width={["100%", "auto"]}
-                    // onClick={() => handleDelete(user._id)}
+                      onClick={() => navigate(`/profile/${user._id}`)}
                     >
                       View Profile
                     </Button>

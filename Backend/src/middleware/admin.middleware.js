@@ -26,7 +26,6 @@ export const  verifyAdmin = asyncHandler(async (req, res, next) => {
     }
 
     // Check if the user has the 'admin' role
-    // console.log(user.name);
     if (user.role !== 'admin') {
       console.log("Access denied. Admins only.");
       return res.status(403).json({ message: 'Access denied. Admins only.' });
