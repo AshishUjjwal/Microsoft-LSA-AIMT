@@ -21,6 +21,7 @@ import LoadingPage from '../pages/LoadingPage.jsx';
 import { AuthContext } from '../contexts/AuthContext.js';
 // import EventGallery from '../components/GallarySection/EventGallary.jsx';
 import AccountPageAccessByAdmin from '../components/ProfilePage/AccountPageAccessByAdmin.jsx';
+import UserManagement from '../components/AdminSection/UserManagement.Admin.jsx';
 
 
 const AllRoutes = () => {
@@ -75,6 +76,8 @@ const AllRoutes = () => {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/user-management" element={<UserManagement />} />
 
         <Route path="/profile/:userId" 
         element={

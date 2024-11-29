@@ -2,9 +2,7 @@ import Hero from '../components/Templates/Hero.jsx';
 import { Flex, Stack,  } from '@chakra-ui/react';
 import Sidebar from '../components/AdminSection/SideBar.Admin.jsx';
 import UserManagement from '../components/AdminSection/UserManagement.Admin.jsx';
-// import BlogPanel from '../components/AdminSection/BlogAdminPanel.jsx';
-// import UserPanel from '../components/AdminSection/UserAdmin.jsx';
-
+import EventDashBoard from '../components/AdminSection/EventDashboard.jsx';
 
 const Home = () => {
   return (
@@ -21,6 +19,7 @@ const Home = () => {
           <Sidebar />
           <UserManagement/>
       </Flex>
+      <EventDashBoard />
     </Stack>
   );
 };
