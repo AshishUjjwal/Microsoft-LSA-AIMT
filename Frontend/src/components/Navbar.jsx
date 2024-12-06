@@ -45,21 +45,30 @@ const NavLink = ({ to, children, onClick }) => (
   <Link
     as={RouterLink}
     to={to}
-    px={1}
-    py={1}
+    px={{base: 0, md: 2}} // Increased padding for width
+    py={{base: 0, md: 2}} // Increased padding for height
     borderRadius="md"
+    textAlign="center"
+    fontSize="16px" // Adjust font size for better readability
+    fontWeight="medium"
+    bg="transparent" // Optional: Transparent background
     color="dark.900"
     _hover={{
       textDecoration: 'none',
-      color: 'blue.500',
-      transform: 'scale(1.05)',
-      transition: '0.2s ease',
+      color: 'blue.500', // Hover text color
+      bg: 'rgba(128, 90, 213, 0.2)', // Light hover background
+      transform: 'scale(1.05)', // Hover scaling effect
+      transition: 'all 0.3s ease',
+    }}
+    _active={{
+      bg: 'blue.200', // Active state background
     }}
     onClick={onClick}
   >
     {children}
   </Link>
 );
+
 
 export default function Navbar() {
   const { auth, logout } = useContext(AuthContext);
@@ -106,14 +115,18 @@ export default function Navbar() {
   return (
     <Box
       bgGradient={useColorModeValue(
-        "linear(to-r, teal.400, green.700)",
-        "linear(to-r, teal.800, green.800)"
+        "linear(to-r, #f3e8ff, #e9d8fd, #e1e3ff)", // Light mode gradient
+        "linear(to-r, #1a202c, #2d3748, #4a5568)"  // Dark mode gradient
       )}
+      opacity={1.9} // Semi-transparent background
       position="sticky"
       top={0}
       zIndex={1000} // Ensure it stays above all other elements
-      shadow="md"
-      fontFamily="'Alice', serif"  // Apply Alice font here
+      shadow="lg" // Enhanced shadow for a polished look
+      fontFamily="'Alice', serif" // Apply Alice font here
+      backdropFilter="blur(10px)" // Adds a slight blur effect for a modern touch
+      px={4} // Padding for spacing
+      py={2}
     >
       {/* Main Container */}
       <Flex
