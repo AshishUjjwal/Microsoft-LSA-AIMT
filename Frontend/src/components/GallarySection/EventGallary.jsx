@@ -21,7 +21,7 @@ import {
     const galleryItems = [
       {
         date: "11/07/24",
-        title: "MLSA Team MEETUP",
+        title: "MLSA TEAM MEETUP",
         imageUrl: "https://aimt.edu.in/wp-content/uploads/2024/08/GD.png",
         description:
           "An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals.",
@@ -162,7 +162,7 @@ import {
               fontFamily="'Alice', serif"
               color={colorMode === "dark" ? "white" : "gray.800"}
             >
-              EVENTS $$$ WORKSHOPS $$$ HACKATHONS
+              WORKSHOPS $$$ EVENTS <br /> $$$ HACKATHONS $$$
             </Text>
           </Flex>
   

@@ -187,8 +187,8 @@ const BlogSection = () => {
 
 
     return (
-        <Container maxWidth={'1170px'} p="12">
-            <Heading
+        <Container maxWidth={'1170px'} p="5">
+            {/* <Heading
                 as="h1"
                 fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
                 // textAlign="center"
@@ -199,9 +199,8 @@ const BlogSection = () => {
                 mt={3}
             >
                 LATEST ADMIN BLOG ...👨🏻‍💻
-            </Heading>
+            </Heading> */}
             <AdminBlogRotator
-                blogs={blogs}
                 user={user}
                 // handleEditEvent={handleEditEvent}
                 // handleDeleteEvent={handleDeleteEvent}
@@ -304,8 +303,9 @@ const BlogSection = () => {
                                                     transform: 'scale(1.05)',
                                                     transition: 'transform 0.2s ease, color 0.2s ease',
                                                 }}
+                                                borderRadius={0}
                                             >
-                                                {blog.isApproved ? "UnApprove" : "Approve"}
+                                                {blog.isApproved ? "DISAPPROVE" : "APPROVE"}
                                             </Button>
                                         )}
                                     </HStack>

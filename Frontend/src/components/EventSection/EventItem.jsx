@@ -246,8 +246,9 @@ const EventItem = ({ event, isAdmin, onDelete, onEdit }) => {
                       transform: "scale(1.05)",
                       transition: "transform 0.2s ease, color 0.2s ease",
                     }}
+                    borderRadius={0}
                   >
-                    Unregister
+                    DEREGISTER
                   </Button>
                 ) : (
                   <Button
@@ -262,8 +263,9 @@ const EventItem = ({ event, isAdmin, onDelete, onEdit }) => {
                       transform: "scale(1.05)",
                       transition: "transform 0.2s ease, color 0.2s ease",
                     }}
+                    borderRadius={0}
                   >
-                    Register
+                    REGISTER
                   </Button>
                 )
               )
@@ -281,8 +283,9 @@ const EventItem = ({ event, isAdmin, onDelete, onEdit }) => {
                 transform: "scale(1.05)",
                 transition: "transform 0.2s ease, color 0.2s ease",
               }}
+              borderRadius={0}
             >
-              {/* Fill The Form */} Meeting Link
+              {/* Fill The Form */} MEETING LINK
             </Button>
           )}
 

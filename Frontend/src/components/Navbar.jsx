@@ -45,8 +45,8 @@ const NavLink = ({ to, children, onClick }) => (
   <Link
     as={RouterLink}
     to={to}
-    px={{base: 0, md: 2}} // Increased padding for width
-    py={{base: 0, md: 2}} // Increased padding for height
+    px={{ base: 0, md: 2 }} // Increased padding for width
+    py={{ base: 0, md: 2 }} // Increased padding for height
     borderRadius="md"
     textAlign="center"
     fontSize="16px" // Adjust font size for better readability
@@ -118,7 +118,7 @@ export default function Navbar() {
         "linear(to-r, #f3e8ff, #e9d8fd, #e1e3ff)", // Light mode gradient
         "linear(to-r, #1a202c, #2d3748, #4a5568)"  // Dark mode gradient
       )}
-      opacity={1.9} // Semi-transparent background
+      opacity={1} // Semi-transparent background
       position="sticky"
       top={0}
       zIndex={1000} // Ensure it stays above all other elements
@@ -132,19 +132,14 @@ export default function Navbar() {
       <Flex
         maxWidth="1200px"
         mx="auto"
-        h={{ base: '24', md: '28' }}
-        alignItems={'center'}
-        justifyContent={'space-between'}
-        px={{ base: '8px', md: '0' }} // Add padding for mobile
+        h={{ base: '20', md: '24' }}
+        alignItems="center"
+        justifyContent="space-between"
+        px={{ base: '2px', md: '0' }} // Add padding for mobile
       >
         {/* Logo */}
         <Box
-          fontFamily="'Dancing Script'"
-          fontWeight="bold"
-          fontSize={{ base: '4xl', md: '4xl' }}
-          color="white"
-          ml={{ base: '10px', md: '' }}
-          w={{ base: '90px', md: '100px' }}
+          w={{ base: '80px', md: '100px' }}
         >
           {/* MLSA AIMT */}
           <RouterLink to="/">
@@ -157,122 +152,121 @@ export default function Navbar() {
         </Box>
 
         {/* Dark/Light Mode Toggle */}
-        <Flex display={{ base: 'flex', md: 'none' }} mr={-40} mt={3}>
-          <Button onClick={toggleColorMode} variant="ghost">
+        <Flex alignItems="center" display={{ base: 'flex', md: 'none' }} gap={4} >
+          <Button onClick={toggleColorMode} variant="ghost" mt={'3'}>
             {colorMode === 'light' ? (
               <FaMoon color="yellow.400" size="24px" /> // Increased size for FaMoon
             ) : (
               <FaSun color="yellow.300" size="24px" /> // Increased size for FaSun
             )}
           </Button>
-        </Flex>
 
-
-        {/* Profile Menu Button for Mobile */}
-        <Menu isOpen={isOpen}>
-          <MenuButton
-            as={IconButton}
-            aria-label="Options"
-            icon={
-              <Avatar
-                size={'md'}
-                // src={
-                //   'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'
-                // }
-                src={user?.avatarUrl}
-              />
-            }
-            variant="ghost"
-            onClick={isOpen ? onClose : onOpen} // Toggle menu
-            display={{ base: 'block', md: 'none' }}
-          />
-          <MenuList
-            display={{ base: 'block', md: 'none' }} // Show on mobile only
-            bg={useColorModeValue('gray.200', 'gray.900')}
-            zIndex={1500}
-            fontFamily="'Alice', serif"  // Apply Alice font here
-          >
-            <Center>
-              <Avatar
-                size={'xl'}
-                m={2}
-                // src={
-                //   'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'
-                // }
-                src={user?.avatarUrl}
-              />
-            </Center>
-            <Center>
-              <Text my={3}>{auth?.user === null ? 'Guest' : user?.name.toUpperCase()}</Text>
-            </Center>
-            <MenuDivider />
-            <MenuItem><NavLink to={`/${user?.role}/${displayUsername}`}>View Yr Account</NavLink></MenuItem>
-            <MenuDivider />
-            <MenuItem>
-              <NavLink to="/">Home</NavLink>
-            </MenuItem>
-            <MenuItem>
-              <NavLink to="/about">About</NavLink>
-            </MenuItem>
-            <MenuItem>
-              <NavLink to="/blog">Blogs</NavLink>
-            </MenuItem>
-            <MenuItem>
-              <NavLink to="/events">Events</NavLink>
-            </MenuItem>
-            <MenuItem>
-              <NavLink to="/gallary">Gallery</NavLink>
-            </MenuItem>
-            <MenuItem>
-              <NavLink to="/admin">Admin Panel</NavLink>
-            </MenuItem>
-            {user ? '' :
+          {/* Profile Menu Button for Mobile */}
+          <Menu isOpen={isOpen}>
+            <MenuButton
+              as={IconButton}
+              aria-label="Options"
+              icon={
+                <Avatar
+                  size={'md'}
+                  // src={
+                  //   'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'
+                  // }
+                  src={user?.avatarUrl}
+                />
+              }
+              variant="ghost"
+              onClick={isOpen ? onClose : onOpen} // Toggle menu
+              display={{ base: 'block', md: 'none' }}
+            />
+            <MenuList
+              display={{ base: 'block', md: 'none' }} // Show on mobile only
+              bg={useColorModeValue('gray.200', 'gray.900')}
+              zIndex={1500}
+              fontFamily="'Alice', serif"  // Apply Alice font here
+            >
+              <Center>
+                <Avatar
+                  size={'xl'}
+                  // m={2}
+                  // src={
+                  //   'https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png'
+                  // }
+                  src={user?.avatarUrl}
+                />
+              </Center>
+              <Center>
+                <Text my={3}>{auth?.user === null ? 'Guest' : user?.name.toUpperCase()}</Text>
+              </Center>
+              <MenuDivider />
+              <MenuItem><NavLink to={`/${user?.role}/${displayUsername}`}>View Yr Account</NavLink></MenuItem>
+              <MenuDivider />
               <MenuItem>
-                <NavLink to="/login">Register / Login</NavLink>
+                <NavLink to="/">Home</NavLink>
               </MenuItem>
-            }
-            <MenuDivider />
+              <MenuItem>
+                <NavLink to="/about">About</NavLink>
+              </MenuItem>
+              <MenuItem>
+                <NavLink to="/blog">Blogs</NavLink>
+              </MenuItem>
+              <MenuItem>
+                <NavLink to="/events">Events</NavLink>
+              </MenuItem>
+              <MenuItem>
+                <NavLink to="/gallary">Gallery</NavLink>
+              </MenuItem>
+              <MenuItem>
+                <NavLink to="/admin">Admin Panel</NavLink>
+              </MenuItem>
+              {user ? '' :
+                <MenuItem>
+                  <NavLink to="/login">Register / Login</NavLink>
+                </MenuItem>
+              }
+              <MenuDivider />
 
-            {user ?
-              <MenuItem onClick={handleLogout}><NavLink to="/login">Logout</NavLink></MenuItem>
-              : ''
-            }
+              {user ?
+                <MenuItem onClick={handleLogout}><NavLink to="/login">Logout</NavLink></MenuItem>
+                : ''
+              }
 
-            {/* Social Media Icons Mobile*/}
-            <Center mt={5}>
-              <HStack spacing={4}>
-                <Link to="https://www.instagram.com" isExternal>
-                  <Icon
-                    as={FaInstagram}
-                    boxSize={6}
-                    _hover={{ color: 'pink.500', transform: 'scale(1.2)' }}
-                  />
-                </Link>
-                <Link to="https://www.linkedin.com/company/mlsa-aimt/" isExternal>
-                  <Icon
-                    as={FaLinkedin}
-                    boxSize={6}
-                    _hover={{ color: 'linkedin.500', transform: 'scale(1.2)' }}
-                  />
-                </Link>
-                <Link to="https://twitter.com" isExternal>
-                  <Icon
-                    as={FaTwitter}
-                    boxSize={6}
-                    _hover={{ color: 'twitter.500', transform: 'scale(1.2)' }}
-                  />
-                </Link>
-                <Link to="https://chat.whatsapp.com/LpoQfKYpS9M3eS5GXojKoj" isExternal>
-                  <Icon
-                    as={FaWhatsapp}
-                    boxSize={6}
-                    _hover={{ color: 'whatsapp.500', transform: 'scale(1.2)' }}
-                  />
-                </Link>
-              </HStack>
-            </Center>
-          </MenuList>
-        </Menu>
+              {/* Social Media Icons Mobile*/}
+              <Center mt={5}>
+                <HStack spacing={4}>
+                  <Link to="https://www.instagram.com" isExternal>
+                    <Icon
+                      as={FaInstagram}
+                      boxSize={6}
+                      _hover={{ color: 'pink.500', transform: 'scale(1.2)' }}
+                    />
+                  </Link>
+                  <Link to="https://www.linkedin.com/company/mlsa-aimt/" isExternal>
+                    <Icon
+                      as={FaLinkedin}
+                      boxSize={6}
+                      _hover={{ color: 'linkedin.500', transform: 'scale(1.2)' }}
+                    />
+                  </Link>
+                  <Link to="https://twitter.com" isExternal>
+                    <Icon
+                      as={FaTwitter}
+                      boxSize={6}
+                      _hover={{ color: 'twitter.500', transform: 'scale(1.2)' }}
+                    />
+                  </Link>
+                  <Link to="https://chat.whatsapp.com/LpoQfKYpS9M3eS5GXojKoj" isExternal>
+                    <Icon
+                      as={FaWhatsapp}
+                      boxSize={6}
+                      _hover={{ color: 'whatsapp.500', transform: 'scale(1.2)' }}
+                    />
+                  </Link>
+                </HStack>
+              </Center>
+            </MenuList>
+          </Menu>
+        </Flex>
 
 
         {/*larger screens */}

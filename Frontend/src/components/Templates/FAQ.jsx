@@ -11,10 +11,10 @@ const FAQ = () => {
   };
 
   const faqData = [
-    { question: 'What is the MLSA Program?', answer: 'The Microsoft Learn Student Ambassadors (MLSA) program is a global group of on-campus ambassadors who are eager to help students, build their careers, and use technology to solve real-world problems.' },
-    { question: 'How can I join the MLSA program?', answer: 'You can apply for the MLSA program through the Microsoft Learn Student Ambassadors website. The application process includes submitting an online application form and potentially an interview.' },
-    { question: 'How do I stay updated with MLSA activities?', answer: 'You can stay updated with MLSA activities by following the official MLSA social media channels and participating in community discussions on platforms like Microsoft Teams.' },
-    { question: 'What are the benefits of becoming an MLSA?', answer: 'As an MLSA, you get access to exclusive resources, mentorship opportunities, and the chance to connect with like-minded peers and industry professionals. You also get the opportunity to enhance your skills through various learning resources.' },
+    { question: 'What is the Microsoft Learn Student Ambassadors (MLSA) Program and what does it offer to students?', answer: 'The Microsoft Learn Student Ambassadors (MLSA) program is a global group of on-campus ambassadors who are eager to help students, build their careers, and use technology to solve real-world problems.' },
+    { question: 'How can I apply to join the Microsoft Learn Student Ambassadors (MLSA) program, and what does the application process involve?', answer: 'You can apply for the MLSA program through the Microsoft Learn Student Ambassadors website. The application process includes submitting an online application form and potentially an interview.' },
+    { question: 'What are the ways to stay updated with the latest activities, initiatives, and events organized by the Microsoft Learn Student Ambassadors (MLSA)?', answer: 'You can stay updated with MLSA activities by following the official MLSA social media channels and participating in community discussions on platforms like Microsoft Teams.' },
+    { question: 'What are the key benefits, opportunities, and resources available to individuals who become part of the Microsoft Learn Student Ambassadors (MLSA) program?', answer: 'As an MLSA, you get access to exclusive resources, mentorship opportunities, and the chance to connect with like-minded peers and industry professionals. You also get the opportunity to enhance your skills through various learning resources.' },
   ];
 
   return (
