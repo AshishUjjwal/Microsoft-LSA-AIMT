@@ -1,5 +1,6 @@
 import { Button, HStack, Image, Tag, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import AdminBlogShimmer from "./AdminShimmer.jsx";
 
 const BlogTags = ({ tags  }) => {
     // Ensure that tags is an array before using map
@@ -25,7 +26,7 @@ const TruncatedText = ({ text = '', slug }) => {
         navigate(`/blog/${slug}`); // Navigate to blog detail page
     };
 
-    if (!text) return <Text>No content available</Text>;
+    if (!text) return;
 
     return (
         <Text>
@@ -38,6 +39,7 @@ const TruncatedText = ({ text = '', slug }) => {
 };
 
 const BlogAuthor = ({ authorImage, author, date }) => {
+    if(!date) return;
     if (authorImage === '') {
         authorImage = 'https://100k-faces.glitch.me/random-image'; // Placeholder image URL
     }

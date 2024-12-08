@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { BlogAuthor, BlogTags } from './BlogComponent.jsx';
 import apiClient from '../../api/axiosInstance.js';
-import LoadingPage from '../../pages/LoadingPage.jsx';
-import axios from 'axios';
+import AdminBlogShimmer from './AdminShimmer.jsx';
 
 const TruncatedText = ({ text = '', slug }) => {
     const navigate = useNavigate();
@@ -16,7 +15,7 @@ const TruncatedText = ({ text = '', slug }) => {
         navigate(`/blog/${slug}`); // Navigate to blog detail page
     };
 
-    if (!text) return <Text>No content available</Text>;
+    if (!text) return <AdminBlogShimmer />;
 
     return (
         <Text>
@@ -63,7 +62,7 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching blogs:', error);
-                setLoading(false);
+                // setLoading(false);
             }
         };
 
@@ -102,7 +101,7 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
     // }
 
     if (loading || !blogs || !blogs?.length) {
-        return <LoadingPage />;
+        return <AdminBlogShimmer />;
     }
 
     // const blog = adminBlogs[currentIndex];
