@@ -60,6 +60,7 @@ const FrontPage = () => {
         zIndex={-1}
         filter="brightness(60%)"
         pointerEvents="none" // Prevent background from blocking clicks
+        fontFamily="'Alice', serif"
       />
 
       <VStack spacing={6} align="center" maxW="1000px" position="relative" zIndex={10}>
@@ -69,6 +70,7 @@ const FrontPage = () => {
           fontWeight="bold"
           color={useColorModeValue('gray.100', 'whiteAlpha.900')}
           transition="color 0.3s ease"
+          fontFamily="'Alice', serif"
         >
           Empowering students to code their future, master AI and shape tomorrow's Tech Culture.
         </Heading>
@@ -79,11 +81,12 @@ const FrontPage = () => {
           maxW="700px"
           lineHeight="1.6"
           transition="color 0.3s ease"
+          fontFamily="'Alice', serif"
         >
           Join our community to learn, innovate, and thrive in the tech world together.
         </Text>
 
-        <Flex justify="center" align="center" zIndex={20}>
+        <Flex justify="center" align="center" zIndex={20} fontFamily="'Alice', serif">
           <Link href="https://www.linkedin.com/company/mlsa-aimt/" isExternal>
             <Button
               leftIcon={<FaLinkedin />}
@@ -120,6 +123,7 @@ const FrontPage = () => {
             size={buttonSize}
             _hover={{ transform: 'scale(1.05)', boxShadow: 'lg' }}
             transition="all 0.3s ease"
+            fontFamily="'Alice', serif"
           >
             Join WhatsApp
           </Button>

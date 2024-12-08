@@ -69,7 +69,7 @@ export default function About() {
             }
             alt={'Login Image'}
             objectFit={'cover'}
-            rounded="2xl"
+            borderRadius={5}
             boxShadow="2xl"
             width={{ base: '100%', md: '600px' }}  // Full width on mobile, fixed width on desktop
             height={{ base: 'auto', md: '400px' }}  // Auto height on mobile, fixed height on desktop
