@@ -22,6 +22,7 @@ import { AuthContext } from '../contexts/AuthContext.js';
 // import EventGallery from '../components/GallarySection/EventGallary.jsx';
 import AccountPageAccessByAdmin from '../components/ProfilePage/AccountPageAccessByAdmin.jsx';
 import UserManagement from '../components/AdminSection/UserManagement.Admin.jsx';
+import PrivacyPolicy from '../components/Templates/PrivacyPolicy.jsx';
 
 
 const AllRoutes = () => {
@@ -78,6 +79,7 @@ const AllRoutes = () => {
         />
 
         <Route path="/user-management" element={<UserManagement />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
         <Route path="/profile/:userId" 
         element={

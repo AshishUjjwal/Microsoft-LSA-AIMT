@@ -140,9 +140,21 @@ const FooterLinks = () => {
   const linkHoverColor = useColorModeValue("teal.600", "teal.200");
 
   const links = {
-    Company: ["About Us", "Blog", "Careers"],
-    Support: ["Contact Us", "FAQs", "Live Chat"],
-    Legal: ["Privacy Policy", "Terms of Service", "Cookie Policy"],
+    Company: [
+      { label: "About Us", href: "/about" },
+      { label: "Blog", href: "/blog" },
+      { label: "Careers", href: "/careers" },
+    ],
+    Support: [
+      { label: "Contact Us", href: "/contact" },
+      { label: "FAQs", href: "/faqs" },
+      { label: "Live Chat", href: "/live-chat" },
+    ],
+    Legal: [
+      { label: "Privacy Policy", href: "/privacy-policy" },
+      { label: "Terms of Service", href: "/terms-of-service" },
+      { label: "Cookie Policy", href: "/cookie-policy" },
+    ],
   };
 
   return (
@@ -151,22 +163,28 @@ const FooterLinks = () => {
       spacing={8}
       justify="space-between"
       w="100%"
-      ml={{ base: '', md: '4' }}
+      ml={{ base: "", md: "4" }}
     >
       {Object.keys(links).map((section) => (
         <VStack key={section} align="flex-start">
-          <Text fontWeight="500" fontSize="lg" mb={2} textDecoration="underline" textDecorationColor="black.500">
+          <Text
+            fontWeight="500"
+            fontSize="lg"
+            mb={2}
+            textDecoration="underline"
+            textDecorationColor="black.500"
+          >
             {section}
           </Text>
           {links[section].map((link) => (
             <Link
-              key={link}
-              href="#"
+              key={link.label}
+              href={link.href}
               color={linkColor}
               _hover={{ color: linkHoverColor, textDecoration: "underline" }}
               transition="color 0.3s ease"
             >
-              {link}
+              {link.label}
             </Link>
           ))}
         </VStack>
