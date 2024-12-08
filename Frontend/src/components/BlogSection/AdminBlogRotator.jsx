@@ -30,6 +30,7 @@ const TruncatedText = ({ text = '', slug }) => {
 
 const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
 
+    const navigate = useNavigate();
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -74,6 +75,10 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
     //     'radial(orange.600 1px, transparent 1px)',
     //     'radial(orange.300 1px, transparent 1px)'
     // );
+
+    const handleReadMore1 = () => {
+        navigate(`/blog/${blog?.slug}`); // Navigate to blog detail page
+    };
 
 
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -138,7 +143,7 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
                     marginRight="3"
                     position="relative"
                     alignItems="center"
-                >
+                    >
                     <Box
                         width={{ base: '100%', sm: '85%' }}
                         height="250px"
@@ -148,7 +153,7 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
                         display="flex"
                         justifyContent="center"
                         alignItems="center"
-                    >
+                        >
                         <Image
                             borderRadius="lg"
                             src={blog?.imageUrl}
@@ -156,6 +161,8 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
                             objectFit="contain"
                             maxWidth="100%"
                             maxHeight="100%"
+                            cursor={'pointer'}
+                            onClick={handleReadMore1}
                         />
                     </Box>
 

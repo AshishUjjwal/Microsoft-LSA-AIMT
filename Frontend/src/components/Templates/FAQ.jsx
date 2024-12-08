@@ -72,7 +72,7 @@ const FAQ = () => {
             {faqData.map((item, index) => (
               <Box
                 key={index}
-                w="90%"
+                w="100%"
                 p={3}
                 // borderRadius="5px"
                 shadow="lg"

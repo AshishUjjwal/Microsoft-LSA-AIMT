@@ -310,7 +310,7 @@ export default function Navbar() {
                 zIndex={1500}
                 left={-200}
                 top={25}
-                px={5}
+                px={2}
               >
                 <Center>
                   <Avatar
