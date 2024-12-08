@@ -1,6 +1,5 @@
 // Optional: For auth-specific API calls
 // src/api/authService.js
-import axios from 'axios';
 import apiClient from './axiosInstance';
 
 // const API_URL = process.env.REACT_APP_BASE_URL; // Base URL for API

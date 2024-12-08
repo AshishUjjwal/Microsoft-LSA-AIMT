@@ -1,10 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Image, Heading, Text, HStack, IconButton, useColorModeValue } from '@chakra-ui/react';
+import { Box, Image, Heading, Text, HStack, IconButton, useColorModeValue, Button } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
+import { useNavigate } from "react-router-dom";
 
-import { BlogAuthor, BlogTags, TruncatedText } from './BlogComponent.jsx';
+import { BlogAuthor, BlogTags } from './BlogComponent.jsx';
 import apiClient from '../../api/axiosInstance.js';
 import LoadingPage from '../../pages/LoadingPage.jsx';
+import axios from 'axios';
+
+const TruncatedText = ({ text = '', slug }) => {
+    const navigate = useNavigate();
+    const maxLength = 200;
+
+    const handleReadMore = () => {
+        navigate(`/blog/${slug}`); // Navigate to blog detail page
+    };
+
+    if (!text) return <Text>No content available</Text>;
+
+    return (
+        <Text>
+            {`${text.substring(0, maxLength)}... `}
+            <Button size="sm" variant="link" onClick={handleReadMore}>
+                Read More
+            </Button>
+        </Text>
+    );
+};
 
 const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
 
@@ -18,10 +40,7 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
                 // Determine the API endpoint based on the user's role
                 // console.log(`user role : `, user?.role);
 
-                const endpoint =
-                    user?.role === 'admin'
-                        ? '/api/blogs/getallblog'
-                        : '/api/blogsapprove/getapprovedblogs'
+                const endpoint = '/api/blogsapprove/getapprovedblogs'
 
                 const response = await apiClient.get(endpoint, {
                     withCredentials: true,
@@ -29,19 +48,14 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
                         'Content-Type': 'application/json',
                     },
                 });
-                const blogs = user?.role === 'admin'
-                    ? response?.data?.blogs?.map(item => ({
-                        ...item, // Spread the blog details
-                        approvalDate: item.approvalDate, // Add the approval date
-                        approvedBy: item.approvedBy, // Add approvedBy details
-                    }))
-                    : response?.data?.approvedBlogs?.map(item => ({
+                console.log(`response: ${response}`);
+                const blogs = response?.data?.approvedBlogs?.map(item => ({
                         ...item.blog, // Spread the blog details
                         approvalDate: item.approvalDate, // Add the approval date
                         approvedBy: item.approvedBy, // Add approvedBy details
                     }));
 
-                // console.log(`Blogs : `, blogs);
+                console.log(`Blogs : `, blogs);
 
                 setBlogs(blogs); // Store in state
                 // console.log(`Response : `, response?.data);
@@ -56,10 +70,10 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
     }, [user]);
 
 
-    const bgGradient = useColorModeValue(
-        'radial(orange.600 1px, transparent 1px)',
-        'radial(orange.300 1px, transparent 1px)'
-    );
+    // const bgGradient = useColorModeValue(
+    //     'radial(orange.600 1px, transparent 1px)',
+    //     'radial(orange.300 1px, transparent 1px)'
+    // );
 
 
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -78,9 +92,9 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
     }, [adminBlogs?.length]);
 
     // If there are no admin blogs, show nothing
-    if (adminBlogs?.length === 0) {
-        return <Text>No admin blogs available.</Text>;
-    }
+    // if (adminBlogs?.length === 0) {
+    //     return <Text>No admin blogs available.</Text>;
+    // }
 
     if (loading || !blogs || !blogs?.length) {
         return <LoadingPage />;
@@ -95,11 +109,11 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
             key={blog?._id}
             marginTop={{ base: '5px', sm: '2' }}
             display="flex"
-            maxWidth={'1170px'}
-            p="12"
+            maxWidth={'1100px'}
+            p="4"
             alignItems={'center'}
             justifyContent={'center'}
-            mx={'auto'}
+            mx='auto'
             flexDirection={{ base: 'column', sm: 'row' }}
             // justifyContent="space-between"
             transition="all 0.6s ease-in-out" // Smooth transition
@@ -108,7 +122,7 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
             <Box>
                 <Heading
                     as="h1"
-                    fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
+                    fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}
                     textAlign="center"
                     bgGradient="linear(to-r, teal.300, blue.500, purple.600)"
                     bgClip="text"
@@ -145,7 +159,7 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
                         />
                     </Box>
 
-                    <Box zIndex="-1" minW="60vw"
+                    {/* <Box zIndex="-1" minW="60vw"
                      position="absolute" height="100%">
                         <Box
                             mx={'auto'}
@@ -154,7 +168,7 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
                             // opacity="0.2"
                             height="100%"
                         />
-                    </Box>
+                    </Box> */}
                 </Box>
 
 
@@ -168,7 +182,8 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
                     <BlogTags tags={blog?.tags} />
                     <Heading marginTop="1">
                         <Text textDecoration="none" _hover={{ textDecoration: 'none' }}>
-                            {`${blog?.title.substring(0, 50)}... `}
+                            {/* {`${blog?.title.substring(0, 50)}... `} */}
+                            {blog?.title}
                         </Text>
 
                     </Heading>

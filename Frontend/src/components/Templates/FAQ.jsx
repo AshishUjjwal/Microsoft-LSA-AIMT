@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Flex, Image, Heading, Text, VStack, Collapse, IconButton, Grid } from '@chakra-ui/react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import faqLogo from '../../Images/faqs-concept-illustration_114360-5185-removebg-preview.png'; // Ensure the correct path
+import faqLogo from '../../Images/faq-bubble-and-people-png.webp'; // Ensure the correct path
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -18,14 +18,20 @@ const FAQ = () => {
   ];
 
   return (
-    <Box maxW="1170px" mx="auto" p={{ base: 4, md: 8 }}>
+    <Box
+      maxW="1170px"
+      mx="auto"
+      p={{ base: 4, md: 8 }}
+      fontFamily="'Alice', serif"
+    >
       {/* Heading */}
       <Heading
         as="h2"
         size="lg"
         mt={10}
         textAlign="center"
-        display={{ base: 'block', md: 'none' }} 
+        display={{ base: 'block', md: 'none' }}
+        fontFamily="'Alice', serif" 
       >
         Frequently Asked Questions
       </Heading>
@@ -41,7 +47,8 @@ const FAQ = () => {
             <Image
               src={faqLogo}
               alt="FAQ Logo"
-              boxSize={{ base: '250px', md: '500px' }}  // Responsive image size
+              boxSize={{ base: '400px', md: '650px' }}  // Responsive image size
+              maxH={{ base: '300px', md: '400px' }}
             />
           </Flex>
         </Box>
@@ -52,21 +59,22 @@ const FAQ = () => {
           <Heading
             as="h2"
             size="lg"
-            mb={8}
+            my={8}
             textAlign="center"
-            display={{ base: 'none', md: 'block' }} 
+            display={{ base: 'none', md: 'block' }}
+            fontFamily="'Alice', serif"
           >
             Frequently Asked Questions
           </Heading>
 
           {/* FAQ Section */}
-          <VStack spacing={6} mb={10}>
+          <VStack spacing={6} mb={8}>
             {faqData.map((item, index) => (
               <Box
                 key={index}
-                w="100%"
+                w="90%"
                 p={3}
-                borderRadius="10"
+                // borderRadius="5px"
                 shadow="lg"
                 cursor="pointer"
                 onClick={() => toggleFAQ(index)}
@@ -75,7 +83,7 @@ const FAQ = () => {
               >
                 <Flex h="100%" alignItems="center" justify="space-between">
                   {/* Question */}
-                  <Heading as="h3" size="md" fontSize={{ base: 'md', md: 'lg' }} alignSelf="center">
+                  <Heading as="h3" size="md" fontSize={{ base: 'md', md: 'lg' }} alignSelf="center" fontFamily="'Alice', serif" >
                     {item.question}
                   </Heading>
 

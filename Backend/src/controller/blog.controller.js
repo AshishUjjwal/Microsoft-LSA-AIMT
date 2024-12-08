@@ -70,6 +70,7 @@ const getApprovedBlogs = asyncHandler(async (req, res) => {
             blogs,
         });
     } catch (error) {
+        console.log(`ewwwwew`, error);
         res.status(500).json({
             message: 'Error fetching blogs',
             error: error.message,

@@ -12,15 +12,20 @@ import {
 
 export default function About() {
   return (
-    <Box h={{ base: 'auto', md: '90vh' }} my={{base:'10', md:'0'}}>
+    <Box 
+      h={{ base: 'auto', md: '90vh' }} 
+      my={{base:'10', md:'0'}}
+      fontFamily="'Alice', serif"
+    >
       <Heading
         as="h1"
         textAlign="center"
         fontSize={{ base: '2xl', md: '4xl' }}
         mt={{ base: '30px', md: '50px' }}
         px={4}
+        fontFamily="'Alice', serif"
       >
-        Empowering Future Innovators with MLSA
+        Empowering Future Innovators with <br /> Microsoft Learn Student Ambassadors
       </Heading>
       <Flex
         direction={{ base: 'column-reverse', md: 'row' }}  // Image moves to top on mobile
@@ -31,10 +36,10 @@ export default function About() {
         h={{ base: 'auto', md: '100%' }}  // Full height on desktop, auto height on mobile
       >
         {/* Text Content */}
-        <Flex p={4} flex={{ base: '0', md: '1' }} align={'center'} justify={'center'}>
+        <Flex p={4} flex={{ base: '0', md: '1' }} align={'center'} justify={'center'} fontFamily="'Alice', serif">
           <Stack spacing={6} maxW={'md'}>
             <Heading>
-              <Text fontSize={'2xl'} color={'blue.400'} as={'span'}>
+              <Text fontFamily="'Alice', serif" fontSize={'2xl'} color={'blue.400'} as={'span'}>
                 Join the Microsoft Learn Student Ambassador Program
               </Text>{' '}
             </Heading>

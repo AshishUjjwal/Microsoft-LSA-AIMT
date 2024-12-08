@@ -45,7 +45,7 @@ const LoadingPage = () => {
         }}
         whileHover={{ scale: 1.0, color: "red.500" }}  // Interactive hover effect
       >
-        {!user ? 'Please log in to access this Page' : 'Loading, please wait...'}
+        {!user ? 'Please Login To Access This Page' : 'Loading, please wait...'}
       </MotionText>
     </MotionFlex>
   );
