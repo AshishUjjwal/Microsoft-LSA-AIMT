@@ -23,7 +23,7 @@ router.get('/getallblog', verifyAdmin, getAllBlogs);
 router.get('/getapprovedblog', verifyJWT, getApprovedBlogs);
 
 // Define API route to get a specific blog by ID
-router.get('/getblog/:slug',verifyJWT, getfixedBlog);
+router.get('/getblog/:slug', getfixedBlog);
 
 // @route   POST http://localhost:8000/api/blogs/create-blog
 router.route('/createblog').post(verifyJWT, createBlog);

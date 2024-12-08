@@ -44,6 +44,40 @@ const approveBlog = async (req, res) => {
  * Get all approved blogs
  * @route GET /api/blogs/approved
  */
+const getApprovedAdminBlogs = async (req, res) => {
+    try {
+        // Fetch only approved blogs authored by admins
+        const adminApprovedBlogs = await BlogApproved.find() // Check if the blog is approved
+            .populate({
+                path: 'blog',
+                select: 'title description content imageUrl slug category tags author authorImage createdAt',
+                populate: {
+                    path: 'author', // Populate the author details
+                    match: { role: 'admin' }, // Ensure only admin authors
+                    select: 'name email role', // Include name, email, and role
+                },
+            });
+
+        // console.log(adminApprovedBlogs);
+
+        // Filter out entries where the blog or author doesn't meet the criteria
+        const filteredAdminBlogs = adminApprovedBlogs.filter(
+            blog => blog.blog && blog.blog.author // Ensure both blog and author exist
+        );
+
+        res.status(200).json({ blogs: filteredAdminBlogs });
+    } catch (error) {
+        console.error('Error fetching approved admin blogs:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+
+
+/**
+ * Get all approved blogs
+ * @route GET /api/blogs/approved
+ */
 const getApprovedBlogs = async (req, res) => {
     try {
         // Fetch all approved blogs with blog details and approver details
@@ -95,6 +129,7 @@ const revokeApproval = async (req, res) => {
 
 export {
     approveBlog,
+    getApprovedAdminBlogs,
     getApprovedBlogs,
     revokeApproval,
 };

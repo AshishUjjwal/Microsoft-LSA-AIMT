@@ -41,7 +41,7 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
                 // Determine the API endpoint based on the user's role
                 // console.log(`user role : `, user?.role);
 
-                const endpoint = '/api/blogsapprove/getapprovedblogs'
+                const endpoint = '/api/blogsapprove/getapprovedAdminblogs'
 
                 const response = await apiClient.get(endpoint, {
                     withCredentials: true,
@@ -49,14 +49,14 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
                         'Content-Type': 'application/json',
                     },
                 });
-                console.log(`response: ${response}`);
-                const blogs = response?.data?.approvedBlogs?.map(item => ({
+                // console.log(`response:`, response);
+                const blogs = response?.data?.blogs?.map(item => ({
                         ...item.blog, // Spread the blog details
                         approvalDate: item.approvalDate, // Add the approval date
                         approvedBy: item.approvedBy, // Add approvedBy details
                     }));
 
-                console.log(`Blogs : `, blogs);
+                // console.log(`Blogs : `, blogs);
 
                 setBlogs(blogs); // Store in state
                 // console.log(`Response : `, response?.data);
