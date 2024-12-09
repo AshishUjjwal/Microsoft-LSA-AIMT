@@ -83,7 +83,7 @@ const FAQ = () => {
               >
                 <Flex h="100%" alignItems="center" justify="space-between">
                   {/* Question */}
-                  <Heading as="h3" size="md" fontSize={{ base: 'md', md: 'lg' }} alignSelf="center" fontFamily="'Alice', serif" >
+                  <Heading as="h3" size="md" fontSize={{ base: 'md', md: 'lg' }} fontWeight={50} alignSelf="center" fontFamily="'Alice', serif" >
                     {item.question}
                   </Heading>
 

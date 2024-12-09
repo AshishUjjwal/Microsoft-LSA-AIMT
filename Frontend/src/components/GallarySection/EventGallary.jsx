@@ -218,6 +218,7 @@ const EventGallary = () => {
                 <Text
                   fontSize={{ base: "xs", md: "sm" }}
                   color={colorMode === "dark" ? "gray.400" : "gray.500"}
+                  textAlign="justify"
                 >
                   {item.description}
                 </Text>
