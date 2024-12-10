@@ -6,7 +6,6 @@ const userSchema = new Schema(
     {
         name: {
             type: String,
-            // lowercase: true,
             trim: true,
             // index: true
         },
@@ -40,6 +39,9 @@ const userSchema = new Schema(
             enum: ['user', 'admin'], // Allowed roles
             default: 'user' // Default role
         },
+        isVerified: { type: Boolean, default: false },
+        verificationToken: { type: String },
+        verificationExpiresAt: { type: Date },
         refreshToken: {
             type: String
         },

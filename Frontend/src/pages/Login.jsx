@@ -109,7 +109,7 @@ const Login = () => {
         }
       );
 
-
+      // console.log(`resdf`,response);
       const result = await response.data;
       // console.log('result', result);
 
@@ -129,12 +129,12 @@ const Login = () => {
         // console.log('usenavigate');
         navigate("/");
       } else {
-        throw new Error(result.message || "Login failed!");
+        throw new Error(result.data.message || "Login failed!");
       }
 
     } catch (error) {
       // Handle errors
-      // console.log(error);
+      // console.log(`hiuhi`,error);
       toast({
         title: `Login failed!`,
         description: error?.response?.data?.message,

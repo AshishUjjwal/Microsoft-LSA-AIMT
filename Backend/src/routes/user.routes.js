@@ -5,7 +5,7 @@ import { verifyAdmin } from '../middleware/admin.middleware.js';
 
 const router = Router();
 
-import {registerUser, loginUser, logoutUser, refreshAccessToken , getCurrentUser, updateUser} from '../controller/user.controller.js';
+import {registerUser, loginUser, verifyEmail, logoutUser, refreshAccessToken , getCurrentUser, updateUser} from '../controller/user.controller.js';
 import {
     getAllUsers,
     seeUserProfile,
@@ -18,6 +18,7 @@ import {
 // http://localhost:8000/api/users
 router.route('/register').post(registerUser);
 router.route('/login').post(loginUser);
+router.route('/verify-email/:token').get(verifyEmail);
 router.route('/logout').post(verifyJWT ,logoutUser);
 router.route('/refresh-token').post(refreshAccessToken);
 router.route('/current-user').get(verifyJWT, getCurrentUser);

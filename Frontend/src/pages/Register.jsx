@@ -134,7 +134,7 @@ const Signup = () => {
       if (response?.status === 201) {
         toast({
           title: `Registration successful!`,
-          description: `Now you can Login`,
+          description: `Verify Your Email. See Your MailBOX`,
           position: "top",
           duration: 6000,
           status: "success",

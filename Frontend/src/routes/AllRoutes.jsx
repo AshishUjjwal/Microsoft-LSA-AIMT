@@ -13,7 +13,8 @@ import NotFound from '../pages/NotFound.jsx';
 import AboutPage from '../pages/AboutPage.jsx';
 import BlogSection from '../components/BlogSection/Blog.jsx';
 import BlogDetail from '../components/BlogSection/BlogDetail.jsx';   // Detail page for individual blog
-import Account from '../components/ProfilePage/AccountPage.jsx'
+import Account from '../components/ProfilePage/AccountPage.jsx';
+import VerifyEmail from '../components/Templates/verify-email.jsx';
 
 import ProtectedRoute from './ProtectedRoute.jsx'; // A component to protect routes
 import AdminPanel from '../pages/AdminPage.jsx';
@@ -79,6 +80,7 @@ const AllRoutes = () => {
         />
 
         <Route path="/user-management" element={<UserManagement />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
         <Route path="/profile/:userId" 

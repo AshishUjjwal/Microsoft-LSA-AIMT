@@ -2,6 +2,8 @@ import { asyncHandler } from "../utils/asyncHandler.js"
 import { ApiError } from "../utils/apiError.js"
 import { ApiResponse } from "../utils/apiResponse.js"
 import { User } from '../Models/user.model.js';
+import { generateToken, isTokenValid } from '../../services/tokenService.js';
+import { sendVerificationEmail } from '../../services/emailService.js';
 import jwt from "jsonwebtoken"
 
 
@@ -28,53 +30,134 @@ const registerUser = asyncHandler(async (req, res) => {
     // return res.status(200).json({
     //     message: "ok"
     // })
+    try {
+        const { name, email, password } = req.body;
 
-    const { name, email, password } = req.body;
+        // check for required fields
+        if ([name, email, password].some((field) =>
+            typeof field === 'undefined')
+        ) {
+            throw new ApiError('All fields are required', 400);
+        }
 
-    // check for required fields
-    if ([name, email, password].some((field) =>
-        typeof field === 'undefined')
-    ) {
-        throw new ApiError('All fields are required', 400);
-    }
+        // check if user already exists
+        const userExists = await User.findOne({ email });
+        if (userExists) {
+            // throw new ApiError("User Already Exists", 409);
+            return res.status(409).json(
+                new ApiResponse(409, "User Already Exist")
+            )
+        }
 
-    // check if user already exists
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-        // throw new ApiError("User Already Exists", 409);
-        return res.status(409).json(
-            new ApiResponse(409, "User Already Exist")
+        const verificationToken = generateToken();
+        const verificationExpiresAt = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
+
+        // Save the user object in the database.
+        const newUser = await User.create({
+            name,
+            email,
+            password,
+            verificationToken,
+            verificationExpiresAt,
+        });
+
+        // Send verification email
+        const verificationLink = `${process.env.CORS_ORIGIN}/verify-email?token=${verificationToken}`;
+        await sendVerificationEmail(email, verificationLink);
+
+        const createdUser = await User.findById(newUser._id).select(
+            '-password -refreshToken'
         )
+        if (!createdUser) {
+            throw new ApiError('Failed to create user', 500);
+        }
+
+        return res.status(201).json(
+            new ApiResponse(200, "Registeration Successfull. Please verify your email.", createdUser)
+        )
+    } catch (error) {
+        res.status(500).json({ message: "Error registering user.", error });
     }
 
-    // Save the user object in the database.
-    const newUser = await User.create({
-        // username: username.toLowerCase(),
-        name,
-        email,
-        password,
-        // avatar: avatar.url,
-        // coverImage: coverImage?.url || "",
-    });
-
-    const createdUser = await User.findById(newUser._id).select(
-        '-password -refreshToken'
-    )
-    if (!createdUser) {
-        throw new ApiError('Failed to create user', 500);
-    }
-
-    return res.status(201).json(
-        new ApiResponse(200, "User Registered Successfully", createdUser)
-    )
 });
+
+
+
+// Controller to handle email verification
+const verifyEmail = async (req, res) => {
+    // console.log('hii');
+    try {
+        const { token } = req.params; // Extract the token from query params
+        // console.log(token);
+
+        if (!token) {
+            return res.status(400).json({ message: "Verification token is required." });
+        }
+
+        // Find the user by the token
+        const user = await User.findOne({ verificationToken: token });
+
+        if (!user) {
+            return res.status(404).json({ message: "Invalid or expired verification token." });
+        }
+
+        // Check if the token is still valid
+        const IsTokenValid = isTokenValid(user.verificationExpiresAt);
+        if (!IsTokenValid) {
+            // Token expired, delete user
+            await User.deleteOne({ _id: user._id });
+            return res.status(400).json({ message: "Verification token has expired. Please register again." });
+        }
+
+        // Mark the user as verified
+        user.isVerified = true;
+        user.verificationToken = null; // Clear the token
+        user.verificationExpiresAt = null; // Clear expiration time
+        await user.save();
+
+        res.status(200).json({ message: "Email verified successfully. You can now log in." });
+    } catch (error) {
+        console.error("Error verifying email:", error.message);
+        res.status(500).json({ message: "Error verifying email.", error: error.message });
+    }
+};
+
+
 
 const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email })
     if (!user) {
-        throw new ApiError('User not found', 404);
+        // throw new ApiError('User not found', 404);
+        return res.status(404).json({ message: "User not found" });
     }
+    const now = Date.now();
+    // console.log(user);
+    if (!user.isVerified && user.verificationExpiresAt < now) {
+        try {
+            // Assuming deleteUser is a function that deletes the user from the database
+            // Assuming you are using a function like findByIdAndDelete for MongoDB or similar
+            const result = await User.findByIdAndDelete(user._id); // Replace `User` with your actual model
+            if (result) {
+                console.log(`User with ID ${user._id} deleted successfully.`);
+                return res.status(500).json({ message: "User Deleted as Email not verified. Register Again" });
+            } else {
+                console.log(`User with ID ${user._id} not found.`);
+                return res.status(500).json({ message: "User is not Deleted and Email not verified. Register Again" });
+            }
+
+            console.log(`User with ID ${user._id} has been deleted due to expired verification.`);
+        } catch (error) {
+            console.error(`Error deleting user with ID ${user._id}:`, error);
+        }
+    }
+    if (!user.isVerified || user.verificationExpiresAt > now) {
+        // throw new ApiError('User not found', 404);
+        return res.status(404).json({ message: "Email is Not Verified. Pls. Verify it." });
+    }
+
+
+
     // validate the password
     const isPasswordValid = await user.isPasswordCorrect(password);
     if (!isPasswordValid) {
@@ -104,6 +187,8 @@ const loginUser = asyncHandler(async (req, res) => {
             accessToken: accessToken
         }));
 });
+
+
 
 const logoutUser = asyncHandler(async (req, res) => {
 
@@ -273,6 +358,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 
 export {
     registerUser,
+    verifyEmail,
     loginUser,
     logoutUser,
     updateUser,

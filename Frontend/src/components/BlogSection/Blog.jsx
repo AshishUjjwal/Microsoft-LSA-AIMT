@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
 import {
     Box,
     Heading,
@@ -15,7 +14,6 @@ import {
     IconButton,
     Button,
     useBreakpointValue,
-    Flex,
 } from '@chakra-ui/react';
 import LoadingPage from '../../pages/LoadingPage.jsx';
 
@@ -43,9 +41,9 @@ const BlogSection = () => {
 
     const [currentPage, setCurrentPage] = useState(1); // Track the current page
     const blogsPerPage = useBreakpointValue({
-        base: 3, // For mobile (base) view
-        md: 4,   // For tablet (md) and up
-        lg: 6,   // For desktop/laptop (lg) and up
+        base: 6, // For mobile (base) view
+        md: 6,   // For tablet (md) and up
+        lg: 9,   // For desktop/laptop (lg) and up
     });
 
     // Sorting the blogs by date
