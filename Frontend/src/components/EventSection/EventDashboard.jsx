@@ -124,7 +124,7 @@ const EventDashBoard = () => {
     };
 
     return (
-        <Container maxW={'6xl'} p="12">
+        <Container maxW={{ base: '97vw', md: '1100px' }} mt={10}>
             <Heading
                 as="h1"
                 fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}

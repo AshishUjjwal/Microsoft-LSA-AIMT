@@ -32,42 +32,42 @@ const EventGallary = () => {
       title: "MLSA TEAM MEETUP",
       imageUrl: "https://aimt.edu.in/wp-content/uploads/2024/08/GD.png",
       description:
-        "An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals.",
+        "The MLSA (Microsoft Learn Student Ambassadors) Team Meetup is an exciting opportunity for student ambassadors to come together, share ideas, and foster collaboration. This event is designed to strengthen connections within the community, encourage knowledge exchange, and inspire innovation through interactive sessions and hands-on activities. Attendees will have the chance to network with like-minded peers, engage in insightful discussions, and explore new avenues for growth and impact. Whether it’s brainstorming on projects, enhancing technical skills, or building lifelong friendships, the meetup promises to be a dynamic and enriching experience for all participants.",
     },
     {
       date: "11/16/24",
       title: "Hack-A-Thon",
       imageUrl: "https://aimt.edu.in/wp-content/uploads/2023/04/lab.jpg",
       description:
-        "An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals.",
+        "The MLSA Team organized an exciting Hackathon, bringing together innovative minds to collaborate, create, and compete. This event provided participants with a platform to tackle real-world challenges using technology, fostering creativity and problem-solving skills. With engaging workshops, mentorship sessions, and team-building activities, the Hackathon empowered students to transform their ideas into impactful projects. It also encouraged networking and learning within a vibrant community of like-minded peers. The event showcased the power of collaboration, innovation, and the potential of technology to drive meaningful change.",
     },
     {
       date: "11/15/24",
       title: "CodeWar",
       imageUrl: "https://www.campusoption.com/images/colleges/gallery/14_11_16_091323_AM_6.jpeg",
       description:
-        "An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals.",
+        "The MLSA Team hosted an exhilarating CodeWar, a competitive programming event designed to challenge and inspire coders of all levels. Participants showcased their problem-solving skills, algorithmic thinking, and creativity by tackling time-bound coding challenges. With a focus on fostering learning and healthy competition, CodeWar provided a platform for students to enhance their technical expertise while engaging in a battle of wits. The event also featured interactive sessions, peer networking, and opportunities for mentorship, making it an unforgettable experience for aspiring developers.",
     },
     {
       date: "11/09/24",
       title: "Tech War'2024",
       imageUrl: "https://aimt.edu.in/wp-content/uploads/2024/04/DSC_9096-scaled-600x400.jpg",
       description:
-        "An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals.",
+        "Tech War 2024, organized by the MLSA Team, is an electrifying tech showdown designed to ignite innovation and showcase cutting-edge skills. This multi-faceted event brings together tech enthusiasts to compete across domains like coding, hackathons, and tech quizzes. Participants collaborate, innovate, and solve real-world challenges, pushing the boundaries of creativity and problem-solving. With mentorship sessions, engaging workshops, and thrilling competitions, Tech War 2024 offers an unparalleled platform for learning, networking, and showcasing talent. It's not just a competition—it's a celebration of technology, teamwork, and the future of innovation.",
     },
     {
       date: "11/16/24",
       title: "Hack-A-Thon",
       imageUrl: "https://aimt.edu.in/wp-content/uploads/2023/04/lab.jpg",
       description:
-        "An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals.",
+        "The MLSA Team organized an exciting Hackathon, bringing together innovative minds to collaborate, create, and compete. This event provided participants with a platform to tackle real-world challenges using technology, fostering creativity and problem-solving skills. With engaging workshops, mentorship sessions, and team-building activities, the Hackathon empowered students to transform their ideas into impactful projects. It also encouraged networking and learning within a vibrant community of like-minded peers. The event showcased the power of collaboration, innovation, and the potential of technology to drive meaningful change.",
     },
     {
       date: "11/15/24",
       title: "CodeWar",
       imageUrl: "https://www.campusoption.com/images/colleges/gallery/14_11_16_091323_AM_6.jpeg",
       description:
-        "An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals. An interactive meetup for the MLSA team, discussing collaboration, technology, and future goals.",
+        "The MLSA Team hosted an exhilarating CodeWar, a competitive programming event designed to challenge and inspire coders of all levels. Participants showcased their problem-solving skills, algorithmic thinking, and creativity by tackling time-bound coding challenges. With a focus on fostering learning and healthy competition, CodeWar provided a platform for students to enhance their technical expertise while engaging in a battle of wits. The event also featured interactive sessions, peer networking, and opportunities for mentorship, making it an unforgettable experience for aspiring developers.",
     },
     {
       date: "11/09/24",
@@ -159,7 +159,7 @@ const EventGallary = () => {
 
     // Scroll to the top of the container or page
     window.scrollTo({
-      top: 2500,
+      top: 200,
       behavior: 'smooth', // Optional: Adds a smooth scrolling effect
     });
   };

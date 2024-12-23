@@ -19,7 +19,7 @@ const SeeMoreGalleryButton = () => {
   return (
     <Flex justifyContent="center" alignItems="center">
       <Button
-        maxW="75vw"
+        maxW={{ base: '90vw', md: '1100px' }}
         width="100%"
         mx="auto"
         backgroundColor={bgColor}

@@ -20,7 +20,7 @@ const SeeMoreBlogsButton = () => {
   return (
     <Flex justifyContent="center" alignItems="center">
       <Button
-        maxW={{ base: '96vw', md: '1100px' }}
+        maxW={{ base: '90vw', md: '1100px' }}
         width="100%"
         mx="auto"
         backgroundColor={bgColor}

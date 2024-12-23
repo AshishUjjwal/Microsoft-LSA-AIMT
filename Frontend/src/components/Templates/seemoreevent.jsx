@@ -17,9 +17,9 @@ const SeeMoreEventsButton = () => {
   };
 
   return (
-    <Flex justifyContent="center" alignItems="center" mt={8}>
+    <Flex justifyContent="center" alignItems="center" mt={8} >
       <Button
-        maxW="75vw"
+        maxW={{ base: '90vw', md: '1100px' }}
         width="100%"
         mx="auto"
         mt={2}
