@@ -26,12 +26,12 @@ const SeeMoreGalleryButton = () => {
         border="1px solid gray"
         color={textColor}
         fontWeight="bold"
-        bgGradient="linear(to-r, green.400,pink.400)"
+        // bgGradient="linear(to-r, green.400,pink.400)"
         fontFamily="'Alice', serif"
         _hover={{
           backgroundColor: hoverBgColor,
           color: hoverTextColor,
-          bgGradient: 'linear(to-r, blue.400, green.400)'
+          // bgGradient: 'linear(to-r, blue.400, green.400)'
         }}
         onClick={handleNavigate} // Calls the navigation function on click
       >
