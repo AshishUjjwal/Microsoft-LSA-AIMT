@@ -36,7 +36,7 @@ const SeeMoreEventsButton = () => {
         }}
         onClick={handleNavigate} // Calls the navigation function on click
       >
-        See More Events
+        ---See More Events---
       </Button>
     </Flex>
   );

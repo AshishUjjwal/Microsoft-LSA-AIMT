@@ -115,7 +115,7 @@ const AdminBlogRotator = ({ user }) => {
             key={blog?._id}
             marginTop={{ base: '5px', sm: '2' }}
             display="flex"
-            maxWidth={'1100px'}
+            maxW={{ base: '96vw', md: '1100px' }}
             p="4"
             alignItems={'center'}
             justifyContent={'center'}

@@ -19,7 +19,7 @@ const FAQ = () => {
 
   return (
     <Box
-      maxW="1170px"
+      maxW={{ base: '96vw', md: '1100px' }}
       mx="auto"
       p={{ base: 4, md: 8 }}
       fontFamily="'Alice', serif"

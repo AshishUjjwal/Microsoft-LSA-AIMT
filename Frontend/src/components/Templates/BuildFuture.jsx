@@ -5,7 +5,7 @@ import { Box, Flex, Heading, Text, Image, Stack } from '@chakra-ui/react';
 export default function BuildFuture() {
     return (
         <Box py={{ base: 8, md: 0 }} px={{ base: 2, md: 5 }} my={{ base: '10', md: '0' }}
-            h={{ base: 'auto', md: '90vh' }} maxW={{ base: '100vw', md: '1100px' }} mx={'auto'}
+            h={{ base: 'auto', md: '90vh' }} maxW={{ base: '96vw', md: '1100px' }} mx={'auto'}
             fontFamily="'Alice', serif"
         >
             <Heading fontSize={{ base: '3xl', md: '50' }} textAlign={'center'} fontFamily="'Alice', serif" >

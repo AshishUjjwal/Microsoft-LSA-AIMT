@@ -20,7 +20,7 @@ const SeeMoreBlogsButton = () => {
   return (
     <Flex justifyContent="center" alignItems="center">
       <Button
-        maxW="75vw"
+        maxW={{ base: '96vw', md: '1100px' }}
         width="100%"
         mx="auto"
         backgroundColor={bgColor}
@@ -36,7 +36,7 @@ const SeeMoreBlogsButton = () => {
         }}
         onClick={handleNavigate} // Calls the navigation function on click
       >
-        See More Blogs
+        ---See More Blogs---
       </Button>
     </Flex>
   );

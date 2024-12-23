@@ -14,6 +14,7 @@ import {
     IconButton,
     Button,
     useBreakpointValue,
+    useColorModeValue,
 } from '@chakra-ui/react';
 import LoadingPage from './AdminShimmer.jsx';
 
@@ -38,6 +39,9 @@ const BlogSection = () => {
 
     const { auth } = useContext(AuthContext); // Access user from AuthContext
     const user = auth?.user;
+
+    const headingColor = useColorModeValue('black', 'white'); // Light mode: black, Dark mode: white
+    const bgColor = useColorModeValue('gray.100', 'gray.800');
 
     const [currentPage, setCurrentPage] = useState(1); // Track the current page
     const blogsPerPage = useBreakpointValue({
@@ -198,12 +202,14 @@ const BlogSection = () => {
                 as="h1"
                 fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}
                 textAlign="center"
-                // color={useColorModeValue('gray.100', 'gray.200')}
-                txtcolor
+                color={headingColor} // Dynamic text color based on color mode
                 fontWeight="extrabold"
+                fontFamily="'Alice', serif"
                 mb={5}
+                bg={bgColor} // Dynamic background color based on color mode (optional)
+                p={5} // Optional padding to make the background visible
             >
-                LATEST ADMIN BLOG... <span role="img" aria-label="laptop">👨🏻‍💻</span>
+                Latest Admin Blogs...<span role="img" aria-label="laptop">👨🏻‍💻</span>
             </Heading>
             <AdminBlogRotator
                 user={user}

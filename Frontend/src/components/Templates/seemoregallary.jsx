@@ -35,7 +35,7 @@ const SeeMoreGalleryButton = () => {
         }}
         onClick={handleNavigate} // Calls the navigation function on click
       >
-        See More Gallery
+        ---See More Gallery---
       </Button>
     </Flex>
   );

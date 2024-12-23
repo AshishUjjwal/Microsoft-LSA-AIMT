@@ -62,11 +62,11 @@ const UpcomingEventRotator = () => {
 
     return (
         <Box
-            h='55vh'
+            // h='55vh'
             maxW={{base: '88vw', md : '75vw'}}
             mx='auto'
             key={event?._id}
-            marginTop={{ base: '1', sm: '5' }}
+            marginTop={{ base: '1', sm: '1' }}
             display="flex"
             flexDirection={{ base: 'column', sm: 'row' }}
             justifyContent="space-between"

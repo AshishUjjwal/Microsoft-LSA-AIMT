@@ -166,7 +166,7 @@ const EventGallary = () => {
 
   return (
     <Box bg={colorMode === "dark" ? "gray.800" : "white"} minH="100vh" fontFamily="'Alice', serif" >
-      <Box py={10} px={6} maxW="1150px" mx="auto">
+      <Box py={10} px={6} maxW={{ base: '96vw', md: '1100px' }} mx="auto">
         {/* Gallery Title */}
         <Flex align="center" justify="center" mb={8}>
           <Text
