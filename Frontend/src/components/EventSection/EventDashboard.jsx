@@ -9,11 +9,12 @@ import {
     ModalFooter,
     HStack,
     Text,
-    useBreakpointValue
+    useBreakpointValue,
+    useColorModeValue
 } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext.js';
-import LoadingPage from '../../pages/LoadingPage.jsx';
+import LoadingPage from './AdminShimmer.jsx';
 import { AddIcon, ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import EventItem from './EventItem.jsx';
 import CreateEventForm from './EventModals/CreateEvent.jsx';
@@ -25,10 +26,12 @@ const EventDashBoard = () => {
     const [loading, setLoading] = useState(true);
     const { auth } = useContext(AuthContext);  // Access user from AuthContext
     const user = auth?.user;
-    const token = auth?.token;
     const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [modalType, setModalType] = useState(""); // To track which modal to open
+
+    const headingColor = useColorModeValue('black', 'white'); // Light mode: black, Dark mode: white
+    const bgColor = useColorModeValue('gray.100', 'gray.800');
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
@@ -58,7 +61,7 @@ const EventDashBoard = () => {
         fetchEvents();
     }, [toast]);
 
-    if ((!user && !token) || loading) {
+    if (loading) {
         return <LoadingPage />;
     }
 
@@ -124,15 +127,18 @@ const EventDashBoard = () => {
         <Container maxW={'6xl'} p="12">
             <Heading
                 as="h1"
-                fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
-                bgGradient="linear(to-r, teal.300, blue.500, purple.600)"
-                bgClip="text"
+                fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}
+                textAlign="center"
+                color={headingColor} // Dynamic text color based on color mode
                 fontWeight="extrabold"
-                textShadow="2px 2px 8px rgba(0, 0, 0, 0.4)"
-                mb={6}
+                fontFamily="'Alice', serif"
+                mb={5}
+                bg={bgColor} // Dynamic background color based on color mode (optional)
+                p={5} // Optional padding to make the background visible
             >
-                Latest Upcoming Event's ...!
+                Latest Upcoming Events...<span role="img" aria-label="laptop">👨🏻‍💻</span>
             </Heading>
+
 
             <UpcomingEventRotator events={events} user={user} />
 
@@ -160,15 +166,13 @@ const EventDashBoard = () => {
                     Create New Event
                 </Button>
             )}
-
             <Heading
                 as="h1"
-                fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
-                bgGradient="linear(to-r, teal.300, blue.500, purple.600)"
-                bgClip="text"
+                fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}
+                textAlign="center"
+                my={5}
+                color="black"
                 fontWeight="extrabold"
-                textShadow="2px 2px 8px rgba(0, 0, 0, 0.4)"
-                mt={6}
             >
                 Explore Exciting Events
             </Heading>
@@ -198,7 +202,7 @@ const EventDashBoard = () => {
                     variant="outline"
                     _hover={{ bg: 'blue.400' }}
                 >
-                    
+
                 </Button>
 
                 {/* Page Numbers */}
@@ -246,7 +250,7 @@ const EventDashBoard = () => {
                     variant="outline"
                     _hover={{ bg: 'blue.400' }}
                 >
-                    
+
                 </Button>
             </HStack>
 

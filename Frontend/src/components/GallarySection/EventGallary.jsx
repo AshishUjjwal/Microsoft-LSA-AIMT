@@ -13,12 +13,17 @@ import {
   Divider,
   Spacer,
 } from "@chakra-ui/react";
+import { useLocation } from 'react-router-dom';
 import { useState } from "react";
 //   import { SunIcon, MoonIcon } from "@chakra-ui/icons";
 
 const EventGallary = () => {
   // Toggle between dark and light mode
   const { colorMode } = useColorMode();
+
+  // Inside your component
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   // Gallery data with descriptions
   const galleryItems = [
@@ -228,69 +233,71 @@ const EventGallary = () => {
         </VStack>
 
         {/* Pagination Controls */}
-        <HStack justify="center" mt={8} spacing={2}>
+        {!isHomePage &&
+          <HStack justify="center" mt={8} spacing={2}>
 
-          {/* Previous Button */}
-          <Button
-            leftIcon={<ChevronLeftIcon />}
-            onClick={() => handlePageChange(currentPage - 1)}
-            isDisabled={currentPage === 1}
-            colorScheme="blue"
-            _hover={{ bg: 'blue.400' }}
-            variant="outline"
-          >
+            {/* Previous Button */}
+            <Button
+              leftIcon={<ChevronLeftIcon />}
+              onClick={() => handlePageChange(currentPage - 1)}
+              isDisabled={currentPage === 1}
+              colorScheme="blue"
+              _hover={{ bg: 'blue.400' }}
+              variant="outline"
+            >
 
-          </Button>
+            </Button>
 
-          {/* Page buttons */}
-          {/* Page Numbers */}
-          {Array.from({ length: totalPages }, (_, index) => {
-            const pageNumber = index + 1;
+            {/* Page buttons */}
+            {/* Page Numbers */}
+            {Array.from({ length: totalPages }, (_, index) => {
+              const pageNumber = index + 1;
 
-            // Show first two, last two, current page, and pages close to the current page
-            if (
-              pageNumber === 1 ||
-              pageNumber === totalPages ||
-              Math.abs(currentPage - pageNumber) < 2
-            ) {
-              return (
-                <Button
-                  key={pageNumber}
-                  onClick={() => handlePageChange(pageNumber)}
-                  colorScheme={currentPage === pageNumber ? 'blue' : 'gray'}
-                  _hover={{
-                    backgroundColor: currentPage === pageNumber ? 'blue.500' : 'gray.500',
-                  }}
-                  variant={currentPage === pageNumber ? 'solid' : 'outline'}
-                >
-                  {pageNumber}
-                </Button>
-              );
-            }
+              // Show first two, last two, current page, and pages close to the current page
+              if (
+                pageNumber === 1 ||
+                pageNumber === totalPages ||
+                Math.abs(currentPage - pageNumber) < 2
+              ) {
+                return (
+                  <Button
+                    key={pageNumber}
+                    onClick={() => handlePageChange(pageNumber)}
+                    colorScheme={currentPage === pageNumber ? 'blue' : 'gray'}
+                    _hover={{
+                      backgroundColor: currentPage === pageNumber ? 'blue.500' : 'gray.500',
+                    }}
+                    variant={currentPage === pageNumber ? 'solid' : 'outline'}
+                  >
+                    {pageNumber}
+                  </Button>
+                );
+              }
 
-            // Show ellipsis for skipped pages
-            if (
-              (pageNumber === 2 && currentPage > 4) ||
-              (pageNumber === totalPages - 1 && currentPage < totalPages - 3)
-            ) {
-              return <Text key={pageNumber}>...</Text>;
-            }
+              // Show ellipsis for skipped pages
+              if (
+                (pageNumber === 2 && currentPage > 4) ||
+                (pageNumber === totalPages - 1 && currentPage < totalPages - 3)
+              ) {
+                return <Text key={pageNumber}>...</Text>;
+              }
 
-            return null;
-          })}
+              return null;
+            })}
 
-          {/* Next Button */}
+            {/* Next Button */}
 
-          <Button
-            rightIcon={<ChevronRightIcon />}
-            onClick={() => handlePageChange(currentPage + 1)}
-            isDisabled={currentPage === totalPages}
-            colorScheme="blue"
-            _hover={{ bg: 'blue.400' }}
-            variant="outline"
-          ></Button>
-        
-        </HStack>
+            <Button
+              rightIcon={<ChevronRightIcon />}
+              onClick={() => handlePageChange(currentPage + 1)}
+              isDisabled={currentPage === totalPages}
+              colorScheme="blue"
+              _hover={{ bg: 'blue.400' }}
+              variant="outline"
+            ></Button>
+
+          </HStack>
+        }
       </Box>
     </Box>
   );

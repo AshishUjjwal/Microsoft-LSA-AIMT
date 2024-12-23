@@ -42,7 +42,7 @@ apiClient.interceptors.response.use(
       else {
         localStorage.removeItem('accessToken');
         console.log("Failed to refresh Access token. Redirecting to login page...");
-        window.location.href = "/login";
+        // window.location.href = "/login";
         return Promise.reject(error);
       }
     }

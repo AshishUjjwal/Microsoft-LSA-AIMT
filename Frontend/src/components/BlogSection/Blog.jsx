@@ -15,7 +15,7 @@ import {
     Button,
     useBreakpointValue,
 } from '@chakra-ui/react';
-import LoadingPage from '../../pages/LoadingPage.jsx';
+import LoadingPage from './AdminShimmer.jsx';
 
 // Modals for CreateBlog, EditBlog, DeleteBlog
 import CreateBlogModal from './BlogModals/CreateBlogModal.jsx';
@@ -74,11 +74,11 @@ const BlogSection = () => {
         } : (newBlog) => { }
 
     const handleEdit = (id, updatedBlog) => {
-        setBlogs(blogs.map((blog) => (blog._id === id ? updatedBlog : blog)));
+        setBlogs(blogs.map((blog) => (blog?._id === id ? updatedBlog : blog)));
     };
 
     const handleDelete = (id) => {
-        setBlogs(blogs.filter((blog) => blog._id !== id));
+        setBlogs(blogs.filter((blog) => blog?._id !== id));
     };
 
     const handleEditEvent = (blog) => {
@@ -103,7 +103,7 @@ const BlogSection = () => {
             // Update the state to reflect the approved blog
             setBlogs((prevBlogs) =>
                 prevBlogs.map((blog) =>
-                    blog._id === blogId ? { ...blog, isApproved: true } : blog
+                    blog?._id === blogId ? { ...blog, isApproved: true } : blog
                 )
             );
         } catch (err) {
@@ -125,7 +125,7 @@ const BlogSection = () => {
             // Update the state to reflect the unapproved blog
             setBlogs((prevBlogs) =>
                 prevBlogs.map((blog) =>
-                    blog._id === blogId ? { ...blog, isApproved: false } : blog
+                    blog?._id === blogId ? { ...blog, isApproved: false } : blog
                 )
             );
         } catch (err) {
@@ -142,10 +142,12 @@ const BlogSection = () => {
                 // Determine the API endpoint based on the user's role
                 // console.log(`user role : `, user?.role);
 
-                const endpoint =
-                    user?.role === 'admin'
-                        ? '/api/blogs/getallblog'
-                        : '/api/blogsapprove/getapprovedblogs'
+                // const endpoint =
+                //     user?.role === 'admin'
+                //         ? '/api/blogs/getallblog'
+                //         : '/api/blogsapprove/getapprovedblogs'
+
+                const endpoint = '/api/blogsapprove/getapprovedblogs'
 
                 const response = await apiClient.get(endpoint, {
                     withCredentials: true,
@@ -153,17 +155,23 @@ const BlogSection = () => {
                         'Content-Type': 'application/json',
                     },
                 });
-                const blogs = user?.role === 'admin'
-                    ? response?.data?.blogs?.map(item => ({
-                        ...item, // Spread the blog details
-                        approvalDate: item.approvalDate, // Add the approval date
-                        approvedBy: item.approvedBy, // Add approvedBy details
-                    }))
-                    : response?.data?.approvedBlogs?.map(item => ({
-                        ...item.blog, // Spread the blog details
-                        approvalDate: item.approvalDate, // Add the approval date
-                        approvedBy: item.approvedBy, // Add approvedBy details
-                    }));
+                // const blogs = user?.role === 'admin'
+                //     ? response?.data?.blogs?.map(item => ({
+                //         ...item, // Spread the blog details
+                //         approvalDate: item.approvalDate, // Add the approval date
+                //         approvedBy: item.approvedBy, // Add approvedBy details
+                //     }))
+                //     : response?.data?.approvedBlogs?.map(item => ({
+                //         ...item.blog, // Spread the blog details
+                //         approvalDate: item.approvalDate, // Add the approval date
+                //         approvedBy: item.approvedBy, // Add approvedBy details
+                //     }));
+
+                const blogs = response?.data?.approvedBlogs?.map(item => ({
+                    ...item.blog, // Spread the blog details
+                    approvalDate: item.approvalDate, // Add the approval date
+                    approvedBy: item.approvedBy, // Add approvedBy details
+                }));
 
                 // console.log(`Blogs : `, blogs);
 
@@ -179,25 +187,24 @@ const BlogSection = () => {
         fetchBlogs();
     }, [user]);
 
-    if (loading || !user || !blogs || !blogs?.length) {
+    if (loading || !blogs || !blogs?.length) {
         return <LoadingPage />;
     }
 
 
     return (
         <Container maxWidth={'1170px'} p="5">
-            {/* <Heading
+            <Heading
                 as="h1"
-                fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
-                // textAlign="center"
-                bgGradient="linear(to-r, teal.300, blue.500, purple.600)"
-                bgClip="text"
+                fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}
+                textAlign="center"
+                // color={useColorModeValue('gray.100', 'gray.200')}
+                txtcolor
                 fontWeight="extrabold"
-                textShadow="2px 2px 8px rgba(0, 0, 0, 0.4)"
-                mt={3}
+                mb={5}
             >
-                LATEST ADMIN BLOG ...👨🏻‍💻
-            </Heading> */}
+                LATEST ADMIN BLOG... <span role="img" aria-label="laptop">👨🏻‍💻</span>
+            </Heading>
             <AdminBlogRotator
                 user={user}
                 // handleEditEvent={handleEditEvent}
@@ -223,7 +230,7 @@ const BlogSection = () => {
             <Divider marginTop="5" />
             <Wrap spacing="30px" marginTop="5" alignItems="start">
                 {currentBlogs.map((blog) => (
-                    <WrapItem key={blog._id} width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}>
+                    <WrapItem key={blog?._id} width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}>
                         <Box w="100%" height="100%" display="flex" flexDirection="column" justifyContent="space-between" >
                             {/* Top Section */}
                             <Box>
@@ -261,7 +268,7 @@ const BlogSection = () => {
                             {/* Bottom Section */}
                             <Box mt="auto">
 
-                                {(blog.author?._id === user._id || user.role === 'admin') && (
+                                {(blog.author?._id === user?._id || user?.role === 'admin') && (
                                     <HStack spacing={4} marginTop={4}>
                                         <IconButton
                                             size="sm"

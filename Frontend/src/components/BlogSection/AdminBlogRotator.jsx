@@ -9,13 +9,13 @@ import AdminBlogShimmer from './AdminShimmer.jsx';
 
 const TruncatedText = ({ text = '', slug }) => {
     const navigate = useNavigate();
-    const maxLength = 200;
+    const maxLength = 250;
 
     const handleReadMore = () => {
         navigate(`/blog/${slug}`); // Navigate to blog detail page
     };
 
-    if (!text) return <AdminBlogShimmer />;
+    // if (!text) return <AdminBlogShimmer />;
 
     return (
         <Text>
@@ -27,11 +27,13 @@ const TruncatedText = ({ text = '', slug }) => {
     );
 };
 
-const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
+const AdminBlogRotator = ({ user }) => {
 
     const navigate = useNavigate();
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const txtcolor = useColorModeValue('black', 'white');
 
     useEffect(() => {
         const fetchBlogs = async () => {
@@ -50,10 +52,10 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
                 });
                 // console.log(`response:`, response);
                 const blogs = response?.data?.blogs?.map(item => ({
-                        ...item.blog, // Spread the blog details
-                        approvalDate: item.approvalDate, // Add the approval date
-                        approvedBy: item.approvedBy, // Add approvedBy details
-                    }));
+                    ...item.blog, // Spread the blog details
+                    approvalDate: item.approvalDate, // Add the approval date
+                    approvedBy: item.approvedBy, // Add approvedBy details
+                }));
 
                 // console.log(`Blogs : `, blogs);
 
@@ -119,30 +121,18 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
             justifyContent={'center'}
             mx='auto'
             flexDirection={{ base: 'column', sm: 'row' }}
-            // justifyContent="space-between"
             transition="all 0.6s ease-in-out" // Smooth transition
             _hover={{ transform: 'scale(1.02)' }}  // Scale effect on hover
         >
             <Box>
-                <Heading
-                    as="h1"
-                    fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}
-                    textAlign="center"
-                    bgGradient="linear(to-r, teal.300, blue.500, purple.600)"
-                    bgClip="text"
-                    fontWeight="extrabold"
-                    textShadow="2px 2px 8px rgba(0, 0, 0, 0.4)"
-                    mb={5}
-                >
-                    LATEST ADMIN BLOG ...👨🏻‍💻
-                </Heading>
+                
                 <Box
                     display="flex"
                     flex="1"
                     marginRight="3"
                     position="relative"
                     alignItems="center"
-                    >
+                >
                     <Box
                         width={{ base: '100%', sm: '85%' }}
                         height="250px"
@@ -152,7 +142,7 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
                         display="flex"
                         justifyContent="center"
                         alignItems="center"
-                        >
+                    >
                         <Image
                             borderRadius="lg"
                             src={blog?.imageUrl}
@@ -164,17 +154,6 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
                             onClick={handleReadMore1}
                         />
                     </Box>
-
-                    {/* <Box zIndex="-1" minW="60vw"
-                     position="absolute" height="100%">
-                        <Box
-                            mx={'auto'}
-                            bgGradient={bgGradient}
-                            backgroundSize="20px 20px"
-                            // opacity="0.2"
-                            height="100%"
-                        />
-                    </Box> */}
                 </Box>
 
 
@@ -199,39 +178,6 @@ const AdminBlogRotator = ({ user, handleEditEvent, handleDeleteEvent }) => {
                         author={blog?.author}
                         date={blog?.createdAt}
                     />
-
-                    {/* Add Edit and Delete Buttons for admin */}
-                    {/* {(user.role === 'admin') &&
-                    <HStack spacing={4} marginTop={4}>
-                        <IconButton
-                            size="sm"
-                            colorScheme="yellow"
-                            aria-label="Edit Blog"
-                            icon={<EditIcon />}
-                            onClick={() => handleEditEvent(blog)}
-                            _hover={{
-                                cursor: 'pointer',
-                                color: 'yellow.900',
-                                transform: 'scale(1.05)',
-                                transition: 'transform 0.2s ease, color 0.2s ease',
-                            }}
-                        />
-
-                        <IconButton
-                            size="sm"
-                            colorScheme="red"
-                            aria-label="Delete Blog"
-                            icon={<DeleteIcon />}
-                            onClick={() => handleDeleteEvent(blog)}
-                            _hover={{
-                                cursor: 'pointer',
-                                color: 'red.900',
-                                transform: 'scale(1.05)',
-                                transition: 'transform 0.2s ease, color 0.2s ease',
-                            }}
-                        />
-                    </HStack>
-                } */}
                 </Box>
             </Box>
         </Box>

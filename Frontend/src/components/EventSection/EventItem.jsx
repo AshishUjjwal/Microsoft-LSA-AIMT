@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   VStack,
   HStack,
@@ -16,7 +16,7 @@ import {
 import { DeleteIcon, EditIcon, AddIcon } from '@chakra-ui/icons';
 import EditEventForm from './EventModals/EditEvent.jsx'; // Import the EditEventForm component
 import DeleteEvent from './EventModals/DeleteEvent.jsx'; // Import the DeleteEvent component
-import axios from "axios";
+import { AuthContext } from '../../contexts/AuthContext.js';
 import apiClient from "../../api/axiosInstance.js";
 
 const BlogTags = (props) => {
@@ -58,6 +58,9 @@ const EventItem = ({ event, isAdmin, onDelete, onEdit }) => {
   const [modalType, setModalType] = useState(""); // To track which modal to open
   const [isRegistered, setIsRegistered] = useState(false);
 
+  const { auth } = useContext(AuthContext); // Access user from AuthContext
+  const user = auth?.user;
+
   // Handlers for different modals
   const handleEditEvent = () => {
     setModalType("edit");
@@ -71,28 +74,33 @@ const EventItem = ({ event, isAdmin, onDelete, onEdit }) => {
 
   // Check if the user is registered for this event on component mount
   useEffect(() => {
-    const checkRegistration = async () => {
-      try {
-        const response = await apiClient.get(
-          `/api/registrations/registration-status/${event._id}`,
-          {
-            withCredentials: true, // Include credentials
-            headers: {
-              // Authorization: `Bearer ${token}`, // Attach the token here
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-        setIsRegistered(response.data.isRegistered);
-      } catch (error) {
-        console.error("Failed to check registration status:", error);
-      }
-    };
-    checkRegistration();
-  }, [event._id]);
+    if (user) { // Ensure user exists
+      const checkRegistration = async () => {
+        try {
+          const response = await apiClient.get(
+            `/api/registrations/registration-status/${event._id}`,
+            {
+              withCredentials: true, // Include credentials
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+          setIsRegistered(response.data.isRegistered);
+        } catch (error) {
+          console.error("Failed to check registration status:", error);
+        }
+      };
+      checkRegistration();
+    }
+  }, [event._id, user]); // Add user as a dependency
 
   // Function to handle event registration with an API call
   const handleRegisterEvent = async () => {
+    if (!user) {
+      alert("You need to be logged in to register for events.");
+      return;
+    }
     try {
       // const token = localStorage.getItem('token'); // Retrieve token from local storage or context
 
@@ -128,6 +136,10 @@ const EventItem = ({ event, isAdmin, onDelete, onEdit }) => {
 
   // Function to handle event Unregistration with an API call
   const handleUnregisterEvent = async () => {
+    if (!user) {
+      alert("You need to be logged in to unregister from events.");
+      return;
+    }
     try {
       // const token = localStorage.getItem("token");
       const response = await apiClient.delete(

@@ -2,33 +2,58 @@ import React, { useState, useEffect } from 'react';
 import { Box, Button, Heading, Image, Spinner, Text, useColorModeValue } from '@chakra-ui/react'
 import { EventAuthor, EventTags, TruncatedText } from './EventComponent';
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
+import apiClient from '../../api/axiosInstance';
+import AdminBlogShimmer from './AdminShimmer';
 
-const UpcomingEventRotator = ({ events, user }) => {
+const UpcomingEventRotator = () => {
 
-    const bgGradient = useColorModeValue(
-        'radial(orange.600 1px, transparent 1px)',
-        'radial(orange.300 1px, transparent 1px)'
-    );
+    const [events, setEvents] = useState([]);  // To store fetched events
+    const [loading, setLoading] = useState(true);
 
-    const [isRegistered, setIsRegistered] = useState(false);
+    // const bgGradient = useColorModeValue(
+    //     'radial(orange.600 1px, transparent 1px)',
+    //     'radial(orange.300 1px, transparent 1px)'
+    // );
+
+    // const [isRegistered, setIsRegistered] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
 
+    // Fetch events
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                // const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/events/getevent`, {
+                const response = await apiClient.get(`/api/events/getevent`, {
+                    withCredentials: true,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                setEvents(response?.data?.data?.Event);   // Adjust based on your API response structure
+                setLoading(false);
+            } catch (err) {
+                console.error(err.message || 'Error fetching events');
+            }
+        };
+        fetchEvents();
+    }, []);
+
     // Filter to only show admin blogs
-    const UpcomingEvents = events.filter(event => event.status === 'Upcoming');
+    const UpcomingEvents = events?.filter(event => event.status === 'Upcoming');
 
     // Rotate through admin blogs every 5 seconds
     useEffect(() => {
         const interval = setInterval(() => {
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % UpcomingEvents.length);
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % UpcomingEvents?.length);
         }, 5000); // 5 seconds
 
         // Cleanup the interval on component unmount
         return () => clearInterval(interval);
-    }, [UpcomingEvents.length]);
+    }, [UpcomingEvents?.length]);
 
     // If there are no admin blogs, show nothing
-    if (UpcomingEvents.length === 0) {
-        return <Text>No admin blogs available.</Text>;
+    if (UpcomingEvents?.length === 0 || loading) {
+        return <AdminBlogShimmer/>
     }
 
     const event = UpcomingEvents[currentIndex];
@@ -37,7 +62,10 @@ const UpcomingEventRotator = ({ events, user }) => {
 
     return (
         <Box
-            key={event._id}
+            h='55vh'
+            maxW={{base: '88vw', md : '75vw'}}
+            mx='auto'
+            key={event?._id}
             marginTop={{ base: '1', sm: '5' }}
             display="flex"
             flexDirection={{ base: 'column', sm: 'row' }}
@@ -65,7 +93,7 @@ const UpcomingEventRotator = ({ events, user }) => {
                     <Image
                         borderRadius="lg"
                         src={event?.connectorIcon}
-                        alt={event.title}
+                        alt={event?.title}
                         objectFit="contain"
                         maxWidth="100%"
                         maxHeight="100%"
@@ -74,7 +102,7 @@ const UpcomingEventRotator = ({ events, user }) => {
 
                 <Box zIndex="1" width="100%" position="absolute" height="100%">
                     <Box
-                        bgGradient={bgGradient}
+                        // bgGradient={bgGradient}
                         backgroundSize="20px 20px"
                         opacity="0.9"
                         height="100%"
@@ -91,18 +119,18 @@ const UpcomingEventRotator = ({ events, user }) => {
                 marginTop={{ base: '3', sm: '0' }}
                 marginBottom={{ base: '7', sm: '10' }}
             >
-                <EventTags tags={event.status} />
+                <EventTags tags={event?.status} />
                 <Heading marginTop="1">
                     <Text textDecoration="none" _hover={{ textDecoration: 'none' }}>
                         {`${event?.title} `}
                     </Text>
 
                 </Heading>
-                <TruncatedText text={event.description} />
+                <TruncatedText text={event?.description} />
                 <EventAuthor
-                    authorImage={event.connectorIcon}
+                    authorImage={event?.connectorIcon}
                     author={event?.createdBy}
-                    date={event.date}
+                    date={event?.date}
                 />
                 
                 {/* {user.role === 'admin' | user.role === 'user' && (

@@ -11,7 +11,7 @@ import { getEvents, createEvent, updateEvent, deleteEvent } from '../controller/
 // @route   GET /api/events
 // @desc    Get all events
 // @access  Private
-router.get('/getevent', verifyJWT, getEvents);
+router.route('/getevent').get(getEvents);
 
 // @route   POST /api/events
 // @desc    Create a new event

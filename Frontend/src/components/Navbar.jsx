@@ -53,12 +53,33 @@ const NavLink = ({ to, children, onClick }) => (
     fontWeight="medium"
     bg="transparent" // Optional: Transparent background
     color="dark.900"
+    // _hover={{
+    //   textDecoration: 'none',
+    //   color: 'blue.500', // Hover text color
+    //   bg: 'transparent', // No background color on hover
+    //   position: 'relative', // Ensure we can use pseudo-elements
+    //   transition: 'all 0.3s ease',
+    // }}
+    
     _hover={{
-      textDecoration: 'none',
-      color: 'blue.500', // Hover text color
-      bg: 'rgba(128, 90, 213, 0.2)', // Light hover background
-      transform: 'scale(1.05)', // Hover scaling effect
-      transition: 'all 0.3s ease',
+      '&::after': {
+        content: '""', 
+        position: 'absolute',
+        left: 0,
+        bottom: 0, // Position the line just below the text
+        width: '0%', // Initially the underline has no width
+        height: '2px', // Adjust height of the underline
+        background: 'linear-gradient(90deg, #00ffff, #ff00ff)', // Neon gradient for the underline
+        transition: 'all 0.3s ease', // Smooth transition
+      },
+    
+      // On hover, animate the underline to expand
+      '&:hover::after': {
+        width: '100%', // On hover, the underline will span the full width of the text
+      },
+      '&:hover': {
+        color: 'white', // Change the text color on hover
+      },
     }}
     _active={{
       bg: 'blue.200', // Active state background
@@ -214,7 +235,7 @@ export default function Navbar() {
                 <NavLink to="/events">Events</NavLink>
               </MenuItem>
               <MenuItem>
-                <NavLink to="/gallary">Gallery</NavLink>
+                <NavLink to="/gallery">Gallery</NavLink>
               </MenuItem>
               <MenuItem>
                 <NavLink to="/admin">Admin Panel</NavLink>
@@ -276,7 +297,7 @@ export default function Navbar() {
             <NavLink to="/about">About</NavLink>
             <NavLink to="/blog">Blog</NavLink>
             <NavLink to="/events">Events</NavLink>
-            <NavLink to="/gallary">Gallery</NavLink>
+            <NavLink to="/gallery">Gallery</NavLink>
             <NavLink to="/admin">AdminPanel</NavLink>
 
             {/* Dark/Light Mode Toggle */}

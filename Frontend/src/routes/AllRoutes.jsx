@@ -67,7 +67,7 @@ const AllRoutes = () => {
         <Route path="/blog" element={<BlogSection />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/events" element={<EventPage />} />
-        <Route path="/gallary" element={<GallaryPage />} />
+        <Route path="/gallery" element={<GallaryPage />} />
         <Route path="/loading" element={<LoadingPage />} />
         <Route path={`/${user?.role}/${displayUsername}`} element={<Account />} />
 

@@ -15,7 +15,7 @@ router.get('/getapprovedAdminblogs',  getApprovedAdminBlogs);
 
 // Get all approved blogs
 // http://localhost:8000/api/blogsapprove/getapprovedblogs
-router.get('/getapprovedblogs', verifyJWT,  getApprovedBlogs);
+router.get('/getapprovedblogs',  getApprovedBlogs);
 
 // Revoke blog approval (Admin only)
 // http://localhost:8000/api/blogsapprove/unapprove/:id

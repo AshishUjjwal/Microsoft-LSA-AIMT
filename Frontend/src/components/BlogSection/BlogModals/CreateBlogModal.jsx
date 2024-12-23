@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Input, Textarea, FormLabel, useDisclosure, VStack, HStack, IconButton, useToast } from '@chakra-ui/react';
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
+import { AuthContext } from '../../../contexts/AuthContext.js';
 import apiClient from '../../../api/axiosInstance';
 
 const CreateBlogModal = ({ onCreate }) => {
     const toast = useToast();
+    const { auth } = useContext(AuthContext); // Access user from AuthContext
+    const user = auth?.user;
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [formData, setFormData] = useState({
         title: '',
@@ -14,6 +17,14 @@ const CreateBlogModal = ({ onCreate }) => {
         category: 'Technology',
         tags: [''],
     });
+
+    const handleCreateBlog = () => {
+        if (!user) {
+            alert("You need to log in to create a blog.");
+            return;
+        }
+        onOpen(); // Open the modal if the user is logged in
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -98,19 +109,19 @@ const CreateBlogModal = ({ onCreate }) => {
                 aria-label="Add Event"
                 leftIcon={<AddIcon />}
                 _hover={{
-                  bgGradient: "linear(to-r, green.400, teal.500)",
-                  boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
-                  transform: 'scale(1.05)',
-                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                    bgGradient: "linear(to-r, green.400, teal.500)",
+                    boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
+                    transform: 'scale(1.05)',
+                    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
                 }}
                 _active={{
-                  bgGradient: "linear(to-r, teal.600, green.500)",
-                  transform: 'scale(0.98)',
+                    bgGradient: "linear(to-r, teal.600, green.500)",
+                    transform: 'scale(0.98)',
                 }}
-                onClick={onOpen}
-              >
+                onClick={handleCreateBlog}
+            >
                 LET'S WRITE A BLOG ... 📝
-              </Button>
+            </Button>
 
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
@@ -125,7 +136,7 @@ const CreateBlogModal = ({ onCreate }) => {
                             <Textarea name="description" value={formData.description} onChange={handleChange} placeholder="Blog Description" />
                             {/* <FormLabel>Author</FormLabel>
                             <Input name="author" value={formData.author} onChange={handleChange} placeholder="Author Name" /> */}
-                            
+
                             <FormLabel>Image URL</FormLabel>
                             <Input name="imageUrl" value={formData.imageUrl} onChange={handleChange} placeholder="Image URL" />
 
@@ -133,15 +144,15 @@ const CreateBlogModal = ({ onCreate }) => {
                             <FormLabel>Tags</FormLabel>
                             {formData.tags.map((tag, index) => (
                                 <HStack key={index} width="100%" spacing={4}>
-                                    <Input 
-                                        placeholder={`Tag ${index + 1}`} 
-                                        value={tag} 
-                                        onChange={(e) => handleTagChange(index, e.target.value)} 
+                                    <Input
+                                        placeholder={`Tag ${index + 1}`}
+                                        value={tag}
+                                        onChange={(e) => handleTagChange(index, e.target.value)}
                                     />
-                                    <IconButton 
-                                        icon={<DeleteIcon />} 
-                                        colorScheme="red" 
-                                        onClick={() => removeTag(index)} 
+                                    <IconButton
+                                        icon={<DeleteIcon />}
+                                        colorScheme="red"
+                                        onClick={() => removeTag(index)}
                                         aria-label="Delete tag"
                                     />
                                 </HStack>
@@ -154,29 +165,29 @@ const CreateBlogModal = ({ onCreate }) => {
                                 <VStack alignItems="start" key={index} spacing={4} w="100%">
                                     <HStack width="100%" justifyContent="space-between">
                                         <FormLabel>Content Section {index + 1}</FormLabel>
-                                        <IconButton 
-                                            icon={<DeleteIcon />} 
-                                            colorScheme="red" 
-                                            onClick={() => removeContentSection(index)} 
+                                        <IconButton
+                                            icon={<DeleteIcon />}
+                                            colorScheme="red"
+                                            onClick={() => removeContentSection(index)}
                                             aria-label="Delete content section"
                                         />
                                     </HStack>
-                                    <Input 
-                                        placeholder="Header" 
-                                        value={section.Header} 
-                                        onChange={(e) => handleContentChange(index, 'Header', e.target.value)} 
+                                    <Input
+                                        placeholder="Header"
+                                        value={section.Header}
+                                        onChange={(e) => handleContentChange(index, 'Header', e.target.value)}
                                     />
-                                    <Textarea 
-                                        placeholder="Body" 
-                                        value={section.Body} 
-                                        onChange={(e) => handleContentChange(index, 'Body', e.target.value)} 
+                                    <Textarea
+                                        placeholder="Body"
+                                        value={section.Body}
+                                        onChange={(e) => handleContentChange(index, 'Body', e.target.value)}
                                     />
                                 </VStack>
                             ))}
 
                             <Button onClick={addContentSection} colorScheme="blue" mt={2}>Add Content</Button>
 
-                            
+
 
                         </VStack>
                     </ModalBody>

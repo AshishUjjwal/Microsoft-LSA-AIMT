@@ -41,30 +41,30 @@ const BlogDetail = () => {
     if (!blog) return <LoadingPage />;
 
     return (
-        <Container maxWidth={'900px'} p="12">
+        <Container maxWidth={'1000px'} p="12">
             <VStack spacing="4">
                 <Heading as="h1" >
-                    {blog.title}
+                    {blog?.title}
                 </Heading>
                 <Text as="h4" textAlign="Justify">
-                    {blog.description}
+                    {blog?.description}
                 </Text>
-                <BlogTags tags={blog.tags} />
-                <BlogAuthor authorImage={blog.authorImage} author={blog.author} date={blog.createdAt} />
+                <BlogTags tags={blog?.tags} />
+                <BlogAuthor authorImage={blog?.authorImage} author={blog?.author} date={blog?.createdAt} />
                 <Divider my={5} />
                 <Image
                     // src={'https://plopdo.com/wp-content/uploads/2020/02/GettyImages-887987150-5c770377c9e77c00011c82e6.jpg' || blog.imageUrl }
-                    src={blog.imageUrl}
-                    alt={blog.title}
+                    src={blog?.imageUrl}
+                    alt={blog?.title}
                     borderRadius="lg"
                 />
 
                 {/* Render blog content */}
-                {blog.content && blog.content.length > 0 ? (
-                    blog.content.map((section, index) => (
+                {blog?.content && blog?.content?.length > 0 ? (
+                    blog?.content.map((section, index) => (
                         <VStack key={index} align="start" spacing={3} mt={5}>
                             <Heading as="h3" size="lg">
-                                {section.Header}
+                                {section?.Header}
                             </Heading>
                             <Text fontSize="lg" textAlign="Justify">{section.Body}</Text>
                         </VStack>
