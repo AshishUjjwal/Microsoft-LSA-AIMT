@@ -32,6 +32,7 @@ const AdminBlogRotator = ({ user }) => {
     const navigate = useNavigate();
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [hasReloaded, setHasReloaded] = useState(false); // Track reload state
 
     const txtcolor = useColorModeValue('black', 'white');
 
@@ -70,6 +71,24 @@ const AdminBlogRotator = ({ user }) => {
 
         fetchBlogs();
     }, [user]);
+
+
+    // Add event listeners for internet connectivity
+    useEffect(() => {
+        const handleOnline = () => {
+            if (!hasReloaded) {
+                setHasReloaded(true);
+                window.location.reload();
+            }
+        };
+
+        // Listen for connectivity changes
+        window.addEventListener('online', handleOnline);
+
+        return () => {
+            window.removeEventListener('online', handleOnline);
+        };
+    }, [hasReloaded]);
 
 
     // const bgGradient = useColorModeValue(
